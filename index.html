@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Liberty — Gestor del patrimonio del hogar</title>
+<meta name="description" content="Liberty: aplicación de escritorio 100% local y privada para gestionar el patrimonio de tu hogar. Sin cuentas, sin servidores, sin telemetría.">
+<link rel="icon" type="image/png" href="favicon.png">
+<meta property="og:title" content="Liberty — Gestor del patrimonio del hogar">
+<meta property="og:description" content="Gestiona todo el patrimonio de tu hogar en una app de escritorio 100% local y privada.">
+<meta property="og:image" content="icono-512.png">
+<meta property="og:type" content="website">
+<style>
+  :root{
+    --azul:#143a7a;
+    --azul-osc:#0e2b5c;
+    --azul-claro:#2b5bb5;
+    --oro:#e0a83a;
+    --oro-osc:#c68e22;
+    --tinta:#1a2236;
+    --texto:#2a3344;
+    --suave:#5a6678;
+    --fondo:#f6f8fc;
+    --tarjeta:#ffffff;
+    --borde:#e2e8f2;
+    --sombra:0 1px 3px rgba(16,30,60,.06),0 8px 28px rgba(16,30,60,.08);
+    --radio:16px;
+    --max:1080px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--texto);
+    background:var(--fondo);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--azul-claro);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
+  h1,h2,h3{color:var(--tinta);line-height:1.25;margin:0 0 .5em}
+  h2{font-size:1.7rem;margin-top:0}
+  p{margin:0 0 1em}
+
+  /* ---------- Cabecera ---------- */
+  header.hero{
+    background:linear-gradient(160deg,var(--azul) 0%,var(--azul-osc) 100%);
+    color:#eaf0fb;
+    text-align:center;
+    padding:64px 20px 72px;
+    position:relative;
+    overflow:hidden;
+  }
+  header.hero::after{
+    content:"";position:absolute;left:0;right:0;bottom:-1px;height:40px;
+    background:var(--fondo);
+    clip-path:polygon(0 100%,100% 100%,100% 0);
+  }
+  .hero-icon{width:104px;height:104px;border-radius:24px;box-shadow:0 10px 30px rgba(0,0,0,.35);margin-bottom:18px}
+  header.hero h1{color:#fff;font-size:2.8rem;margin:0 0 .15em;letter-spacing:-.01em}
+  .hero-sub{font-size:1.2rem;color:#c7d6f2;max-width:620px;margin:0 auto 26px}
+  .hero-badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+  .badge{
+    display:inline-flex;align-items:center;gap:7px;
+    background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);
+    color:#eaf0fb;padding:7px 14px;border-radius:999px;font-size:.9rem;font-weight:500;
+  }
+
+  /* ---------- Secciones ---------- */
+  section{padding:56px 0}
+  section.alt{background:var(--tarjeta);border-top:1px solid var(--borde);border-bottom:1px solid var(--borde)}
+  .lead{font-size:1.12rem;color:var(--suave);max-width:720px;margin-bottom:28px}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+  .card{
+    background:var(--tarjeta);border:1px solid var(--borde);border-radius:var(--radio);
+    padding:22px 20px;box-shadow:var(--sombra);
+  }
+  section.alt .card{background:var(--fondo)}
+  .card .ico{font-size:1.5rem;line-height:1;margin-bottom:10px;display:block}
+  .card h3{font-size:1.08rem;margin-bottom:.35em}
+  .card p{font-size:.96rem;color:var(--suave);margin:0}
+
+  /* ---------- Cómo funciona ---------- */
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;counter-reset:paso}
+  .step{position:relative;padding-left:56px}
+  .step::before{
+    counter-increment:paso;content:counter(paso);
+    position:absolute;left:0;top:0;width:40px;height:40px;border-radius:50%;
+    background:var(--azul);color:#fff;font-weight:700;font-size:1.1rem;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .step h3{font-size:1.05rem;margin-bottom:.25em}
+  .step p{font-size:.95rem;color:var(--suave);margin:0}
+  code{background:#eef2fa;border:1px solid var(--borde);border-radius:6px;padding:.1em .45em;font-size:.9em;color:var(--azul-osc)}
+
+  /* ---------- Carrusel ---------- */
+  .carousel-block{margin-top:14px}
+  .carousel-block h3{font-size:1.25rem;color:var(--azul-osc);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+  .carousel-block h3 .dot{width:10px;height:10px;border-radius:50%;background:var(--oro);flex:none}
+  .carousel{
+    position:relative;border-radius:var(--radio);overflow:hidden;
+    background:#0e2b5c;box-shadow:var(--sombra);border:1px solid var(--borde);
+  }
+  .carousel-viewport{position:relative;width:100%;aspect-ratio:2220/1300;overflow:hidden}
+  .slide{
+    position:absolute;inset:0;opacity:0;transition:opacity .6s ease;
+    display:flex;align-items:center;justify-content:center;pointer-events:none;
+  }
+  .slide.active{opacity:1;pointer-events:auto}
+  .slide img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+  .car-btn{
+    position:absolute;top:50%;transform:translateY(-50%);z-index:3;
+    width:44px;height:44px;border-radius:50%;border:none;cursor:pointer;
+    background:rgba(255,255,255,.88);color:var(--azul-osc);
+    font-size:1.5rem;line-height:1;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 2px 10px rgba(0,0,0,.25);transition:background .2s,transform .2s;
+  }
+  .car-btn:hover{background:#fff;transform:translateY(-50%) scale(1.06)}
+  .car-btn:focus-visible{outline:3px solid var(--oro);outline-offset:2px}
+  .car-prev{left:12px}
+  .car-next{right:12px}
+  .car-dots{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:14px 10px;background:rgba(255,255,255,.04)}
+  .car-dot{
+    width:10px;height:10px;border-radius:50%;border:none;padding:0;cursor:pointer;
+    background:rgba(255,255,255,.3);transition:background .2s,transform .2s;
+  }
+  .car-dot.active{background:var(--oro);transform:scale(1.25)}
+  .car-dot:focus-visible{outline:2px solid var(--oro);outline-offset:2px}
+  .car-caption{
+    position:absolute;left:0;right:0;bottom:0;z-index:2;
+    background:linear-gradient(0deg,rgba(14,43,92,.85),rgba(14,43,92,0));
+    color:#fff;font-size:.92rem;font-weight:500;padding:34px 16px 12px;text-align:center;
+  }
+  .single-shot{border-radius:var(--radio);overflow:hidden;box-shadow:var(--sombra);border:1px solid var(--borde)}
+  .single-shot img{width:100%;display:block}
+
+  /* ---------- Descarga ---------- */
+  #descarga{text-align:center;background:linear-gradient(160deg,var(--azul) 0%,var(--azul-osc) 100%);color:#eaf0fb}
+  #descarga h2{color:#fff}
+  #descarga .lead{color:#c7d6f2;margin-left:auto;margin-right:auto}
+  .btn-descarga{
+    display:inline-flex;align-items:center;gap:12px;
+    background:linear-gradient(180deg,var(--oro) 0%,var(--oro-osc) 100%);
+    color:#2a1e00;font-weight:700;font-size:1.25rem;
+    padding:18px 38px;border-radius:14px;margin:8px 0 6px;
+    box-shadow:0 8px 24px rgba(224,168,58,.35);transition:transform .15s,box-shadow .15s;
+  }
+  .btn-descarga:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(224,168,58,.45);text-decoration:none}
+  .btn-descarga .big{font-size:1.5rem}
+  .descargas-count{min-height:1.4em;color:#c7d6f2;font-size:1rem;margin-top:6px}
+  .descargas-count strong{color:#fff}
+  .plataforma{color:#9fb6e0;font-size:.9rem;margin-top:10px}
+
+  /* ---------- Avisos ---------- */
+  .aviso{
+    display:flex;gap:16px;align-items:flex-start;
+    background:#fff8e8;border:1px solid #f0d99a;border-radius:var(--radio);
+    padding:20px 22px;box-shadow:var(--sombra);
+  }
+  .aviso .ico{font-size:1.6rem;line-height:1;flex:none}
+  .aviso h3{margin:0 0 .3em;font-size:1.08rem}
+  .aviso p{margin:0;color:#6b5a2a;font-size:.98rem}
+  .aviso code{background:#fff;border-color:#f0d99a;color:#8a6d1f}
+
+  /* ---------- Privacidad ---------- */
+  .priv-list{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+  .priv-list li{display:flex;gap:12px;align-items:flex-start;background:var(--fondo);border:1px solid var(--borde);border-radius:12px;padding:16px 18px}
+  .priv-list .ico{color:#1f8a4c;font-weight:700;font-size:1.2rem;flex:none}
+  .priv-list b{color:var(--tinta)}
+  .priv-list span{color:var(--suave);font-size:.95rem}
+
+  /* ---------- Créditos / footer ---------- */
+  footer{background:var(--tinta);color:#c2cbdb;padding:48px 20px 40px;text-align:center}
+  footer h2{color:#fff;font-size:1.4rem}
+  footer p{color:#9aa6bd;max-width:680px;margin:0 auto 1em}
+  footer a{color:#cdbd86}
+  .social{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:22px 0 8px}
+  .social a{
+    display:inline-flex;align-items:center;gap:8px;
+    background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);
+    color:#e7ecf5;padding:10px 18px;border-radius:10px;font-size:.95rem;font-weight:500;
+  }
+  .social a:hover{background:rgba(255,255,255,.14);text-decoration:none}
+  .foot-fine{font-size:.85rem;color:#79839a;margin-top:18px}
+
+  @media (max-width:600px){
+    header.hero{padding:48px 18px 56px}
+    header.hero h1{font-size:2.2rem}
+    .hero-sub{font-size:1.05rem}
+    h2{font-size:1.45rem}
+    section{padding:44px 0}
+    .car-btn{width:38px;height:38px;font-size:1.3rem}
+    .btn-descarga{font-size:1.1rem;padding:16px 28px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ======== CABECERA ======== -->
+<header class="hero">
+  <div class="wrap">
+    <img class="hero-icon" src="icono-512.png" alt="Icono de Liberty">
+    <h1>Liberty</h1>
+    <p class="hero-sub">El gestor del patrimonio de tu hogar. <strong>100% local y privado</strong>: tus datos nunca salen de tu ordenador.</p>
+    <div class="hero-badges">
+      <span class="badge">🖥️ App de escritorio</span>
+      <span class="badge">🔒 Sin cuentas ni servidores</span>
+      <span class="badge">🪟 Windows</span>
+    </div>
+  </div>
+</header>
+
+<!-- ======== QUÉ ES ======== -->
+<section id="que-es">
+  <div class="wrap">
+    <h2>¿Qué es y para qué sirve?</h2>
+    <p class="lead">Liberty reúne <strong>todo el patrimonio de tu hogar</strong> en un solo sitio y te da una visión clara de cómo evoluciona, sin hojas de cálculo dispersas y sin depender de ningún servicio externo.</p>
+    <div class="grid">
+      <div class="card"><span class="ico">🏦</span><h3>Patrimonio completo</h3><p>Cuentas, inversiones, inmuebles y deudas, todo en una misma vista consolidada.</p></div>
+      <div class="card"><span class="ico">👥</span><h3>Titulares</h3><p>Asigna cada activo o deuda a sus titulares y conoce el reparto real del patrimonio.</p></div>
+      <div class="card"><span class="ico">💶</span><h3>Ingresos y gastos</h3><p>Registra y sigue tus flujos para entender de dónde viene y a dónde va tu dinero.</p></div>
+      <div class="card"><span class="ico">📄</span><h3>Informe fiscal</h3><p>Obtén un resumen orientado a tus obligaciones fiscales a partir de tus datos.</p></div>
+      <div class="card"><span class="ico">🗂️</span><h3>Multi-patrimonio</h3><p>Gestiona varios patrimonios independientes desde la misma aplicación.</p></div>
+      <div class="card"><span class="ico">🔐</span><h3>Sin cuentas ni servidores</h3><p>No hay registro ni nube: todo funciona en tu equipo, sin conexión obligatoria.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== CÓMO FUNCIONA ======== -->
+<section class="alt" id="como-funciona">
+  <div class="wrap">
+    <h2>Cómo funciona</h2>
+    <p class="lead">Nada que instalar ni configurar. Liberty es un único ejecutable que se abre en tu navegador y guarda los datos a su lado.</p>
+    <div class="steps">
+      <div class="step">
+        <h3>Abres el <code>.exe</code></h3>
+        <p>Haces doble clic en <code>Liberty.exe</code>. No requiere instalación.</p>
+      </div>
+      <div class="step">
+        <h3>Se abre en tu navegador</h3>
+        <p>La app se sirve localmente y se abre en <code>127.0.0.1</code>. Todo ocurre dentro de tu ordenador.</p>
+      </div>
+      <div class="step">
+        <h3>Tus datos, a su lado</h3>
+        <p>Se guardan en una carpeta <code>mis_datos</code> junto al <code>.exe</code>. Nada se sube a ningún sitio.</p>
+      </div>
+      <div class="step">
+        <h3>Portable</h3>
+        <p>Para moverlo a otro equipo, copia solo el <code>.exe</code>: él recreará su carpeta de datos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== CAPTURAS ======== -->
+<section id="capturas">
+  <div class="wrap">
+    <h2>Un vistazo a Liberty</h2>
+    <p class="lead">Así se ve por dentro. Los carruseles avanzan solos; pasa el ratón para pausar, o usa las flechas, los puntos o desliza en móvil.</p>
+
+    <!-- Carrusel Panel -->
+    <div class="carousel-block">
+      <h3><span class="dot"></span>Panel</h3>
+      <div class="carousel" data-carousel aria-roledescription="carrusel" aria-label="Capturas del Panel">
+        <div class="carousel-viewport" data-track>
+          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Resumen del patrimonio (1)"><img src="capturas/panel/Panel_1_patrimonio1.png" alt="Panel — Resumen del patrimonio (1)"></div>
+          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Resumen del patrimonio (2)"><img src="capturas/panel/Panel_1_patrimonio2.png" alt="Panel — Resumen del patrimonio (2)" loading="lazy"></div>
+          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Distribución del patrimonio"><img src="capturas/panel/Panel_2_distribucion.png" alt="Panel — Distribución del patrimonio" loading="lazy"></div>
+          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Vista de un activo"><img src="capturas/panel/Panel_3_vistaDeActivo.png" alt="Panel — Vista de un activo" loading="lazy"></div>
+          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Rentabilidad"><img src="capturas/panel/Panel_4_rentabilidad.png" alt="Panel — Rentabilidad" loading="lazy"></div>
+          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Evolución del patrimonio"><img src="capturas/panel/Panel_5_Evolucion.png" alt="Panel — Evolución del patrimonio" loading="lazy"></div>
+          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Evolución del patrimonio (2)"><img src="capturas/panel/Panel_5_Evolucion2.png" alt="Panel — Evolución del patrimonio (2)" loading="lazy"></div>
+          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Ingresos y gastos"><img src="capturas/panel/Panel_6_IngresosYGastos.png" alt="Panel — Ingresos y gastos" loading="lazy"></div>
+          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Deudas y vencimientos"><img src="capturas/panel/Panel_7_DeudasYVencimientos.png" alt="Panel — Deudas y vencimientos" loading="lazy"></div>
+          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Informe fiscal"><img src="capturas/panel/Panel_8_InformeFiscal.png" alt="Panel — Informe fiscal" loading="lazy"></div>
+        </div>
+        <button class="car-btn car-prev" type="button" data-prev aria-label="Captura anterior">‹</button>
+        <button class="car-btn car-next" type="button" data-next aria-label="Captura siguiente">›</button>
+        <div class="car-dots" data-dots role="tablist" aria-label="Seleccionar captura del Panel"></div>
+      </div>
+    </div>
+
+    <!-- Carrusel Mis datos -->
+    <div class="carousel-block" style="margin-top:36px">
+      <h3><span class="dot"></span>Mis datos</h3>
+      <div class="carousel" data-carousel aria-roledescription="carrusel" aria-label="Capturas de Mis datos">
+        <div class="carousel-viewport" data-track>
+          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Mis datos — Activos"><img src="capturas/misdatos/MisDatos_1_Activos.png" alt="Mis datos — Activos"></div>
+          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Mis datos — Ingresos y gastos"><img src="capturas/misdatos/MisDatos_4_IngresosYGastos.png" alt="Mis datos — Ingresos y gastos" loading="lazy"></div>
+          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Mis datos — Saldos y movimientos"><img src="capturas/misdatos/MisDatos_5_SaldosYMovimientos.png" alt="Mis datos — Saldos y movimientos" loading="lazy"></div>
+          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Mis datos — Configuración"><img src="capturas/misdatos/MisDatos_7_Configuracion.png" alt="Mis datos — Configuración" loading="lazy"></div>
+          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Mis datos — Importar"><img src="capturas/misdatos/MisDatos_8_Importar.png" alt="Mis datos — Importar" loading="lazy"></div>
+          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Mis datos — Copias y seguridad"><img src="capturas/misdatos/MisDatos_9_CopiasYSeguridad.png" alt="Mis datos — Copias y seguridad" loading="lazy"></div>
+        </div>
+        <button class="car-btn car-prev" type="button" data-prev aria-label="Captura anterior">‹</button>
+        <button class="car-btn car-next" type="button" data-next aria-label="Captura siguiente">›</button>
+        <div class="car-dots" data-dots role="tablist" aria-label="Seleccionar captura de Mis datos"></div>
+      </div>
+    </div>
+
+    <!-- Ajustes (una sola imagen) -->
+    <div class="carousel-block" style="margin-top:36px">
+      <h3><span class="dot"></span>Ajustes</h3>
+      <div class="single-shot">
+        <img src="capturas/ajustes/Ajustes.png" alt="Ajustes de la aplicación" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== DESCARGA ======== -->
+<section id="descarga">
+  <div class="wrap">
+    <h2>Descarga Liberty</h2>
+    <p class="lead">Gratis, sin registro. Un único archivo de ~13 MB para Windows.</p>
+    <a class="btn-descarga" href="https://github.com/AlonsoVine/liberty/releases/latest/download/Liberty.exe">
+      <span class="big">⬇</span> Descargar Liberty.exe
+    </a>
+    <div class="descargas-count" id="descargas-count" aria-live="polite"></div>
+    <p class="plataforma">Para Windows 10 y 11 · No requiere instalación</p>
+  </div>
+</section>
+
+<!-- ======== AVISO SMARTSCREEN ======== -->
+<section class="alt" id="smartscreen">
+  <div class="wrap">
+    <div class="aviso">
+      <span class="ico">🛡️</span>
+      <div>
+        <h3>Aviso de Windows SmartScreen</h3>
+        <p>Al ser un <code>.exe</code> sin firma de pago, la primera vez Windows puede mostrar un aviso azul de SmartScreen. Es normal. Pulsa en <strong>«Más información»</strong> y luego en <strong>«Ejecutar de todos modos»</strong> para abrir Liberty. El aviso desaparece a medida que más gente lo descarga.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== PRIVACIDAD ======== -->
+<section id="privacidad">
+  <div class="wrap">
+    <h2>Privacidad y seguridad</h2>
+    <p class="lead">Liberty está pensado para datos sensibles de tu hogar, así que la privacidad no es una opción: es el diseño.</p>
+    <ul class="priv-list">
+      <li><span class="ico">✓</span><span><b>100% local.</b> Todo se ejecuta y se guarda en tu propio ordenador.</span></li>
+      <li><span class="ico">✓</span><span><b>Sin telemetría.</b> No se recopila ni se envía ningún dato de uso.</span></li>
+      <li><span class="ico">✓</span><span><b>Sin cuentas ni nube.</b> No hay registro, inicio de sesión ni servidores.</span></li>
+      <li><span class="ico">✓</span><span><b>Tú controlas tus datos.</b> Viven en una carpeta que puedes copiar o borrar cuando quieras.</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ======== CRÉDITOS / FOOTER ======== -->
+<footer id="creditos">
+  <div class="wrap">
+    <h2>Créditos</h2>
+    <p>Hecho por <strong>Alonso Viñé</strong> a partir de un fork de <a href="https://github.com/danidm98/rumbo" target="_blank" rel="noopener">Rumbo</a>, el proyecto original de <strong>Dani Domínguez Quant</strong>. Gracias por sentar las bases que han hecho posible Liberty.</p>
+    <div class="social">
+      <a href="https://alonsovine.github.io/portfolioR/" target="_blank" rel="noopener">🌐 Portfolio</a>
+      <a href="https://www.linkedin.com/in/alonso-vi%C3%B1%C3%A9-barrancos/" target="_blank" rel="noopener">💼 LinkedIn</a>
+      <a href="https://github.com/AlonsoVine" target="_blank" rel="noopener">🐙 GitHub</a>
+    </div>
+    <p class="foot-fine">Liberty · Gestor del patrimonio del hogar · 100% local y privado</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- Carruseles ---------- */
+  var INTERVALO = 4000;
+
+  document.querySelectorAll("[data-carousel]").forEach(function(car){
+    var track  = car.querySelector("[data-track]");
+    var slides = Array.prototype.slice.call(track.querySelectorAll(".slide"));
+    var dotsBox= car.querySelector("[data-dots]");
+    var prev   = car.querySelector("[data-prev]");
+    var next   = car.querySelector("[data-next]");
+    if(!slides.length) return;
+
+    var idx = 0, timer = null, dots = [];
+
+    // Crear puntitos
+    slides.forEach(function(s, i){
+      var d = document.createElement("button");
+      d.type = "button";
+      d.className = "car-dot";
+      d.setAttribute("role","tab");
+      d.setAttribute("aria-label","Ir a la captura " + (i+1));
+      d.addEventListener("click", function(){ goto(i); reset(); });
+      dotsBox.appendChild(d);
+      dots.push(d);
+    });
+
+    function render(){
+      slides.forEach(function(s, i){
+        var on = (i === idx);
+        s.classList.toggle("active", on);
+        s.setAttribute("aria-hidden", on ? "false" : "true");
+      });
+      dots.forEach(function(d, i){
+        var on = (i === idx);
+        d.classList.toggle("active", on);
+        d.setAttribute("aria-selected", on ? "true" : "false");
+      });
+    }
+    function goto(i){ idx = (i + slides.length) % slides.length; render(); }
+    function avanza(){ goto(idx + 1); }
+    function retrocede(){ goto(idx - 1); }
+
+    function start(){ if(!timer && slides.length > 1) timer = setInterval(avanza, INTERVALO); }
+    function stop(){ if(timer){ clearInterval(timer); timer = null; } }
+    function reset(){ stop(); start(); }
+
+    prev.addEventListener("click", function(){ retrocede(); reset(); });
+    next.addEventListener("click", function(){ avanza();    reset(); });
+
+    // Pausa al pasar el ratón / foco
+    car.addEventListener("mouseenter", stop);
+    car.addEventListener("mouseleave", start);
+    car.addEventListener("focusin",  stop);
+    car.addEventListener("focusout", start);
+
+    // Swipe en móvil
+    var x0 = null;
+    track.addEventListener("touchstart", function(e){ x0 = e.touches[0].clientX; stop(); }, {passive:true});
+    track.addEventListener("touchend", function(e){
+      if(x0 === null) return;
+      var dx = e.changedTouches[0].clientX - x0;
+      if(Math.abs(dx) > 40){ dx < 0 ? avanza() : retrocede(); }
+      x0 = null; start();
+    });
+
+    // Teclado (flechas) cuando el carrusel tiene el foco
+    car.addEventListener("keydown", function(e){
+      if(e.key === "ArrowLeft"){ retrocede(); reset(); }
+      else if(e.key === "ArrowRight"){ avanza(); reset(); }
+    });
+
+    // Pausar si la pestaña no está visible
+    document.addEventListener("visibilitychange", function(){
+      document.hidden ? stop() : start();
+    });
+
+    render();
+    start();
+  });
+
+  /* ---------- Contador de descargas ---------- */
+  (function(){
+    var el = document.getElementById("descargas-count");
+    if(!el) return;
+    el.style.display = "none"; // oculto hasta confirmar un número
+    try{
+      fetch("https://api.github.com/repos/AlonsoVine/liberty/releases")
+        .then(function(r){ if(!r.ok) throw new Error("http " + r.status); return r.json(); })
+        .then(function(releases){
+          if(!Array.isArray(releases)) throw new Error("formato");
+          var total = 0;
+          releases.forEach(function(rel){
+            (rel.assets || []).forEach(function(a){
+              if(a && a.name === "Liberty.exe" && typeof a.download_count === "number"){
+                total += a.download_count;
+              }
+            });
+          });
+          var n = new Intl.NumberFormat("es-ES").format(total);
+          el.innerHTML = "⬇ <strong>" + n + "</strong> descargas";
+          el.style.display = "";
+        })
+        .catch(function(){ el.style.display = "none"; });
+    }catch(e){
+      el.style.display = "none";
+    }
+  })();
+
+})();
+</script>
+
+</body>
+</html>
