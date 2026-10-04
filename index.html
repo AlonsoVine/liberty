@@ -176,7 +176,16 @@
   .single-shot img{width:100%;display:block}
 
   /* ---------- Descarga ---------- */
-  #descarga{text-align:center;background:linear-gradient(160deg,var(--azul) 0%,var(--azul-osc) 100%);color:#eaf0fb}
+  #descarga{text-align:center;background:linear-gradient(160deg,var(--azul) 0%,var(--azul-osc) 100%);color:#eaf0fb;position:relative;overflow:hidden}
+  /* Mismo foco de luz que el hero, siguiendo al ratón */
+  #descarga::before{
+    content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+    background:radial-gradient(560px circle at var(--mx,50%) var(--my,50%),
+      rgba(224,168,58,.28), rgba(43,91,181,.20) 42%, transparent 72%);
+    opacity:0;transition:opacity .6s ease;
+  }
+  #descarga:hover::before{opacity:1}
+  #descarga .wrap{position:relative;z-index:1}
   #descarga h2{color:#fff}
   #descarga .lead{color:#c7d6f2;margin-left:auto;margin-right:auto}
   .btn-descarga{
@@ -435,16 +444,14 @@
     });
   });
 
-  /* ---------- Foco de luz del hero siguiendo al ratón ---------- */
-  (function(){
-    var hero = document.querySelector("header.hero");
-    if(!hero) return;
-    hero.addEventListener("mousemove", function(e){
-      var r = hero.getBoundingClientRect();
-      hero.style.setProperty("--mx", ((e.clientX - r.left) / r.width  * 100) + "%");
-      hero.style.setProperty("--my", ((e.clientY - r.top)  / r.height * 100) + "%");
+  /* ---------- Foco de luz siguiendo al ratón (hero y descarga) ---------- */
+  document.querySelectorAll("header.hero, #descarga").forEach(function(zona){
+    zona.addEventListener("mousemove", function(e){
+      var r = zona.getBoundingClientRect();
+      zona.style.setProperty("--mx", ((e.clientX - r.left) / r.width  * 100) + "%");
+      zona.style.setProperty("--my", ((e.clientY - r.top)  / r.height * 100) + "%");
     });
-  })();
+  });
 
   /* ---------- Carruseles ---------- */
   var INTERVALO = 4000;
