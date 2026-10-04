@@ -207,6 +207,39 @@
   .verificar p{color:#9fb6e0;margin:12px 0 8px}
   .verificar code{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:#eaf0fb;border-radius:6px;padding:.12em .45em}
   .verificar code.hash{display:block;word-break:break-all;padding:10px 12px;color:#e7edf8}
+  .aviso-azul{
+    display:flex;gap:12px;align-items:flex-start;text-align:left;
+    max-width:620px;margin:18px auto 0;
+    background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);
+    border-radius:12px;padding:14px 16px;
+  }
+  .aviso-azul .ico{font-size:1.3rem;line-height:1.3;flex:none}
+  .aviso-azul p{margin:0;color:#dbe6fa;font-size:.92rem}
+  .aviso-azul strong{color:#fff}
+  .aviso-azul code{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);color:#eaf0fb;border-radius:5px;padding:.06em .4em}
+
+  /* ---------- Preguntas frecuentes ---------- */
+  .faq{max-width:800px}
+  .faq-item{
+    background:var(--fondo);border:1px solid var(--borde);border-radius:12px;
+    margin-bottom:12px;overflow:hidden;transition:border-color .2s,box-shadow .2s;
+  }
+  .faq-item[open]{border-color:#cdd9ee;box-shadow:var(--sombra)}
+  .faq-item summary{
+    cursor:pointer;list-style:none;padding:16px 48px 16px 18px;position:relative;
+    font-weight:600;color:var(--tinta);font-size:1.02rem;
+  }
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::after{
+    content:"+";position:absolute;right:18px;top:50%;transform:translateY(-50%);
+    font-size:1.4rem;font-weight:400;color:var(--azul-claro);transition:transform .2s;
+  }
+  .faq-item[open] summary::after{content:"−";transform:translateY(-50%)}
+  .faq-item summary:hover{color:var(--azul)}
+  .faq-item .faq-body{padding:0 18px 16px;color:var(--suave);font-size:.97rem}
+  .faq-item .faq-body p{margin:0}
+  .faq-item .faq-body a{font-weight:500}
+  .faq-item code{background:#eef2fa;border:1px solid var(--borde);border-radius:6px;padding:.1em .45em;font-size:.9em;color:var(--azul-osc)}
 
   /* ---------- Avisos ---------- */
   .aviso{
@@ -394,25 +427,16 @@
     </a>
     <div class="descargas-count" id="descargas-count" aria-live="polite"></div>
     <p class="plataforma">Para Windows 10 y 11 · No requiere instalación</p>
+    <div class="aviso-azul">
+      <span class="ico">🛡️</span>
+      <p><strong>¿Windows muestra un aviso al abrirlo?</strong> Es normal: al ser un <code>.exe</code> sin firma de pago, la primera vez SmartScreen puede avisar. Pulsa <strong>«Más información» → «Ejecutar de todos modos»</strong>. El aviso se va reduciendo a medida que más gente lo descarga.</p>
+    </div>
     <details class="verificar">
       <summary>Verificar integridad (SHA-256)</summary>
       <p>Comprueba que el archivo descargado es exactamente este, sin manipular. En PowerShell:
       <code>Get-FileHash .\Liberty.exe -Algorithm SHA256</code> y compara con:</p>
       <code class="hash">e7170fa337388888d0ca31635e61606733ffaf60a8894115bd476bedb695ef00</code>
     </details>
-  </div>
-</section>
-
-<!-- ======== AVISO SMARTSCREEN ======== -->
-<section class="alt" id="smartscreen">
-  <div class="wrap">
-    <div class="aviso">
-      <span class="ico">🛡️</span>
-      <div>
-        <h3>Aviso de Windows SmartScreen</h3>
-        <p>Al ser un <code>.exe</code> sin firma de pago, la primera vez Windows puede mostrar un aviso azul de SmartScreen. Es normal. Pulsa en <strong>«Más información»</strong> y luego en <strong>«Ejecutar de todos modos»</strong> para abrir Liberty. El aviso desaparece a medida que más gente lo descarga.</p>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -427,6 +451,56 @@
       <li><span class="ico">✓</span><span><b>Sin cuentas ni nube.</b> No hay registro, inicio de sesión ni servidores.</span></li>
       <li><span class="ico">✓</span><span><b>Tú controlas tus datos.</b> Viven en una carpeta que puedes copiar o borrar cuando quieras.</span></li>
     </ul>
+  </div>
+</section>
+
+<!-- ======== PREGUNTAS FRECUENTES ======== -->
+<section class="alt" id="faq">
+  <div class="wrap">
+    <h2>Preguntas frecuentes</h2>
+    <p class="lead">Lo que la gente suele preguntar antes de empezar.</p>
+    <div class="faq">
+      <details class="faq-item">
+        <summary>¿Es gratis?</summary>
+        <div class="faq-body"><p>Sí. Liberty es totalmente gratuito y no hay que registrarse ni crear ninguna cuenta.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary>¿Mis datos se suben a algún sitio?</summary>
+        <div class="faq-body"><p>No. Todo se queda en tu ordenador, en una carpeta <code>mis_datos</code> junto al programa. No hay nube, ni servidores, ni telemetría. La única conexión que usa es para descargar los precios de tus inversiones.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary>¿Hay que instalarlo?</summary>
+        <div class="faq-body"><p>No. Es un único archivo <code>.exe</code> portable: lo descargas y haces doble clic. Para moverlo a otro equipo, copia el <code>.exe</code> (y tu carpeta <code>mis_datos</code> si quieres llevarte los datos).</p></div>
+      </details>
+      <details class="faq-item">
+        <summary>¿Funciona sin internet?</summary>
+        <div class="faq-body"><p>Sí. La app funciona en local sin conexión. Solo necesita internet puntualmente para actualizar las cotizaciones de fondos, acciones o criptomonedas; el resto (saldos, inmuebles, deudas, informes) funciona sin red.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary>¿Por qué Windows muestra un aviso al abrirlo?</summary>
+        <div class="faq-body"><p>Porque el <code>.exe</code> no está firmado con un certificado de pago, así que Windows SmartScreen avisa la primera vez. Es normal y seguro: pulsa <strong>«Más información» → «Ejecutar de todos modos»</strong>. Si quieres, puedes verificar la integridad del archivo con su <a href="#descarga">SHA-256</a>.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary>¿Cómo hago copias de seguridad?</summary>
+        <div class="faq-body"><p>La propia app hace copias automáticas, y desde <strong>Mis datos → Copias y seguridad</strong> puedes crear y restaurar copias cuando quieras. También puedes copiar manualmente la carpeta <code>mis_datos</code>.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary>¿Puedo gestionar más de un patrimonio?</summary>
+        <div class="faq-body"><p>Sí. Puedes tener varias carteras independientes (por ejemplo, la del hogar y la de un familiar) y cambiar entre ellas desde el selector superior.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary>¿Qué puedo registrar?</summary>
+        <div class="faq-body"><p>Cuentas y efectivo, fondos, ETF, acciones, criptomonedas, planes de pensiones, inmuebles y deudas, con sus titulares; además de ingresos y gastos. Liberty calcula tu patrimonio neto, rentabilidad, distribución e informe fiscal.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary>¿Hay versión para Mac?</summary>
+        <div class="faq-body"><p>Por ahora la descarga directa es para Windows. Si te interesa una versión para Mac, puedes escribirme a través de mis <a href="#creditos">enlaces</a>.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary>¿Es asesoramiento financiero?</summary>
+        <div class="faq-body"><p>No. Liberty es una herramienta informativa para organizar y entender tu patrimonio. No es asesoramiento ni recomendación de inversión, y los precios (de fuentes públicas) pueden tener errores o retrasos.</p></div>
+      </details>
+    </div>
   </div>
 </section>
 
