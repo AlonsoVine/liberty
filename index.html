@@ -54,11 +54,21 @@
     overflow:hidden;
   }
   header.hero::after{
-    content:"";position:absolute;left:0;right:0;bottom:-1px;height:40px;
+    content:"";position:absolute;left:0;right:0;bottom:-1px;height:40px;z-index:2;
     background:var(--fondo);
     clip-path:polygon(0 100%,100% 100%,100% 0);
   }
-  .hero-icon{width:104px;height:104px;border-radius:24px;box-shadow:0 10px 30px rgba(0,0,0,.35);margin-bottom:18px}
+  /* Foco de luz que sigue al ratón por la zona azul */
+  header.hero::before{
+    content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+    background:radial-gradient(560px circle at var(--mx,50%) var(--my,22%),
+      rgba(224,168,58,.28), rgba(43,91,181,.20) 42%, transparent 72%);
+    opacity:0;transition:opacity .6s ease;
+  }
+  header.hero:hover::before{opacity:1}
+  header.hero .wrap{position:relative;z-index:1}
+  .hero-icon{width:104px;height:104px;border-radius:24px;box-shadow:0 10px 30px rgba(0,0,0,.35);margin-bottom:18px;transition:transform .4s ease}
+  header.hero:hover .hero-icon{transform:translateY(-3px) scale(1.03)}
   header.hero h1{color:#fff;font-size:2.8rem;margin:0 0 .15em;letter-spacing:-.01em}
   .hero-sub{font-size:1.2rem;color:#c7d6f2;max-width:620px;margin:0 auto 26px}
   .hero-badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px}
@@ -82,15 +92,34 @@
   section.alt{background:var(--tarjeta);border-top:1px solid var(--borde);border-bottom:1px solid var(--borde)}
   .lead{font-size:1.12rem;color:var(--suave);max-width:720px;margin-bottom:28px}
 
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+  /* Cards en dos filas con auto-scroll en direcciones opuestas */
+  .cards-marquee{display:flex;flex-direction:column;gap:18px}
+  .cards-row{
+    overflow:hidden;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+            mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+  }
+  .cards-track{display:flex;gap:18px;width:max-content;will-change:transform}
+  .cards-row.izq .cards-track{animation:marquee-izq 44s linear infinite}
+  .cards-row.der .cards-track{animation:marquee-der 44s linear infinite}
+  .cards-marquee:hover .cards-track{animation-play-state:paused}
+  @keyframes marquee-izq{from{transform:translateX(0)}      to{transform:translateX(-50%)}}
+  @keyframes marquee-der{from{transform:translateX(-50%)}   to{transform:translateX(0)}}
   .card{
     background:var(--tarjeta);border:1px solid var(--borde);border-radius:var(--radio);
     padding:22px 20px;box-shadow:var(--sombra);
+    flex:0 0 272px;width:272px;
+    transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;
   }
+  .card:hover{transform:translateY(-4px);box-shadow:0 6px 16px rgba(16,30,60,.1),0 16px 40px rgba(16,30,60,.12);border-color:#cdd9ee}
   section.alt .card{background:var(--fondo)}
   .card .ico{font-size:1.5rem;line-height:1;margin-bottom:10px;display:block}
   .card h3{font-size:1.08rem;margin-bottom:.35em}
   .card p{font-size:.96rem;color:var(--suave);margin:0}
+  @media (prefers-reduced-motion:reduce){
+    .cards-row{overflow-x:auto;-webkit-mask-image:none;mask-image:none}
+    .cards-track{animation:none !important}
+  }
 
   /* ---------- Cómo funciona ---------- */
   .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;counter-reset:paso}
@@ -230,15 +259,29 @@
   <div class="wrap">
     <h2>¿Qué es y para qué sirve?</h2>
     <p class="lead">Liberty reúne <strong>todo el patrimonio de tu hogar</strong> en un solo sitio y te da una visión clara de cómo evoluciona, sin hojas de cálculo dispersas y sin depender de ningún servicio externo.</p>
-    <div class="grid">
-      <div class="card"><span class="ico">🏦</span><h3>Patrimonio completo</h3><p>Cuentas, inversiones, inmuebles y deudas, todo en una misma vista consolidada.</p></div>
-      <div class="card"><span class="ico">👥</span><h3>Titulares</h3><p>Asigna cada activo o deuda a sus titulares y conoce el reparto real del patrimonio.</p></div>
-      <div class="card"><span class="ico">💶</span><h3>Ingresos y gastos</h3><p>Registra y sigue tus flujos para entender de dónde viene y a dónde va tu dinero.</p></div>
-      <div class="card"><span class="ico">📄</span><h3>Informe fiscal</h3><p>Obtén un resumen orientado a tus obligaciones fiscales a partir de tus datos.</p></div>
-      <div class="card"><span class="ico">📈</span><h3>Rentabilidad y evolución</h3><p>Sigue la rentabilidad (TIR), las plusvalías y cómo evoluciona tu patrimonio en el tiempo.</p></div>
-      <div class="card"><span class="ico">🥧</span><h3>Distribución</h3><p>Visualiza cómo se reparte tu patrimonio por tipo de activo, titular o categoría.</p></div>
-      <div class="card"><span class="ico">🗂️</span><h3>Multi-patrimonio</h3><p>Gestiona varios patrimonios independientes desde la misma aplicación.</p></div>
-      <div class="card"><span class="ico">🔐</span><h3>Sin cuentas ni servidores</h3><p>No hay registro ni nube: todo funciona en tu equipo, sin conexión obligatoria.</p></div>
+    <div class="cards-marquee" aria-label="Para qué sirve Liberty">
+      <!-- Fila superior: scroll hacia la izquierda -->
+      <div class="cards-row izq">
+        <div class="cards-track" data-cards-track>
+          <div class="card"><span class="ico">🏦</span><h3>Patrimonio completo</h3><p>Cuentas, inversiones, inmuebles y deudas, todo en una misma vista consolidada.</p></div>
+          <div class="card"><span class="ico">💶</span><h3>Ingresos y gastos</h3><p>Registra y sigue tus flujos para entender de dónde viene y a dónde va tu dinero.</p></div>
+          <div class="card"><span class="ico">📈</span><h3>Rentabilidad y evolución</h3><p>Sigue la rentabilidad (TIR), las plusvalías y cómo evoluciona tu patrimonio en el tiempo.</p></div>
+          <div class="card"><span class="ico">🗂️</span><h3>Multi-patrimonio</h3><p>Gestiona varios patrimonios independientes desde la misma aplicación.</p></div>
+          <div class="card"><span class="ico">💱</span><h3>Precios al día</h3><p>Actualiza el valor de tus inversiones —fondos, cripto y más— con un solo clic.</p></div>
+          <div class="card"><span class="ico">💾</span><h3>Copias de seguridad</h3><p>Haz copias de tus datos y restáuralas cuando quieras; todo bajo tu control.</p></div>
+        </div>
+      </div>
+      <!-- Fila inferior: scroll hacia la derecha -->
+      <div class="cards-row der">
+        <div class="cards-track" data-cards-track>
+          <div class="card"><span class="ico">👥</span><h3>Titulares</h3><p>Asigna cada activo o deuda a sus titulares y conoce el reparto real del patrimonio.</p></div>
+          <div class="card"><span class="ico">📄</span><h3>Informe fiscal</h3><p>Obtén un resumen orientado a tus obligaciones fiscales a partir de tus datos.</p></div>
+          <div class="card"><span class="ico">🥧</span><h3>Distribución</h3><p>Visualiza cómo se reparte tu patrimonio por tipo de activo, titular o categoría.</p></div>
+          <div class="card"><span class="ico">💳</span><h3>Deudas y vencimientos</h3><p>Controla tus préstamos y las fechas de vencimiento que se van acercando.</p></div>
+          <div class="card"><span class="ico">📥</span><h3>Importa tus datos</h3><p>Trae tu información desde ficheros y empieza sin partir de cero.</p></div>
+          <div class="card"><span class="ico">🔐</span><h3>Sin cuentas ni servidores</h3><p>No hay registro ni nube: todo funciona en tu equipo, sin conexión obligatoria.</p></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -382,6 +425,26 @@
 <script>
 (function(){
   "use strict";
+
+  /* ---------- Cards en bucle: duplicar para scroll sin costuras ---------- */
+  document.querySelectorAll("[data-cards-track]").forEach(function(track){
+    Array.prototype.slice.call(track.children).forEach(function(card){
+      var clon = card.cloneNode(true);
+      clon.setAttribute("aria-hidden", "true");
+      track.appendChild(clon);
+    });
+  });
+
+  /* ---------- Foco de luz del hero siguiendo al ratón ---------- */
+  (function(){
+    var hero = document.querySelector("header.hero");
+    if(!hero) return;
+    hero.addEventListener("mousemove", function(e){
+      var r = hero.getBoundingClientRect();
+      hero.style.setProperty("--mx", ((e.clientX - r.left) / r.width  * 100) + "%");
+      hero.style.setProperty("--my", ((e.clientY - r.top)  / r.height * 100) + "%");
+    });
+  })();
 
   /* ---------- Carruseles ---------- */
   var INTERVALO = 4000;
