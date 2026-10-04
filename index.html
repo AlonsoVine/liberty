@@ -200,6 +200,13 @@
   .descargas-count{min-height:1.4em;color:#c7d6f2;font-size:1rem;margin-top:6px}
   .descargas-count strong{color:#fff}
   .plataforma{color:#9fb6e0;font-size:.9rem;margin-top:10px}
+  .verificar{max-width:620px;margin:18px auto 0;text-align:left;font-size:.9rem}
+  .verificar summary{cursor:pointer;color:#c7d6f2;text-align:center;list-style:none;font-weight:500}
+  .verificar summary::-webkit-details-marker{display:none}
+  .verificar summary:hover{color:#fff;text-decoration:underline}
+  .verificar p{color:#9fb6e0;margin:12px 0 8px}
+  .verificar code{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:#eaf0fb;border-radius:6px;padding:.12em .45em}
+  .verificar code.hash{display:block;word-break:break-all;padding:10px 12px;color:#e7edf8}
 
   /* ---------- Avisos ---------- */
   .aviso{
@@ -387,6 +394,12 @@
     </a>
     <div class="descargas-count" id="descargas-count" aria-live="polite"></div>
     <p class="plataforma">Para Windows 10 y 11 · No requiere instalación</p>
+    <details class="verificar">
+      <summary>Verificar integridad (SHA-256)</summary>
+      <p>Comprueba que el archivo descargado es exactamente este, sin manipular. En PowerShell:
+      <code>Get-FileHash .\Liberty.exe -Algorithm SHA256</code> y compara con:</p>
+      <code class="hash">3f3b46e2640083851adf491a2c88f2d2a73e4f4eee9f2df390810a1369f6e3ac</code>
+    </details>
   </div>
 </section>
 

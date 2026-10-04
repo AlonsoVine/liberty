@@ -31,3 +31,8 @@ Hecho por **[Alonso Viñé](https://github.com/AlonsoVine)** a partir de un fork
 - 🌐 Portfolio: https://alonsovine.github.io/portfolioR/
 - 💼 LinkedIn: https://www.linkedin.com/in/alonso-vi%C3%B1%C3%A9-barrancos/
 - 🐙 GitHub: https://github.com/AlonsoVine
+
+## Licencia
+
+[MIT](LICENSE). Obra original «Rumbo» © Dani Dominguez Quant; modificaciones © Alonso (AlonsoVine).
+Puedes usar, copiar, modificar y distribuir el software conservando el aviso de copyright y la licencia.
