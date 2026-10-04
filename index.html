@@ -6,10 +6,36 @@
 <title>Liberty — Gestor del patrimonio del hogar</title>
 <meta name="description" content="Liberty: aplicación de escritorio 100% local y privada para gestionar el patrimonio de tu hogar. Sin cuentas, sin servidores, sin telemetría.">
 <link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="icono-512.png">
+<link rel="canonical" href="https://alonsovine.github.io/liberty/">
 <meta property="og:title" content="Liberty — Gestor del patrimonio del hogar">
 <meta property="og:description" content="Gestiona todo el patrimonio de tu hogar en una app de escritorio 100% local y privada.">
-<meta property="og:image" content="icono-512.png">
+<meta property="og:image" content="https://alonsovine.github.io/liberty/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://alonsovine.github.io/liberty/">
 <meta property="og:type" content="website">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Liberty — Gestor del patrimonio del hogar">
+<meta name="twitter:description" content="App de escritorio 100% local y privada para gestionar el patrimonio de tu hogar.">
+<meta name="twitter:image" content="https://alonsovine.github.io/liberty/og.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Liberty",
+  "description": "Aplicación de escritorio 100% local y privada para gestionar el patrimonio del hogar: cuentas, inversiones, inmuebles y deudas, con titulares, ingresos/gastos e informe fiscal.",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Windows",
+  "url": "https://alonsovine.github.io/liberty/",
+  "downloadUrl": "https://github.com/AlonsoVine/liberty/releases/latest/download/Liberty.exe",
+  "softwareVersion": "1.1.0",
+  "image": "https://alonsovine.github.io/liberty/og.png",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+  "author": { "@type": "Person", "name": "Alonso Viñé", "url": "https://github.com/AlonsoVine" }
+}
+</script>
 <style>
   :root{
     --azul:#143a7a;
@@ -273,6 +299,36 @@
   .social a:hover{background:rgba(255,255,255,.14);text-decoration:none}
   .foot-fine{font-size:.85rem;color:#79839a;margin-top:18px}
 
+  /* ---------- Botón de descarga flotante ---------- */
+  .fab-descarga{
+    position:fixed;right:20px;bottom:20px;z-index:50;
+    display:inline-flex;align-items:center;gap:9px;
+    background:linear-gradient(180deg,var(--oro) 0%,var(--oro-osc) 100%);
+    color:#2a1e00;font-weight:700;font-size:1rem;
+    padding:13px 22px;border-radius:999px;
+    box-shadow:0 6px 20px rgba(16,30,60,.28);
+    opacity:0;visibility:hidden;transform:translateY(14px);
+    transition:opacity .3s ease,transform .3s ease,visibility .3s;
+  }
+  .fab-descarga.visible{opacity:1;visibility:visible;transform:translateY(0)}
+  .fab-descarga:hover{text-decoration:none;transform:translateY(-2px);box-shadow:0 10px 26px rgba(224,168,58,.45)}
+
+  /* ---------- Lightbox de capturas ---------- */
+  .lightbox{
+    position:fixed;inset:0;z-index:100;display:none;
+    background:rgba(8,18,40,.92);
+    align-items:center;justify-content:center;padding:28px;cursor:zoom-out;
+  }
+  .lightbox.open{display:flex}
+  .lightbox img{max-width:100%;max-height:100%;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+  .lightbox-close{
+    position:absolute;top:16px;right:20px;width:44px;height:44px;border-radius:50%;
+    border:none;cursor:pointer;background:rgba(255,255,255,.92);color:var(--azul-osc);
+    font-size:1.6rem;line-height:1;display:flex;align-items:center;justify-content:center;
+  }
+  .lightbox-close:hover{background:#fff}
+  .slide img,.single-shot img{cursor:zoom-in}
+
   @media (max-width:600px){
     header.hero{padding:48px 18px 56px}
     header.hero h1{font-size:2.2rem}
@@ -372,16 +428,16 @@
       <h3><span class="dot"></span>Panel</h3>
       <div class="carousel" data-carousel aria-roledescription="carrusel" aria-label="Capturas del Panel">
         <div class="carousel-viewport" data-track>
-          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Resumen del patrimonio (1)"><img src="capturas/panel/Panel_1_patrimonio1.png" alt="Panel — Resumen del patrimonio (1)"></div>
-          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Resumen del patrimonio (2)"><img src="capturas/panel/Panel_1_patrimonio2.png" alt="Panel — Resumen del patrimonio (2)" loading="lazy"></div>
-          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Distribución del patrimonio"><img src="capturas/panel/Panel_2_distribucion.png" alt="Panel — Distribución del patrimonio" loading="lazy"></div>
-          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Vista de un activo"><img src="capturas/panel/Panel_3_vistaDeActivo.png" alt="Panel — Vista de un activo" loading="lazy"></div>
-          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Rentabilidad"><img src="capturas/panel/Panel_4_rentabilidad.png" alt="Panel — Rentabilidad" loading="lazy"></div>
-          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Evolución del patrimonio"><img src="capturas/panel/Panel_5_Evolucion.png" alt="Panel — Evolución del patrimonio" loading="lazy"></div>
-          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Evolución del patrimonio (2)"><img src="capturas/panel/Panel_5_Evolucion2.png" alt="Panel — Evolución del patrimonio (2)" loading="lazy"></div>
-          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Ingresos y gastos"><img src="capturas/panel/Panel_6_IngresosYGastos.png" alt="Panel — Ingresos y gastos" loading="lazy"></div>
-          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Deudas y vencimientos"><img src="capturas/panel/Panel_7_DeudasYVencimientos.png" alt="Panel — Deudas y vencimientos" loading="lazy"></div>
-          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Informe fiscal"><img src="capturas/panel/Panel_8_InformeFiscal.png" alt="Panel — Informe fiscal" loading="lazy"></div>
+          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Resumen del patrimonio (1)"><img src="capturas/panel/Panel_1_patrimonio1.webp" alt="Panel — Resumen del patrimonio (1)"></div>
+          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Resumen del patrimonio (2)"><img src="capturas/panel/Panel_1_patrimonio2.webp" alt="Panel — Resumen del patrimonio (2)" loading="lazy"></div>
+          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Distribución del patrimonio"><img src="capturas/panel/Panel_2_distribucion.webp" alt="Panel — Distribución del patrimonio" loading="lazy"></div>
+          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Vista de un activo"><img src="capturas/panel/Panel_3_vistaDeActivo.webp" alt="Panel — Vista de un activo" loading="lazy"></div>
+          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Rentabilidad"><img src="capturas/panel/Panel_4_rentabilidad.webp" alt="Panel — Rentabilidad" loading="lazy"></div>
+          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Evolución del patrimonio"><img src="capturas/panel/Panel_5_Evolucion.webp" alt="Panel — Evolución del patrimonio" loading="lazy"></div>
+          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Evolución del patrimonio (2)"><img src="capturas/panel/Panel_5_Evolucion2.webp" alt="Panel — Evolución del patrimonio (2)" loading="lazy"></div>
+          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Ingresos y gastos"><img src="capturas/panel/Panel_6_IngresosYGastos.webp" alt="Panel — Ingresos y gastos" loading="lazy"></div>
+          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Deudas y vencimientos"><img src="capturas/panel/Panel_7_DeudasYVencimientos.webp" alt="Panel — Deudas y vencimientos" loading="lazy"></div>
+          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Informe fiscal"><img src="capturas/panel/Panel_8_InformeFiscal.webp" alt="Panel — Informe fiscal" loading="lazy"></div>
         </div>
         <button class="car-btn car-prev" type="button" data-prev aria-label="Captura anterior">‹</button>
         <button class="car-btn car-next" type="button" data-next aria-label="Captura siguiente">›</button>
@@ -394,12 +450,12 @@
       <h3><span class="dot"></span>Mis datos</h3>
       <div class="carousel" data-carousel aria-roledescription="carrusel" aria-label="Capturas de Mis datos">
         <div class="carousel-viewport" data-track>
-          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Mis datos — Activos"><img src="capturas/misdatos/MisDatos_1_Activos.png" alt="Mis datos — Activos"></div>
-          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Mis datos — Ingresos y gastos"><img src="capturas/misdatos/MisDatos_4_IngresosYGastos.png" alt="Mis datos — Ingresos y gastos" loading="lazy"></div>
-          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Mis datos — Saldos y movimientos"><img src="capturas/misdatos/MisDatos_5_SaldosYMovimientos.png" alt="Mis datos — Saldos y movimientos" loading="lazy"></div>
-          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Mis datos — Configuración"><img src="capturas/misdatos/MisDatos_7_Configuracion.png" alt="Mis datos — Configuración" loading="lazy"></div>
-          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Mis datos — Importar"><img src="capturas/misdatos/MisDatos_8_Importar.png" alt="Mis datos — Importar" loading="lazy"></div>
-          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Mis datos — Copias y seguridad"><img src="capturas/misdatos/MisDatos_9_CopiasYSeguridad.png" alt="Mis datos — Copias y seguridad" loading="lazy"></div>
+          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Mis datos — Activos"><img src="capturas/misdatos/MisDatos_1_Activos.webp" alt="Mis datos — Activos"></div>
+          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Mis datos — Ingresos y gastos"><img src="capturas/misdatos/MisDatos_4_IngresosYGastos.webp" alt="Mis datos — Ingresos y gastos" loading="lazy"></div>
+          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Mis datos — Saldos y movimientos"><img src="capturas/misdatos/MisDatos_5_SaldosYMovimientos.webp" alt="Mis datos — Saldos y movimientos" loading="lazy"></div>
+          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Mis datos — Configuración"><img src="capturas/misdatos/MisDatos_7_Configuracion.webp" alt="Mis datos — Configuración" loading="lazy"></div>
+          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Mis datos — Importar"><img src="capturas/misdatos/MisDatos_8_Importar.webp" alt="Mis datos — Importar" loading="lazy"></div>
+          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Mis datos — Copias y seguridad"><img src="capturas/misdatos/MisDatos_9_CopiasYSeguridad.webp" alt="Mis datos — Copias y seguridad" loading="lazy"></div>
         </div>
         <button class="car-btn car-prev" type="button" data-prev aria-label="Captura anterior">‹</button>
         <button class="car-btn car-next" type="button" data-next aria-label="Captura siguiente">›</button>
@@ -411,7 +467,7 @@
     <div class="carousel-block" style="margin-top:36px">
       <h3><span class="dot"></span>Ajustes</h3>
       <div class="single-shot">
-        <img src="capturas/ajustes/Ajustes.png" alt="Ajustes de la aplicación" loading="lazy">
+        <img src="capturas/ajustes/Ajustes.webp" alt="Ajustes de la aplicación" loading="lazy">
       </div>
     </div>
   </div>
@@ -435,7 +491,7 @@
       <summary>Verificar integridad (SHA-256)</summary>
       <p>Comprueba que el archivo descargado es exactamente este, sin manipular. En PowerShell:
       <code>Get-FileHash .\Liberty.exe -Algorithm SHA256</code> y compara con:</p>
-      <code class="hash">e7170fa337388888d0ca31635e61606733ffaf60a8894115bd476bedb695ef00</code>
+      <code class="hash">e67e801a720392cf508f973bc3dd6023f17a868bc08b29f75c60cd2dd20e2e9d</code>
     </details>
   </div>
 </section>
@@ -518,6 +574,17 @@
   </div>
 </footer>
 
+<!-- Botón de descarga flotante -->
+<a class="fab-descarga" id="fab-descarga" href="https://github.com/AlonsoVine/liberty/releases/latest/download/Liberty.exe" aria-label="Descargar Liberty.exe">
+  <span aria-hidden="true">⬇</span> Descargar
+</a>
+
+<!-- Lightbox de capturas -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Captura ampliada" hidden>
+  <button class="lightbox-close" type="button" id="lightbox-close" aria-label="Cerrar">×</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
 <script>
 (function(){
   "use strict";
@@ -539,6 +606,46 @@
       zona.style.setProperty("--my", ((e.clientY - r.top)  / r.height * 100) + "%");
     });
   });
+
+  /* ---------- Botón de descarga flotante (aparece al hacer scroll) ---------- */
+  (function(){
+    var fab = document.getElementById("fab-descarga");
+    var dl  = document.getElementById("descarga");
+    if(!fab) return;
+    function toggle(){
+      var pasadoHero = window.scrollY > 600;
+      // se oculta cuando ya estás sobre la propia sección de descarga
+      var enDescarga = false;
+      if(dl){ var r = dl.getBoundingClientRect(); enDescarga = r.top < window.innerHeight && r.bottom > 0; }
+      fab.classList.toggle("visible", pasadoHero && !enDescarga);
+    }
+    window.addEventListener("scroll", toggle, {passive:true});
+    window.addEventListener("resize", toggle);
+    toggle();
+  })();
+
+  /* ---------- Lightbox de capturas ---------- */
+  (function(){
+    var box = document.getElementById("lightbox");
+    var img = document.getElementById("lightbox-img");
+    var cerrar = document.getElementById("lightbox-close");
+    if(!box || !img) return;
+    function abrir(src, alt){
+      img.src = src; img.alt = alt || "";
+      box.hidden = false; box.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+    function cierra(){
+      box.classList.remove("open"); box.hidden = true;
+      img.src = ""; document.body.style.overflow = "";
+    }
+    document.querySelectorAll(".slide img, .single-shot img").forEach(function(el){
+      el.addEventListener("click", function(){ abrir(el.currentSrc || el.src, el.alt); });
+    });
+    box.addEventListener("click", function(e){ if(e.target !== cerrar) cierra(); });
+    cerrar.addEventListener("click", cierra);
+    document.addEventListener("keydown", function(e){ if(e.key === "Escape" && box.classList.contains("open")) cierra(); });
+  })();
 
   /* ---------- Carruseles ---------- */
   var INTERVALO = 4000;
