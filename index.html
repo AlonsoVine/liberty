@@ -468,7 +468,9 @@
     if(!el) return;
     el.style.display = "none"; // oculto hasta confirmar un número
     try{
-      fetch("https://api.github.com/repos/AlonsoVine/liberty/releases")
+      // Suma el download_count de TODOS los assets Liberty.exe de TODAS las releases:
+      // el total es acumulativo e histórico, independiente de la versión y no se reinicia.
+      fetch("https://api.github.com/repos/AlonsoVine/liberty/releases?per_page=100")
         .then(function(r){ if(!r.ok) throw new Error("http " + r.status); return r.json(); })
         .then(function(releases){
           if(!Array.isArray(releases)) throw new Error("formato");
