@@ -53,6 +53,24 @@
     --radio:16px;
     --max:1080px;
   }
+  /* Modo oscuro automático */
+  @media (prefers-color-scheme:dark){
+    :root{
+      --azul-claro:#6ea0ec;
+      --tinta:#eef2f8;
+      --texto:#c3ccdb;
+      --suave:#8d9ab0;
+      --fondo:#0e1320;
+      --tarjeta:#161d2c;
+      --borde:rgba(255,255,255,.10);
+      --sombra:0 1px 3px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.45);
+    }
+    code{background:#1f2838;color:#e2c98a}
+    .faq-item code,.card code{background:#1f2838;color:#e2c98a}
+    .aviso{background:#2a2412;border-color:#5a4a1e}
+    .aviso p{color:#d8c89a}
+    .aviso code{background:#1f2838;border-color:#5a4a1e;color:#e2c98a}
+  }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{
@@ -233,6 +251,9 @@
   .verificar p{color:#9fb6e0;margin:12px 0 8px}
   .verificar code{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:#eaf0fb;border-radius:6px;padding:.12em .45em}
   .verificar code.hash{display:block;word-break:break-all;padding:10px 12px;color:#e7edf8}
+  .ver-versiones{margin:16px 0 0;font-size:.92rem}
+  .ver-versiones a{color:#c7d6f2;font-weight:500}
+  .ver-versiones a:hover{color:#fff}
   .aviso-azul{
     display:flex;gap:12px;align-items:flex-start;text-align:left;
     max-width:620px;margin:18px auto 0;
@@ -491,8 +512,9 @@
       <summary>Verificar integridad (SHA-256)</summary>
       <p>Comprueba que el archivo descargado es exactamente este, sin manipular. En PowerShell:
       <code>Get-FileHash .\Liberty.exe -Algorithm SHA256</code> y compara con:</p>
-      <code class="hash">e67e801a720392cf508f973bc3dd6023f17a868bc08b29f75c60cd2dd20e2e9d</code>
+      <code class="hash">1fe1e34dfd37647779ca36b8de2fc71128a875e7694fc3c63f5f649cd45b238d</code>
     </details>
+    <p class="ver-versiones"><a href="https://github.com/AlonsoVine/liberty/releases" target="_blank" rel="noopener">Ver todas las versiones y novedades →</a></p>
   </div>
 </section>
 
