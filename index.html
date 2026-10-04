@@ -52,25 +52,39 @@
     --sombra:0 1px 3px rgba(16,30,60,.06),0 8px 28px rgba(16,30,60,.08);
     --radio:16px;
     --max:1080px;
+    --footer-bg:#1a2236;
   }
-  /* Modo oscuro automático */
-  @media (prefers-color-scheme:dark){
-    :root{
-      --azul-claro:#6ea0ec;
-      --tinta:#eef2f8;
-      --texto:#c3ccdb;
-      --suave:#8d9ab0;
-      --fondo:#0e1320;
-      --tarjeta:#161d2c;
-      --borde:rgba(255,255,255,.10);
-      --sombra:0 1px 3px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.45);
-    }
-    code{background:#1f2838;color:#e2c98a}
-    .faq-item code,.card code{background:#1f2838;color:#e2c98a}
-    .aviso{background:#2a2412;border-color:#5a4a1e}
-    .aviso p{color:#d8c89a}
-    .aviso code{background:#1f2838;border-color:#5a4a1e;color:#e2c98a}
+  /* Modo oscuro: SOLO cuando el usuario lo activa (claro por defecto) */
+  :root[data-theme="dark"]{
+    --azul-claro:#6ea0ec;
+    --tinta:#eef2f8;
+    --texto:#c3ccdb;
+    --suave:#8d9ab0;
+    --fondo:#0e1320;
+    --tarjeta:#161d2c;
+    --borde:rgba(255,255,255,.10);
+    --sombra:0 1px 3px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.45);
+    --footer-bg:#0a0e18;
   }
+  :root[data-theme="dark"] code{background:#1f2838;color:#e2c98a}
+  :root[data-theme="dark"] .faq-item code,:root[data-theme="dark"] .card code{background:#1f2838;color:#e2c98a}
+  :root[data-theme="dark"] .aviso{background:#2a2412;border-color:#5a4a1e}
+  :root[data-theme="dark"] .aviso p{color:#d8c89a}
+  :root[data-theme="dark"] .aviso code{background:#1f2838;border-color:#5a4a1e;color:#e2c98a}
+  /* Botón de cambio de tema */
+  .theme-toggle{
+    position:fixed;top:14px;right:16px;z-index:60;
+    width:42px;height:42px;border-radius:50%;cursor:pointer;
+    border:1px solid rgba(255,255,255,.28);
+    background:rgba(14,28,56,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+    color:#fff;font-size:1.1rem;line-height:1;
+    display:flex;align-items:center;justify-content:center;
+    transition:transform .2s,background .2s,border-color .2s;
+  }
+  .theme-toggle:hover{transform:scale(1.08);background:rgba(14,28,56,.72)}
+  .theme-toggle:focus-visible{outline:2px solid var(--oro);outline-offset:2px}
+  :root[data-theme="dark"] .theme-toggle{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.22)}
+  :root[data-theme="dark"] .theme-toggle:hover{background:rgba(255,255,255,.2)}
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{
@@ -307,7 +321,7 @@
   .priv-list span{color:var(--suave);font-size:.95rem}
 
   /* ---------- Créditos / footer ---------- */
-  footer{background:var(--tinta);color:#c2cbdb;padding:48px 20px 40px;text-align:center}
+  footer{background:var(--footer-bg);color:#c2cbdb;padding:48px 20px 40px;text-align:center}
   footer h2{color:#fff;font-size:1.4rem}
   footer p{color:#9aa6bd;max-width:680px;margin:0 auto 1em}
   footer a{color:#cdbd86}
@@ -360,8 +374,13 @@
     .btn-descarga{font-size:1.1rem;padding:16px 28px}
   }
 </style>
+<script>
+  // Aplica el tema guardado antes de pintar (claro por defecto, sin parpadeo).
+  try { if (localStorage.getItem("liberty-tema") === "dark") document.documentElement.setAttribute("data-theme", "dark"); } catch (e) {}
+</script>
 </head>
 <body>
+<button class="theme-toggle" id="theme-toggle" type="button" aria-label="Cambiar a modo oscuro">🌙</button>
 
 <!-- ======== CABECERA ======== -->
 <header class="hero">
@@ -610,6 +629,25 @@
 <script>
 (function(){
   "use strict";
+
+  /* ---------- Cambio de tema (claro por defecto) ---------- */
+  (function(){
+    var btn = document.getElementById("theme-toggle");
+    if(!btn) return;
+    var root = document.documentElement;
+    function pinta(){
+      var oscuro = root.getAttribute("data-theme") === "dark";
+      btn.textContent = oscuro ? "☀️" : "🌙";
+      btn.setAttribute("aria-label", oscuro ? "Cambiar a modo claro" : "Cambiar a modo oscuro");
+    }
+    pinta();
+    btn.addEventListener("click", function(){
+      var oscuro = root.getAttribute("data-theme") === "dark";
+      if(oscuro){ root.removeAttribute("data-theme"); } else { root.setAttribute("data-theme", "dark"); }
+      try { localStorage.setItem("liberty-tema", oscuro ? "light" : "dark"); } catch(e){}
+      pinta();
+    });
+  })();
 
   /* ---------- Cards en bucle: duplicar para scroll sin costuras ---------- */
   document.querySelectorAll("[data-cards-track]").forEach(function(track){
