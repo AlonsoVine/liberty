@@ -8,6 +8,7 @@
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="icono-512.png">
 <link rel="canonical" href="https://alonsovine.github.io/liberty/">
+<link rel="preconnect" href="https://api.github.com"><link rel="dns-prefetch" href="https://api.github.com">
 <meta property="og:title" content="Liberty — Gestor del patrimonio del hogar">
 <meta property="og:description" content="Gestiona todo el patrimonio de tu hogar en una app de escritorio 100% local y privada.">
 <meta property="og:image" content="https://alonsovine.github.io/liberty/og.png">
@@ -97,6 +98,7 @@
   }
   a{color:var(--azul-claro);text-decoration:none}
   a:hover{text-decoration:underline}
+  @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
   .wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
   h1,h2,h3{color:var(--tinta);line-height:1.25;margin:0 0 .5em}
   h2{font-size:1.7rem;margin-top:0}
@@ -279,6 +281,45 @@
   .aviso-azul strong{color:#fff}
   .aviso-azul code{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);color:#eaf0fb;border-radius:5px;padding:.06em .4em}
 
+  /* ---------- Descarga: versión, sellos y novedades ---------- */
+  .ver-actual-linea{color:#c7d6f2;font-size:.98rem;margin:4px 0 0}
+  .ver-actual-linea strong{color:#fff}
+  .ver-fecha{color:#9fb6e0}
+  .sellos{display:flex;gap:10px 20px;justify-content:center;flex-wrap:wrap;margin:16px auto 2px;max-width:640px}
+  .sello{display:inline-flex;align-items:center;gap:7px;color:#dbe6fa;font-size:.9rem;font-weight:500}
+  .sello .ck{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;
+    background:rgba(224,168,58,.16);border:1px solid rgba(224,168,58,.4);color:var(--oro);font-size:.68rem;flex:none}
+  .novedades{max-width:620px;margin:14px auto 0;text-align:left;font-size:.92rem}
+  .novedades>summary{cursor:pointer;color:#c7d6f2;text-align:center;list-style:none;font-weight:500}
+  .novedades>summary::-webkit-details-marker{display:none}
+  .novedades>summary:hover{color:#fff;text-decoration:underline}
+  .novedades-cuerpo{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:14px 18px;margin-top:12px;color:#dbe6fa}
+  .novedades-cuerpo h4{color:#fff;font-size:1rem;margin:12px 0 6px}
+  .novedades-cuerpo h4:first-child{margin-top:0}
+  .novedades-cuerpo ul{margin:0 0 8px;padding-left:20px}
+  .novedades-cuerpo li{margin:3px 0}
+  .novedades-cuerpo p{margin:0 0 8px}
+  .novedades-cuerpo code{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);color:#eaf0fb;border-radius:5px;padding:.06em .4em}
+
+  /* ---------- Características (todo lo que puedes hacer) ---------- */
+  .feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+  .feat{background:var(--tarjeta);border:1px solid var(--borde);border-radius:var(--radio);
+    padding:22px 22px 18px;box-shadow:var(--sombra);transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
+  .feat:hover{transform:translateY(-4px);box-shadow:0 6px 16px rgba(16,30,60,.1),0 16px 40px rgba(16,30,60,.12);border-color:#cdd9ee}
+  .feat-ico{font-size:1.5rem;line-height:1;display:inline-flex;align-items:center;justify-content:center;
+    width:46px;height:46px;border-radius:12px;background:rgba(43,91,181,.10);border:1px solid rgba(43,91,181,.14);margin-bottom:12px}
+  .feat h3{font-size:1.1rem;margin-bottom:.5em}
+  .feat ul{list-style:none;margin:0;padding:0}
+  .feat li{position:relative;padding-left:22px;margin:7px 0;color:var(--texto);font-size:.95rem}
+  .feat li::before{content:"✓";position:absolute;left:0;top:0;color:var(--oro-osc);font-weight:700}
+
+  /* ---------- ¿Para quién es? ---------- */
+  .pq-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px 26px;margin-top:6px}
+  .pq{display:flex;gap:13px;align-items:flex-start}
+  .pq-ico{font-size:1.35rem;line-height:1.2;flex:none}
+  .pq h3{font-size:1.02rem;margin:0 0 .2em}
+  .pq p{font-size:.93rem;color:var(--suave);margin:0}
+
   /* ---------- Preguntas frecuentes ---------- */
   .faq{max-width:800px}
   .faq-item{
@@ -457,6 +498,92 @@
   </div>
 </section>
 
+<!-- ======== CARACTERÍSTICAS ======== -->
+<section id="caracteristicas">
+  <div class="wrap">
+    <h2>Todo lo que puedes hacer con Liberty</h2>
+    <p class="lead">De gestor de inversión a gestor de todo el patrimonio del hogar. Esto es lo que encontrarás dentro, sin coste y sin límites.</p>
+    <div class="feat-grid">
+      <div class="feat">
+        <span class="feat-ico">🏦</span>
+        <h3>Patrimonio completo</h3>
+        <ul>
+          <li>Cuentas, efectivo, inversiones e inmuebles</li>
+          <li>Deudas: hipoteca, préstamos, tarjetas</li>
+          <li>Reservados y colchón de liquidez</li>
+          <li>Varios titulares y reparto por persona</li>
+          <li>Patrimonio bruto y neto</li>
+        </ul>
+      </div>
+      <div class="feat">
+        <span class="feat-ico">📈</span>
+        <h3>Inversión y rentabilidad</h3>
+        <ul>
+          <li>Precios automáticos: fondos, acciones, cripto…</li>
+          <li>Rentabilidad real (TIR/XIRR) y plusvalías</li>
+          <li>Comparación con índices de referencia</li>
+          <li>Ayuda para rebalancear hacia tus objetivos</li>
+          <li>Multidivisa</li>
+        </ul>
+      </div>
+      <div class="feat">
+        <span class="feat-ico">💶</span>
+        <h3>Ingresos y gastos</h3>
+        <ul>
+          <li>Categorías, presupuestos y tasa de ahorro</li>
+          <li>Cascada, tendencias y mapa de calor</li>
+          <li>Filtros potentes y marcas por apunte</li>
+          <li>Importa los movimientos del banco (Excel/CSV o IA)</li>
+        </ul>
+      </div>
+      <div class="feat">
+        <span class="feat-ico">🗒️</span>
+        <h3>Organización</h3>
+        <ul>
+          <li>Notas con etiquetas y listas de tareas</li>
+          <li>Tablero tipo Trello</li>
+          <li>Agenda con calendario mensual</li>
+          <li>Recordatorios y vencimientos en un sitio</li>
+        </ul>
+      </div>
+      <div class="feat">
+        <span class="feat-ico">🎯</span>
+        <h3>Control y planificación</h3>
+        <ul>
+          <li>Objetivos de asignación por tipo</li>
+          <li>Concentración y alertas configurables</li>
+          <li>Vencimientos de depósitos y deudas</li>
+          <li>Informe fiscal anual y exportar a PDF</li>
+        </ul>
+      </div>
+      <div class="feat">
+        <span class="feat-ico">🔐</span>
+        <h3>Privacidad por diseño</h3>
+        <ul>
+          <li>100% local, funciona sin conexión</li>
+          <li>Sin cuentas, sin nube, sin telemetría</li>
+          <li>Tus datos viven en una carpeta tuya</li>
+          <li>Código abierto: puedes revisarlo</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== PARA QUIÉN ES ======== -->
+<section class="alt" id="para-quien">
+  <div class="wrap">
+    <h2>¿Para quién es?</h2>
+    <p class="lead">Si quieres entender y ordenar tu dinero sin ceder tus datos a nadie, Liberty es para ti.</p>
+    <div class="pq-grid">
+      <div class="pq"><span class="pq-ico">🏡</span><div><h3>Hogares y familias</h3><p>Cuentas, inversiones, inmuebles y deudas de toda la casa en una sola foto.</p></div></div>
+      <div class="pq"><span class="pq-ico">💑</span><div><h3>Parejas</h3><p>Reparte cada activo o deuda por titular y ve qué le corresponde a cada uno.</p></div></div>
+      <div class="pq"><span class="pq-ico">📊</span><div><h3>Quien deja el Excel</h3><p>Todo lo de tu hoja de cálculo —y más— sin fórmulas que mantener ni archivos sueltos.</p></div></div>
+      <div class="pq"><span class="pq-ico">📈</span><div><h3>Inversores particulares</h3><p>Rentabilidad real, distribución, rebalanceo y comparación con índices.</p></div></div>
+    </div>
+  </div>
+</section>
+
 <!-- ======== CAPTURAS ======== -->
 <section id="capturas">
   <div class="wrap">
@@ -504,6 +631,21 @@
       </div>
     </div>
 
+    <!-- Carrusel Notas y agenda -->
+    <div class="carousel-block" style="margin-top:36px">
+      <h3><span class="dot"></span>Notas y agenda</h3>
+      <div class="carousel" data-carousel aria-roledescription="carrusel" aria-label="Capturas de Notas y agenda">
+        <div class="carousel-viewport" data-track>
+          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Notas — Lista de notas con etiquetas y tareas"><img src="capturas/notas/Notas_1_Lista.webp" alt="Notas — Lista de notas con etiquetas y tareas" loading="lazy"></div>
+          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Notas — Tablero tipo Trello"><img src="capturas/notas/Notas_2_Tablero.webp" alt="Notas — Tablero tipo Trello" loading="lazy"></div>
+          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Notas — Agenda con calendario mensual"><img src="capturas/notas/Notas_3_Agenda.webp" alt="Notas — Agenda con calendario mensual" loading="lazy"></div>
+        </div>
+        <button class="car-btn car-prev" type="button" data-prev aria-label="Captura anterior">‹</button>
+        <button class="car-btn car-next" type="button" data-next aria-label="Captura siguiente">›</button>
+        <div class="car-dots" data-dots role="tablist" aria-label="Seleccionar captura de Notas y agenda"></div>
+      </div>
+    </div>
+
     <!-- Ajustes (una sola imagen) -->
     <div class="carousel-block" style="margin-top:36px">
       <h3><span class="dot"></span>Ajustes</h3>
@@ -522,8 +664,19 @@
     <a class="btn-descarga" href="https://github.com/AlonsoVine/liberty/releases/latest/download/Liberty.exe">
       <span class="big">⬇</span> Descargar Liberty.exe
     </a>
+    <p class="ver-actual-linea">Última versión: <strong id="ver-actual">v1.8.4</strong><span class="ver-fecha" id="ver-fecha"></span></p>
     <div class="descargas-count" id="descargas-count" aria-live="polite"></div>
     <p class="plataforma">Para Windows 10 y 11 · No requiere instalación</p>
+    <div class="sellos" aria-label="Garantías">
+      <span class="sello"><span class="ck">✓</span> Gratis</span>
+      <span class="sello"><span class="ck">✓</span> Sin registro</span>
+      <span class="sello"><span class="ck">✓</span> 100% local</span>
+      <span class="sello"><span class="ck">✓</span> Código abierto</span>
+    </div>
+    <details class="novedades" id="novedades" hidden>
+      <summary>✨ Novedades de esta versión</summary>
+      <div class="novedades-cuerpo" id="novedades-cuerpo"></div>
+    </details>
     <div class="aviso-azul">
       <span class="ico">🛡️</span>
       <p><strong>¿Windows muestra un aviso al abrirlo?</strong> Es normal: al ser un <code>.exe</code> sin firma de pago, la primera vez SmartScreen puede avisar. Pulsa <strong>«Más información» → «Ejecutar de todos modos»</strong>. El aviso se va reduciendo a medida que más gente lo descarga.</p>
@@ -787,11 +940,35 @@
     start();
   });
 
-  /* ---------- Contador de descargas ---------- */
+  /* ---------- Markdown ligero y seguro (para las novedades de la release) ---------- */
+  function mdLite(texto){
+    var esc = String(texto || "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+    var lineas = esc.split(/\r?\n/), html = "", enLista = false;
+    function cierraLista(){ if(enLista){ html += "</ul>"; enLista = false; } }
+    function inline(s){
+      return s.replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>")
+              .replace(/`([^`]+)`/g,"<code>$1</code>");
+    }
+    lineas.forEach(function(ln){
+      var t = ln.trim();
+      if(!t){ cierraLista(); return; }
+      var h = t.match(/^#{1,6}\s+(.*)$/);
+      if(h){ cierraLista(); html += "<h4>" + inline(h[1]) + "</h4>"; return; }
+      if(/^[-*]\s+/.test(t)){ if(!enLista){ html += "<ul>"; enLista = true; } html += "<li>" + inline(t.replace(/^[-*]\s+/,"")) + "</li>"; return; }
+      cierraLista(); html += "<p>" + inline(t) + "</p>";
+    });
+    cierraLista();
+    return html;
+  }
+
+  /* ---------- Descargas, versión y novedades (una sola petición) ---------- */
   (function(){
-    var el = document.getElementById("descargas-count");
-    if(!el) return;
-    el.style.display = "none"; // oculto hasta confirmar un número
+    var elCount = document.getElementById("descargas-count");
+    var elVer   = document.getElementById("ver-actual");
+    var elFecha = document.getElementById("ver-fecha");
+    var nov     = document.getElementById("novedades");
+    var novBody = document.getElementById("novedades-cuerpo");
+    if(elCount) elCount.style.display = "none"; // oculto hasta confirmar un número
     try{
       // Suma el download_count de TODOS los assets Liberty.exe de TODAS las releases:
       // el total es acumulativo e histórico, independiente de la versión y no se reinicia.
@@ -807,13 +984,29 @@
               }
             });
           });
-          var n = new Intl.NumberFormat("es-ES").format(total);
-          el.innerHTML = "⬇ <strong>" + n + "</strong> descargas";
-          el.style.display = "";
+          if(elCount){
+            elCount.innerHTML = "⬇ <strong>" + new Intl.NumberFormat("es-ES").format(total) + "</strong> descargas";
+            elCount.style.display = "";
+          }
+          // Última versión publicada (la primera que no sea borrador ni prelanzamiento).
+          var ult = null;
+          for(var i=0;i<releases.length;i++){ if(!releases[i].draft && !releases[i].prerelease){ ult = releases[i]; break; } }
+          if(!ult) ult = releases[0];
+          if(ult){
+            var tag = (ult.tag_name || "").trim();
+            if(tag){ if(tag.charAt(0) !== "v") tag = "v" + tag; if(elVer) elVer.textContent = tag; }
+            if(elFecha && ult.published_at){
+              try{ elFecha.textContent = " · " + new Date(ult.published_at).toLocaleDateString("es-ES",{day:"numeric",month:"short",year:"numeric"}); }catch(e){}
+            }
+            if(nov && novBody && ult.body && ult.body.trim()){
+              novBody.innerHTML = mdLite(ult.body);
+              nov.hidden = false;
+            }
+          }
         })
-        .catch(function(){ el.style.display = "none"; });
+        .catch(function(){ if(elCount) elCount.style.display = "none"; });
     }catch(e){
-      el.style.display = "none";
+      if(elCount) elCount.style.display = "none";
     }
   })();
 
