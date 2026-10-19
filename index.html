@@ -28,7 +28,7 @@
   "name": "Liberty",
   "description": "Aplicación de escritorio 100% local y privada para gestionar el patrimonio del hogar: cuentas, inversiones, inmuebles y deudas, con titulares, ingresos/gastos e informe fiscal.",
   "applicationCategory": "FinanceApplication",
-  "operatingSystem": "Windows, macOS",
+  "operatingSystem": "Windows, macOS, Linux",
   "url": "https://alonsovine.github.io/liberty/",
   "downloadUrl": "https://github.com/AlonsoVine/liberty/releases/latest/download/Liberty.exe",
   "softwareVersion": "1.10.0",
@@ -257,11 +257,22 @@
   }
   .btn-descarga:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(224,168,58,.45);text-decoration:none}
   .btn-descarga .big{font-size:1.5rem}
-  .dl-botones{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin:12px 0 4px}
   .btn-descarga .dl-txt{display:flex;flex-direction:column;align-items:flex-start;line-height:1.14;text-align:left}
   .btn-descarga .dl-txt small{font-size:.72rem;font-weight:600;opacity:.72;letter-spacing:.01em}
   .btn-descarga.btn-mac{background:linear-gradient(180deg,#f4f6fb 0%,#cfd7e6 100%);color:#1a2435;box-shadow:0 8px 24px rgba(170,188,222,.32)}
   .btn-descarga.btn-mac:hover{box-shadow:0 12px 30px rgba(170,188,222,.5)}
+  .btn-descarga.btn-lin{background:linear-gradient(180deg,#eef1f8 0%,#c9d3e4 100%);color:#1a2435;box-shadow:0 8px 24px rgba(170,188,222,.28)}
+  .btn-descarga.btn-lin:hover{box-shadow:0 12px 30px rgba(170,188,222,.45)}
+  /* Selector de sistema operativo */
+  .os-selector{display:inline-flex;gap:4px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:5px;margin:14px 0 20px}
+  .os-tab{display:inline-flex;align-items:center;gap:8px;background:none;border:0;color:#c7d6f2;font:inherit;font-weight:600;font-size:1rem;padding:9px 18px;border-radius:999px;cursor:pointer;transition:background .15s,color .15s}
+  .os-tab:hover{color:#fff}
+  .os-tab[aria-selected="true"]{background:#fff;color:#16233b}
+  .os-ico{width:1.1em;height:1.1em;flex:0 0 auto;display:inline-block;vertical-align:-.12em}
+  .os-panel[hidden]{display:none}
+  .btn-descarga .os-ico{width:1.55rem;height:1.55rem}
+  .aviso-azul .os-ico{width:1.3em;height:1.3em}
+  @media (max-width:520px){ .os-tab{padding:8px 13px;font-size:.92rem} }
   .descargas-count{min-height:1.4em;color:#c7d6f2;font-size:1rem;margin-top:6px}
   .descargas-count strong{color:#fff}
   .plataforma{color:#9fb6e0;font-size:.9rem;margin-top:10px}
@@ -437,7 +448,7 @@
     <div class="hero-badges">
       <span class="badge">🖥️ App de escritorio</span>
       <span class="badge">🔒 Sin cuentas ni servidores</span>
-      <span class="badge">🪟 Windows &nbsp;·&nbsp;  Mac</span>
+      <span class="badge"><svg class="os-ico"><use href="#ic-win"/></svg> Windows &nbsp;·&nbsp; <svg class="os-ico"><use href="#ic-apple"/></svg> Mac &nbsp;·&nbsp; <span aria-hidden="true">🐧</span> Linux</span>
     </div>
     <div class="hero-cta-wrap">
       <a class="hero-cta" href="#descarga">⬇ Descargar</a>
@@ -666,19 +677,65 @@
   <div class="wrap">
     <h2>Descarga Liberty</h2>
     <p class="lead">Gratis, sin registro. Elige tu sistema:</p>
-    <div class="dl-botones">
-      <a class="btn-descarga" href="https://github.com/AlonsoVine/liberty/releases/latest/download/Liberty.exe">
-        <span class="big" aria-hidden="true">🪟</span>
-        <span class="dl-txt">Windows<small>Liberty.exe · ~13 MB</small></span>
-      </a>
-      <a class="btn-descarga btn-mac" href="https://github.com/AlonsoVine/liberty/releases/latest/download/Liberty-macOS.zip">
-        <span class="big" aria-hidden="true"></span>
-        <span class="dl-txt">Mac<small>Apple Silicon · Liberty-macOS.zip</small></span>
-      </a>
+
+    <!-- Iconos reutilizables: logo de Windows y logo de Apple (SVG, se ven en cualquier sistema). -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+      <symbol id="ic-win" viewBox="0 0 24 24"><path fill="currentColor" d="M3 5.1 10.4 4v7.3H3V5.1zM3 18.9 10.4 20v-7.2H3v6.1zM11.6 3.84 21 2.5v8.8h-9.4V3.84zM11.6 20.16 21 21.5v-8.7h-9.4v7.36z"/></symbol>
+      <symbol id="ic-apple" viewBox="0 0 24 24"><path fill="currentColor" d="M16.36 1.43c.06 1.03-.33 2.04-.98 2.78-.68.77-1.77 1.36-2.8 1.28-.1-.99.37-2.03.99-2.7.69-.76 1.85-1.32 2.79-1.36zM19.86 17.4c-.52 1.2-.77 1.72-1.43 2.77-.93 1.47-2.23 3.28-3.84 3.29-1.44.02-1.81-.94-3.76-.93-1.95.01-2.36.95-3.8.93-1.61-.01-2.84-1.65-3.77-3.11-2.6-4.09-2.88-8.89-1.27-11.44 1.15-1.8 2.96-2.85 4.67-2.85 1.74 0 2.83.95 4.27.95 1.4 0 2.25-.96 4.26-.96 1.52 0 3.13.83 4.28 2.26-3.76 2.06-3.14 7.42-.28 9.72z"/></symbol>
+    </defs></svg>
+
+    <div class="os-selector" role="tablist" aria-label="Elige tu sistema operativo">
+      <button class="os-tab" type="button" data-os="win" role="tab" aria-selected="true"><svg class="os-ico"><use href="#ic-win"/></svg> Windows</button>
+      <button class="os-tab" type="button" data-os="mac" role="tab" aria-selected="false"><svg class="os-ico"><use href="#ic-apple"/></svg> Mac</button>
+      <button class="os-tab" type="button" data-os="lin" role="tab" aria-selected="false"><span aria-hidden="true">🐧</span> Linux</button>
     </div>
+
+    <!-- Windows -->
+    <div class="os-panel" data-os="win">
+      <a class="btn-descarga" href="https://github.com/AlonsoVine/liberty/releases/latest/download/Liberty.exe">
+        <span class="big" aria-hidden="true"><svg class="os-ico"><use href="#ic-win"/></svg></span>
+        <span class="dl-txt">Descargar para Windows<small>Liberty.exe · ~13 MB</small></span>
+      </a>
+      <p class="plataforma">Windows 10 y 11 · No requiere instalación</p>
+      <div class="aviso-azul">
+        <span class="ico" aria-hidden="true"><svg class="os-ico"><use href="#ic-win"/></svg></span>
+        <p><strong>¿Sale un aviso al abrirlo?</strong> Es normal: al ser un <code>.exe</code> sin firma de pago, la primera vez Windows SmartScreen puede avisar. Pulsa <strong>«Más información» → «Ejecutar de todos modos»</strong>. El aviso se va reduciendo a medida que más gente lo descarga.</p>
+      </div>
+      <details class="verificar">
+        <summary>Verificar integridad (SHA-256)</summary>
+        <p>Comprueba que el <code>Liberty.exe</code> descargado es exactamente este, sin manipular. En PowerShell:
+        <code>Get-FileHash .\Liberty.exe -Algorithm SHA256</code> y compara con el hash que publicamos en las <a href="https://github.com/AlonsoVine/liberty/releases" target="_blank" rel="noopener">notas de cada versión</a>.</p>
+      </details>
+    </div>
+
+    <!-- Mac -->
+    <div class="os-panel" data-os="mac" hidden>
+      <a class="btn-descarga btn-mac" href="https://github.com/AlonsoVine/liberty/releases/latest/download/Liberty-macOS.zip">
+        <span class="big" aria-hidden="true"><svg class="os-ico"><use href="#ic-apple"/></svg></span>
+        <span class="dl-txt">Descargar para Mac<small>Apple Silicon · Liberty-macOS.zip</small></span>
+      </a>
+      <p class="plataforma">macOS con Apple Silicon (M1 o posterior)</p>
+      <div class="aviso-azul">
+        <span class="ico" aria-hidden="true"><svg class="os-ico"><use href="#ic-apple"/></svg></span>
+        <p><strong>Ábrelo la primera vez.</strong> Descomprime el ZIP (doble clic) y mueve <code>Liberty</code> a tu carpeta de <strong>Aplicaciones</strong>. Como no está firmada con un certificado de pago de Apple, la primera vez <strong>haz clic derecho sobre Liberty → «Abrir» → «Abrir»</strong>. Si macOS no te deja, ve a <strong>Ajustes del Sistema → Privacidad y seguridad</strong> y pulsa <strong>«Abrir de todos modos»</strong>. Solo una vez; después, doble clic. Es segura: código abierto y todo se queda en tu Mac.</p>
+      </div>
+    </div>
+
+    <!-- Linux -->
+    <div class="os-panel" data-os="lin" hidden>
+      <a class="btn-descarga btn-lin" href="https://github.com/AlonsoVine/rumboExito" target="_blank" rel="noopener">
+        <span class="big" aria-hidden="true">🐧</span>
+        <span class="dl-txt">Ver el código fuente<small>Se ejecuta con Python</small></span>
+      </a>
+      <p class="plataforma">Cualquier Linux con Python 3.10 o superior</p>
+      <div class="aviso-azul">
+        <span class="ico" aria-hidden="true">🐧</span>
+        <p><strong>En Linux se ejecuta desde el código.</strong> No hay un binario para Linux, pero el proyecto es de <strong>código abierto</strong>. Descarga o clona <a href="https://github.com/AlonsoVine/rumboExito" target="_blank" rel="noopener">el repositorio</a> y arráncalo con <code>python -m app</code> (o con el script incluido <code>Iniciar.command</code>). Necesitas Python 3.10 o superior. Sigue siendo 100 % local.</p>
+      </div>
+    </div>
+
     <p class="ver-actual-linea">Última versión: <strong id="ver-actual">v1.11.2</strong><span class="ver-fecha" id="ver-fecha"></span></p>
     <div class="descargas-count" id="descargas-count" aria-live="polite"></div>
-    <p class="plataforma">Windows 10 y 11 · macOS con Apple Silicon (M1 o posterior) · No requiere instalación</p>
     <div class="sellos" aria-label="Garantías">
       <span class="sello"><span class="ck">✓</span> Gratis</span>
       <span class="sello"><span class="ck">✓</span> Sin registro</span>
@@ -688,19 +745,6 @@
     <details class="novedades" id="novedades" hidden>
       <summary>✨ Novedades de esta versión</summary>
       <div class="novedades-cuerpo" id="novedades-cuerpo"></div>
-    </details>
-    <div class="aviso-azul">
-      <span class="ico">🪟</span>
-      <p><strong>Windows — ¿sale un aviso al abrirlo?</strong> Es normal: al ser un <code>.exe</code> sin firma de pago, la primera vez SmartScreen puede avisar. Pulsa <strong>«Más información» → «Ejecutar de todos modos»</strong>. El aviso se va reduciendo a medida que más gente lo descarga.</p>
-    </div>
-    <div class="aviso-azul">
-      <span class="ico"></span>
-      <p><strong>Mac — ábrelo la primera vez.</strong> Descomprime el ZIP (doble clic) y mueve <code>Liberty</code> a tu carpeta de <strong>Aplicaciones</strong>. Como no está firmada con un certificado de pago de Apple, la primera vez <strong>haz clic derecho sobre Liberty → «Abrir» → «Abrir»</strong>. Si macOS no te deja, ve a <strong>Ajustes del Sistema → Privacidad y seguridad</strong> y pulsa <strong>«Abrir de todos modos»</strong>. Solo hace falta una vez; después se abre con doble clic. Es segura: el código es abierto y todo se queda en tu Mac.</p>
-    </div>
-    <details class="verificar">
-      <summary>Verificar integridad del archivo de Windows (SHA-256)</summary>
-      <p>Comprueba que el <code>Liberty.exe</code> descargado es exactamente este, sin manipular. En PowerShell:
-      <code>Get-FileHash .\Liberty.exe -Algorithm SHA256</code> y compara con el hash que publicamos en las <a href="https://github.com/AlonsoVine/liberty/releases" target="_blank" rel="noopener">notas de cada versión</a>.</p>
     </details>
     <p class="ver-versiones"><a href="https://github.com/AlonsoVine/liberty/releases" target="_blank" rel="noopener">Ver todas las versiones y novedades →</a></p>
   </div>
@@ -835,6 +879,27 @@
       zona.style.setProperty("--my", ((e.clientY - r.top)  / r.height * 100) + "%");
     });
   });
+
+  /* ---------- Selector de sistema operativo (auto-detecta; se puede alternar) ---------- */
+  (function(){
+    var tabs = Array.prototype.slice.call(document.querySelectorAll(".os-tab"));
+    var panels = Array.prototype.slice.call(document.querySelectorAll(".os-panel"));
+    if(!tabs.length) return;
+    function detecta(){
+      var uad = navigator.userAgentData;
+      var p = ((uad && uad.platform) || navigator.platform || "").toLowerCase();
+      var ua = (navigator.userAgent || "").toLowerCase();
+      if(p.indexOf("mac")>=0 || ua.indexOf("mac os")>=0 || ua.indexOf("macintosh")>=0) return "mac";
+      if((p.indexOf("linux")>=0 || ua.indexOf("linux")>=0) && ua.indexOf("android")<0) return "lin";
+      return "win"; // por defecto, Windows
+    }
+    function activa(os){
+      tabs.forEach(function(t){ t.setAttribute("aria-selected", String(t.dataset.os===os)); });
+      panels.forEach(function(pn){ pn.hidden = (pn.dataset.os!==os); });
+    }
+    tabs.forEach(function(t){ t.addEventListener("click", function(){ activa(t.dataset.os); }); });
+    activa(detecta());
+  })();
 
   /* ---------- Botón de descarga flotante (aparece al hacer scroll) ---------- */
   (function(){
