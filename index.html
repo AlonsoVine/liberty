@@ -28,7 +28,7 @@
   "name": "Liberty",
   "description": "Aplicación de escritorio 100% local y privada para gestionar el patrimonio del hogar: cuentas, inversiones, inmuebles y deudas, con titulares, ingresos/gastos e informe fiscal.",
   "applicationCategory": "FinanceApplication",
-  "operatingSystem": "Windows",
+  "operatingSystem": "Windows, macOS",
   "url": "https://alonsovine.github.io/liberty/",
   "downloadUrl": "https://github.com/AlonsoVine/liberty/releases/latest/download/Liberty.exe",
   "softwareVersion": "1.10.0",
@@ -257,6 +257,11 @@
   }
   .btn-descarga:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(224,168,58,.45);text-decoration:none}
   .btn-descarga .big{font-size:1.5rem}
+  .dl-botones{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin:12px 0 4px}
+  .btn-descarga .dl-txt{display:flex;flex-direction:column;align-items:flex-start;line-height:1.14;text-align:left}
+  .btn-descarga .dl-txt small{font-size:.72rem;font-weight:600;opacity:.72;letter-spacing:.01em}
+  .btn-descarga.btn-mac{background:linear-gradient(180deg,#f4f6fb 0%,#cfd7e6 100%);color:#1a2435;box-shadow:0 8px 24px rgba(170,188,222,.32)}
+  .btn-descarga.btn-mac:hover{box-shadow:0 12px 30px rgba(170,188,222,.5)}
   .descargas-count{min-height:1.4em;color:#c7d6f2;font-size:1rem;margin-top:6px}
   .descargas-count strong{color:#fff}
   .plataforma{color:#9fb6e0;font-size:.9rem;margin-top:10px}
@@ -432,7 +437,7 @@
     <div class="hero-badges">
       <span class="badge">🖥️ App de escritorio</span>
       <span class="badge">🔒 Sin cuentas ni servidores</span>
-      <span class="badge">🪟 Windows</span>
+      <span class="badge">🪟 Windows &nbsp;·&nbsp;  Mac</span>
     </div>
     <div class="hero-cta-wrap">
       <a class="hero-cta" href="#descarga">⬇ Descargar</a>
@@ -479,8 +484,8 @@
     <p class="lead">Nada que instalar ni configurar. Liberty es un único ejecutable que se abre en tu navegador y guarda los datos a su lado.</p>
     <div class="steps">
       <div class="step">
-        <h3>Abres el <code>.exe</code></h3>
-        <p>Haces doble clic en <code>Liberty.exe</code>. No requiere instalación.</p>
+        <h3>Abres la app</h3>
+        <p>Doble clic en <code>Liberty.exe</code> (Windows) o en <code>Liberty</code> (Mac). No requiere instalación.</p>
       </div>
       <div class="step">
         <h3>Se abre en tu navegador</h3>
@@ -660,13 +665,20 @@
 <section id="descarga">
   <div class="wrap">
     <h2>Descarga Liberty</h2>
-    <p class="lead">Gratis, sin registro. Un único archivo de ~13 MB para Windows.</p>
-    <a class="btn-descarga" href="https://github.com/AlonsoVine/liberty/releases/latest/download/Liberty.exe">
-      <span class="big">⬇</span> Descargar Liberty.exe
-    </a>
-    <p class="ver-actual-linea">Última versión: <strong id="ver-actual">v1.10.0</strong><span class="ver-fecha" id="ver-fecha"></span></p>
+    <p class="lead">Gratis, sin registro. Elige tu sistema:</p>
+    <div class="dl-botones">
+      <a class="btn-descarga" href="https://github.com/AlonsoVine/liberty/releases/latest/download/Liberty.exe">
+        <span class="big" aria-hidden="true">🪟</span>
+        <span class="dl-txt">Windows<small>Liberty.exe · ~13 MB</small></span>
+      </a>
+      <a class="btn-descarga btn-mac" href="https://github.com/AlonsoVine/liberty/releases/latest/download/Liberty-macOS.zip">
+        <span class="big" aria-hidden="true"></span>
+        <span class="dl-txt">Mac<small>Apple Silicon · Liberty-macOS.zip</small></span>
+      </a>
+    </div>
+    <p class="ver-actual-linea">Última versión: <strong id="ver-actual">v1.11.2</strong><span class="ver-fecha" id="ver-fecha"></span></p>
     <div class="descargas-count" id="descargas-count" aria-live="polite"></div>
-    <p class="plataforma">Para Windows 10 y 11 · No requiere instalación</p>
+    <p class="plataforma">Windows 10 y 11 · macOS con Apple Silicon (M1 o posterior) · No requiere instalación</p>
     <div class="sellos" aria-label="Garantías">
       <span class="sello"><span class="ck">✓</span> Gratis</span>
       <span class="sello"><span class="ck">✓</span> Sin registro</span>
@@ -678,14 +690,17 @@
       <div class="novedades-cuerpo" id="novedades-cuerpo"></div>
     </details>
     <div class="aviso-azul">
-      <span class="ico">🛡️</span>
-      <p><strong>¿Windows muestra un aviso al abrirlo?</strong> Es normal: al ser un <code>.exe</code> sin firma de pago, la primera vez SmartScreen puede avisar. Pulsa <strong>«Más información» → «Ejecutar de todos modos»</strong>. El aviso se va reduciendo a medida que más gente lo descarga.</p>
+      <span class="ico">🪟</span>
+      <p><strong>Windows — ¿sale un aviso al abrirlo?</strong> Es normal: al ser un <code>.exe</code> sin firma de pago, la primera vez SmartScreen puede avisar. Pulsa <strong>«Más información» → «Ejecutar de todos modos»</strong>. El aviso se va reduciendo a medida que más gente lo descarga.</p>
+    </div>
+    <div class="aviso-azul">
+      <span class="ico"></span>
+      <p><strong>Mac — ábrelo la primera vez.</strong> Descomprime el ZIP (doble clic) y mueve <code>Liberty</code> a tu carpeta de <strong>Aplicaciones</strong>. Como no está firmada con un certificado de pago de Apple, la primera vez <strong>haz clic derecho sobre Liberty → «Abrir» → «Abrir»</strong>. Si macOS no te deja, ve a <strong>Ajustes del Sistema → Privacidad y seguridad</strong> y pulsa <strong>«Abrir de todos modos»</strong>. Solo hace falta una vez; después se abre con doble clic. Es segura: el código es abierto y todo se queda en tu Mac.</p>
     </div>
     <details class="verificar">
-      <summary>Verificar integridad (SHA-256)</summary>
-      <p>Comprueba que el archivo descargado es exactamente este, sin manipular. En PowerShell:
-      <code>Get-FileHash .\Liberty.exe -Algorithm SHA256</code> y compara con:</p>
-      <code class="hash">09d4b466a166e485b5a02019300d2e26c88acc74fddc6bc20d904e3d1ae11b2e</code>
+      <summary>Verificar integridad del archivo de Windows (SHA-256)</summary>
+      <p>Comprueba que el <code>Liberty.exe</code> descargado es exactamente este, sin manipular. En PowerShell:
+      <code>Get-FileHash .\Liberty.exe -Algorithm SHA256</code> y compara con el hash que publicamos en las <a href="https://github.com/AlonsoVine/liberty/releases" target="_blank" rel="noopener">notas de cada versión</a>.</p>
     </details>
     <p class="ver-versiones"><a href="https://github.com/AlonsoVine/liberty/releases" target="_blank" rel="noopener">Ver todas las versiones y novedades →</a></p>
   </div>
@@ -745,7 +760,7 @@
       </details>
       <details class="faq-item">
         <summary>¿Hay versión para Mac?</summary>
-        <div class="faq-body"><p>Por ahora la descarga directa es para Windows. Si te interesa una versión para Mac, puedes escribirme a través de mis <a href="#creditos">enlaces</a>.</p></div>
+        <div class="faq-body"><p>Sí. Hay una descarga para <strong>Mac con Apple Silicon (M1 o posterior)</strong> en la <a href="#descarga">zona de descarga</a>. Como no está firmada con un certificado de pago de Apple, la primera vez se abre con <strong>clic derecho → «Abrir»</strong> (o desde Ajustes del Sistema → Privacidad y seguridad). Si usas un Mac con procesador Intel, escríbeme a través de mis <a href="#creditos">enlaces</a> y lo valoramos.</p></div>
       </details>
       <details class="faq-item">
         <summary>¿Es asesoramiento financiero?</summary>
@@ -770,7 +785,7 @@
 </footer>
 
 <!-- Botón de descarga flotante -->
-<a class="fab-descarga" id="fab-descarga" href="https://github.com/AlonsoVine/liberty/releases/latest/download/Liberty.exe" aria-label="Descargar Liberty.exe">
+<a class="fab-descarga" id="fab-descarga" href="#descarga" aria-label="Ir a la descarga de Liberty">
   <span aria-hidden="true">⬇</span> Descargar
 </a>
 
@@ -979,8 +994,8 @@
           var total = 0;
           releases.forEach(function(rel){
             (rel.assets || []).forEach(function(a){
-              if(a && a.name === "Liberty.exe" && typeof a.download_count === "number"){
-                total += a.download_count;
+              if(a && (a.name === "Liberty.exe" || a.name === "Liberty-macOS.zip") && typeof a.download_count === "number"){
+                total += a.download_count;   // suma Windows + Mac: total histórico de todas las versiones
               }
             });
           });

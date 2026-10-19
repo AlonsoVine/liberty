@@ -17,8 +17,8 @@ El contador bajo el botón de descarga muestra el **total histórico y acumulado
 de Liberty, **sumando todas las versiones** (da igual la versión). Cómo funciona:
 
 - En vivo desde la API pública: `GET /repos/AlonsoVine/liberty/releases?per_page=100`.
-- Suma el campo `download_count` de **cada asset llamado exactamente `Liberty.exe`** en **todas**
-  las releases.
+- Suma el campo `download_count` de cada asset llamado exactamente **`Liberty.exe`** (Windows)
+  **o `Liberty-macOS.zip`** (Mac) en **todas** las releases.
 - Con `try/catch`: si la API falla o hay rate-limit, el contador se **oculta** (nunca muestra error).
 - El número se formatea con separador de miles en `es-ES`.
 
@@ -40,12 +40,21 @@ Así el contador refleja siempre "cuánta gente ha descargado Liberty en total, 
 ## Publicar una versión nueva (receta)
 
 ```bash
-# desde una copia local del binario ya construido (NO se construye aquí)
+# 1) Windows: desde el .exe ya construido (NO se construye aquí)
 gh release create vX.Y.Z /ruta/a/Liberty.exe -t "Liberty vX.Y.Z" -n "Novedades..."
+
+# 2) Mac: se compila en el repo del código (AlonsoVine/rumboExito) con GitHub Actions
+#    (runner macOS; no se puede desde Windows). Workflow «Build macOS» (build-mac.yml):
+#      gh workflow run build-mac.yml --ref main -f tag=vX.Y.Z -R AlonsoVine/rumboExito
+#    Produce «Liberty-macOS.zip» (un Liberty.app sin firmar, Apple Silicon). Si el repo
+#    rumboExito tiene el secreto LIBERTY_RELEASE_TOKEN (PAT con escritura aquí), lo sube
+#    solo a esta release; si no, descarga el artefacto del run y súbelo a mano:
+#      gh release upload vX.Y.Z Liberty-macOS.zip -R AlonsoVine/liberty
 ```
 
-El botón de la web apunta siempre a la última release automáticamente
-(`releases/latest/download/Liberty.exe`), así que no hay que tocar `index.html` al sacar versión.
+Los botones de la web apuntan siempre a la última release
+(`releases/latest/download/Liberty.exe` y `/Liberty-macOS.zip`), así que no hay que tocar
+`index.html` al sacar versión. Mantén los nombres EXACTOS de los dos assets (contador).
 
 ## Editar la landing
 
