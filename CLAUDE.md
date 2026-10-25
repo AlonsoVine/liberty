@@ -17,9 +17,10 @@ El contador bajo el botón de descarga muestra el **total histórico y acumulado
 de Liberty, **sumando todas las versiones** (da igual la versión). Cómo funciona:
 
 - En vivo desde la API pública: `GET /repos/AlonsoVine/liberty/releases?per_page=100`.
-- Suma el campo `download_count` de cada asset llamado exactamente **`Liberty.exe`** (Windows),
-  **`Liberty-macOS-AppleSilicon.dmg`** y **`Liberty-macOS-Intel.dmg`** (Mac), y el antiguo
-  **`Liberty-macOS.zip`** (Mac, versiones ≤ 1.14.0) en **todas** las releases.
+- Suma el campo `download_count` de cada asset de Windows **`Liberty.exe`** y de Mac
+  **`Liberty-macOS.dmg`** (actual, universal2) más los nombres históricos de Mac
+  (`Liberty-macOS.zip`, `Liberty-macOS-AppleSilicon.dmg`, `Liberty-macOS-Intel.dmg`)
+  en **todas** las releases.
 - Con `try/catch`: si la API falla o hay rate-limit, el contador se **oculta** (nunca muestra error).
 - El número se formatea con separador de miles en `es-ES`.
 
@@ -44,20 +45,19 @@ Así el contador refleja siempre "cuánta gente ha descargado Liberty en total, 
 # 1) Windows: desde el .exe ya construido (NO se construye aquí)
 gh release create vX.Y.Z /ruta/a/Liberty.exe -t "Liberty vX.Y.Z" -n "Novedades..."
 
-# 2) Mac: se compila en el repo del código (AlonsoVine/rumboExito) con GitHub Actions
+# 2) Mac: se compila en el repo del código (AlonsoVine/liberty-app) con GitHub Actions
 #    (runner macOS; no se puede desde Windows). Workflow «Build macOS» (build-mac.yml):
-#      gh workflow run build-mac.yml --ref main -f tag=vX.Y.Z -R AlonsoVine/rumboExito
-#    Produce DOS .dmg (Liberty.app firmado ad-hoc): Liberty-macOS-AppleSilicon.dmg (arm64,
-#    runner macos-14) y Liberty-macOS-Intel.dmg (x86_64, runner macos-13). Si el repo
-#    rumboExito tiene el secreto LIBERTY_RELEASE_TOKEN (PAT con escritura aquí), los sube
-#    solos a esta release; si no, descarga los dos artefactos del run y súbelos a mano:
-#      gh release upload vX.Y.Z Liberty-macOS-AppleSilicon.dmg Liberty-macOS-Intel.dmg -R AlonsoVine/liberty
+#      gh workflow run build-mac.yml --ref main -f tag=vX.Y.Z -R AlonsoVine/liberty-app
+#    Produce «Liberty-macOS.dmg» (Liberty.app universal2 —Apple Silicon + Intel— firmado
+#    ad-hoc, dentro de un .dmg). Si liberty-app tiene el secreto LIBERTY_RELEASE_TOKEN
+#    (PAT con escritura aquí), lo sube solo a esta release; si no, descarga el artefacto
+#    «Liberty-macOS» del run y súbelo a mano:
+#      gh release upload vX.Y.Z Liberty-macOS.dmg -R AlonsoVine/liberty
 ```
 
 Los botones de la web apuntan siempre a la última release
-(`releases/latest/download/Liberty.exe`, `/Liberty-macOS-AppleSilicon.dmg` y
-`/Liberty-macOS-Intel.dmg`), así que no hay que tocar `index.html` al sacar versión.
-Mantén los nombres EXACTOS de los assets (contador).
+(`releases/latest/download/Liberty.exe` y `/Liberty-macOS.dmg`), así que no hay que tocar
+`index.html` al sacar versión. Mantén los nombres EXACTOS de los dos assets (contador).
 
 ## Editar la landing
 

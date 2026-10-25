@@ -31,7 +31,7 @@
   "operatingSystem": "Windows, macOS, Linux",
   "url": "https://alonsovine.github.io/liberty/",
   "downloadUrl": "https://github.com/AlonsoVine/liberty/releases/latest/download/Liberty.exe",
-  "softwareVersion": "1.10.0",
+  "softwareVersion": "1.15.0",
   "image": "https://alonsovine.github.io/liberty/og.png",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
   "author": { "@type": "Person", "name": "Alonso Viñé", "url": "https://github.com/AlonsoVine" }
@@ -710,35 +710,31 @@
 
     <!-- Mac -->
     <div class="os-panel" data-os="mac" hidden>
-      <a class="btn-descarga btn-mac" href="https://github.com/AlonsoVine/liberty/releases/latest/download/Liberty-macOS-AppleSilicon.dmg">
+      <a class="btn-descarga btn-mac" href="https://github.com/AlonsoVine/liberty/releases/latest/download/Liberty-macOS.dmg">
         <span class="big" aria-hidden="true"><svg class="os-ico"><use href="#ic-apple"/></svg></span>
-        <span class="dl-txt">Mac con Apple Silicon<small>M1, M2, M3 o M4 · Liberty-macOS-AppleSilicon.dmg</small></span>
+        <span class="dl-txt">Descargar para Mac<small>Apple Silicon e Intel · Liberty-macOS.dmg</small></span>
       </a>
-      <span class="btn-descarga btn-mac" style="margin-top:10px;opacity:.55;cursor:default" aria-disabled="true" title="Disponible muy pronto">
-        <span class="big" aria-hidden="true"><svg class="os-ico"><use href="#ic-apple"/></svg></span>
-        <span class="dl-txt">Mac con Intel<small>Macs anteriores a 2020 · próximamente</small></span>
-      </span>
-      <p class="plataforma">¿Cuál elijo? Menú  → «Acerca de este Mac»: si pone «Chip M…» descarga el de Apple Silicon. La versión para <strong>Intel</strong> estará disponible muy pronto.</p>
+      <p class="plataforma">macOS universal: Apple Silicon (M1 o posterior) e Intel</p>
       <div class="aviso-azul">
         <span class="ico" aria-hidden="true"><svg class="os-ico"><use href="#ic-apple"/></svg></span>
-        <p><strong>Instálalo en 10 segundos.</strong> Abre el <code>.dmg</code> descargado (doble clic) y <strong>arrastra Liberty a la carpeta Aplicaciones</strong>. La primera vez, como no está firmada con un certificado de pago de Apple, ábrela con <strong>clic derecho sobre Liberty → «Abrir» → «Abrir»</strong>; si macOS no te deja, ve a <strong>Ajustes del Sistema → Privacidad y seguridad</strong> y pulsa <strong>«Abrir de todos modos»</strong>. Solo la primera vez; después, doble clic normal. Es segura: código abierto y todo se queda en tu Mac.</p>
+        <p><strong>Ábrelo la primera vez.</strong> Abre el <code>.dmg</code> (doble clic) y <strong>arrastra Liberty a tu carpeta de Aplicaciones</strong>. Como no está firmada con un certificado de pago de Apple, la primera vez <strong>haz clic derecho sobre Liberty → «Abrir» → «Abrir»</strong>. Si macOS no te deja, ve a <strong>Ajustes del Sistema → Privacidad y seguridad</strong> y pulsa <strong>«Abrir de todos modos»</strong>. Solo una vez; después, doble clic. Es segura: todo se queda en tu Mac.</p>
       </div>
     </div>
 
     <!-- Linux -->
     <div class="os-panel" data-os="lin" hidden>
-      <a class="btn-descarga btn-lin" href="https://github.com/AlonsoVine/rumboExito" target="_blank" rel="noopener">
+      <a class="btn-descarga btn-lin" href="https://github.com/AlonsoVine/liberty-app" target="_blank" rel="noopener">
         <span class="big" aria-hidden="true">🐧</span>
         <span class="dl-txt">Ver el código fuente<small>Se ejecuta con Python</small></span>
       </a>
       <p class="plataforma">Cualquier Linux con Python 3.10 o superior</p>
       <div class="aviso-azul">
         <span class="ico" aria-hidden="true">🐧</span>
-        <p><strong>En Linux se ejecuta desde el código.</strong> No hay un binario para Linux, pero el proyecto es de <strong>código abierto</strong>. Descarga o clona <a href="https://github.com/AlonsoVine/rumboExito" target="_blank" rel="noopener">el repositorio</a> y arráncalo con <code>python -m app</code> (o con el script incluido <code>Iniciar.command</code>). Necesitas Python 3.10 o superior. Sigue siendo 100 % local.</p>
+        <p><strong>En Linux se ejecuta desde el código.</strong> No hay un binario para Linux, pero el proyecto es de <strong>código abierto</strong>. Descarga o clona <a href="https://github.com/AlonsoVine/liberty-app" target="_blank" rel="noopener">el repositorio</a> y arráncalo con <code>python -m app</code> (o con el script incluido <code>Iniciar.command</code>). Necesitas Python 3.10 o superior. Sigue siendo 100 % local.</p>
       </div>
     </div>
 
-    <p class="ver-actual-linea">Última versión: <strong id="ver-actual">v1.11.2</strong><span class="ver-fecha" id="ver-fecha"></span></p>
+    <p class="ver-actual-linea">Última versión: <strong id="ver-actual">v1.15.0</strong><span class="ver-fecha" id="ver-fecha"></span></p>
     <div class="descargas-count" id="descargas-count" aria-live="polite"></div>
     <div class="sellos" aria-label="Garantías">
       <span class="sello"><span class="ck">✓</span> Gratis</span>
@@ -808,7 +804,7 @@
       </details>
       <details class="faq-item">
         <summary>¿Hay versión para Mac?</summary>
-        <div class="faq-body"><p>Sí. Ya está disponible el <code>.dmg</code> para <strong>Apple Silicon (M1/M2/M3/M4)</strong> en la <a href="#descarga">zona de descarga</a>, y la versión para <strong>Intel</strong> llegará muy pronto. Ábrelo, arrastra Liberty a Aplicaciones y, como no está firmada con un certificado de pago de Apple, la primera vez ábrela con <strong>clic derecho → «Abrir»</strong> (o desde Ajustes del Sistema → Privacidad y seguridad → «Abrir de todos modos»). Después, doble clic normal.</p></div>
+        <div class="faq-body"><p>Sí. Hay una descarga <strong>universal para Mac</strong> en la <a href="#descarga">zona de descarga</a>: un único <code>.dmg</code> que funciona nativo tanto en <strong>Apple Silicon (M1 o posterior)</strong> como en <strong>Mac con Intel</strong>. Como no está firmada con un certificado de pago de Apple, la primera vez se abre con <strong>clic derecho → «Abrir»</strong> (o desde Ajustes del Sistema → Privacidad y seguridad).</p></div>
       </details>
       <details class="faq-item">
         <summary>¿Es asesoramiento financiero?</summary>
@@ -1063,8 +1059,9 @@
           var total = 0;
           releases.forEach(function(rel){
             (rel.assets || []).forEach(function(a){
-              if(a && (a.name === "Liberty.exe" || a.name === "Liberty-macOS.zip" || a.name === "Liberty-macOS-AppleSilicon.dmg" || a.name === "Liberty-macOS-Intel.dmg") && typeof a.download_count === "number"){
-                total += a.download_count;   // suma Windows + Mac: total histórico de todas las versiones
+              var cuenta = ["Liberty.exe", "Liberty-macOS.dmg", "Liberty-macOS.zip", "Liberty-macOS-AppleSilicon.dmg", "Liberty-macOS-Intel.dmg"];
+              if(a && cuenta.indexOf(a.name) !== -1 && typeof a.download_count === "number"){
+                total += a.download_count;   // suma Windows + Mac (todos los nombres, históricos incl.): total de todas las versiones
               }
             });
           });
