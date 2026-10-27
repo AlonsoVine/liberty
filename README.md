@@ -34,5 +34,9 @@ Hecho por **[Alonso Viñé](https://github.com/AlonsoVine)** a partir de un fork
 
 ## Licencia
 
-[MIT](LICENSE). Obra original «Rumbo» © Dani Dominguez Quant; modificaciones © Alonso (AlonsoVine).
-Puedes usar, copiar, modificar y distribuir el software conservando el aviso de copyright y la licencia.
+Licencia **híbrida** (ver **[LICENSE](LICENSE)**):
+
+- La obra **original «Rumbo»** © Dani Dominguez Quant sigue bajo **MIT**.
+- Las **aportaciones de Liberty** © Alonso (AlonsoVine) son **propietarias, todos los derechos reservados**.
+
+En la práctica: puedes **descargar y usar Liberty para tu uso personal**, pero no copiarlo, modificarlo, redistribuirlo ni usarlo con fines comerciales sin permiso escrito del autor. Lo único que terceros pueden reutilizar libremente es el código original de «Rumbo» obtenido de su fuente bajo MIT, no las aportaciones de Liberty.

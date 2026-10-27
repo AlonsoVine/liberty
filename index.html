@@ -283,6 +283,8 @@
   .verificar p{color:#9fb6e0;margin:12px 0 8px}
   .verificar code{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:#eaf0fb;border-radius:6px;padding:.12em .45em}
   .verificar code.hash{display:block;word-break:break-all;padding:10px 12px;color:#e7edf8}
+  .verificar pre{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:#eaf0fb;border-radius:8px;padding:12px 14px;margin:12px 0 8px;overflow-x:auto;font-size:.82rem;line-height:1.5;text-align:left}
+  .verificar pre code{background:none;border:0;padding:0;color:inherit;white-space:pre}
   .ver-versiones{margin:16px 0 0;font-size:.92rem}
   .ver-versiones a{color:#c7d6f2;font-weight:500}
   .ver-versiones a:hover{color:#fff}
@@ -688,6 +690,7 @@
       <button class="os-tab" type="button" data-os="win" role="tab" aria-selected="true"><svg class="os-ico"><use href="#ic-win"/></svg> Windows</button>
       <button class="os-tab" type="button" data-os="mac" role="tab" aria-selected="false"><svg class="os-ico"><use href="#ic-apple"/></svg> Mac</button>
       <button class="os-tab" type="button" data-os="lin" role="tab" aria-selected="false"><span aria-hidden="true">🐧</span> Linux</button>
+      <button class="os-tab" type="button" data-os="docker" role="tab" aria-selected="false"><span aria-hidden="true">🐳</span> Docker</button>
     </div>
 
     <!-- Windows -->
@@ -730,8 +733,39 @@
       <p class="plataforma">Cualquier Linux con Python 3.10 o superior</p>
       <div class="aviso-azul">
         <span class="ico" aria-hidden="true">🐧</span>
-        <p><strong>En Linux se ejecuta desde el código.</strong> No hay un binario para Linux, pero el proyecto es de <strong>código abierto</strong>. Descarga o clona <a href="https://github.com/AlonsoVine/liberty-app" target="_blank" rel="noopener">el repositorio</a> y arráncalo con <code>python -m app</code> (o con el script incluido <code>Iniciar.command</code>). Necesitas Python 3.10 o superior. Sigue siendo 100 % local.</p>
+        <p><strong>En Linux se ejecuta desde el código.</strong> No hay un binario para Linux, pero el proyecto es de <strong>código abierto</strong>. Descarga o clona <a href="https://github.com/AlonsoVine/liberty-app" target="_blank" rel="noopener">el repositorio</a> y arráncalo con <code>python -m app</code> (o con el script incluido <code>Iniciar.command</code>). Necesitas Python 3.10 o superior. También puedes usar <strong>Docker</strong> (pestaña de al lado). Sigue siendo 100 % local.</p>
       </div>
+    </div>
+
+    <!-- Docker -->
+    <div class="os-panel" data-os="docker" hidden>
+      <a class="btn-descarga btn-lin" href="https://github.com/AlonsoVine/liberty-app#ejecutar-en-docker-raspberry-pi-nas" target="_blank" rel="noopener">
+        <span class="big" aria-hidden="true">🐳</span>
+        <span class="dl-txt">Ver la guía de Docker<small>Imagen multiarch · Raspberry Pi, NAS…</small></span>
+      </a>
+      <p class="plataforma">Una sola instancia para toda la casa · linux/amd64 y linux/arm64</p>
+      <div class="aviso-azul">
+        <span class="ico" aria-hidden="true">🐳</span>
+        <p><strong>Para servidores caseros.</strong> Imagen oficial <code>ghcr.io/alonsovine/liberty</code>: ten Liberty siempre encendido (p. ej. en una Raspberry Pi) y entra desde varios dispositivos. <strong>Liberty no tiene usuarios ni contraseña</strong>, así que ponla detrás de una <strong>VPN privada</strong> (Tailscale) o un proxy con autenticación y <strong>nunca la expongas a internet</strong>.</p>
+      </div>
+      <details class="verificar">
+        <summary><code>docker-compose.yml</code> de ejemplo</summary>
+        <pre><code>services:
+  liberty:
+    image: ghcr.io/alonsovine/liberty:1.16.0     # la última versión publicada
+    restart: unless-stopped
+    ports: ["127.0.0.1:8765:8765"]               # solo este equipo; el resto, por VPN
+    volumes: ["/mnt/datos/liberty:/data"]        # tus datos (haz copias de esta carpeta)
+    environment:
+      - LIBERTY_HOSTS_PERMITIDOS=tu-pi.tu-tailnet.ts.net
+    user: "1000:1000"
+    read_only: true
+    tmpfs: ["/tmp"]
+    cap_drop: ["ALL"]
+    security_opt: ["no-new-privileges:true"]
+    init: true</code></pre>
+        <p>Arranca con <code>docker compose up -d</code> y actualiza con <code>docker compose pull &amp;&amp; docker compose up -d</code> (tus datos no se tocan). Comprueba qué imagen corres con <code>docker inspect</code> (digest). Guía completa en el <a href="https://github.com/AlonsoVine/liberty-app#ejecutar-en-docker-raspberry-pi-nas" target="_blank" rel="noopener">repositorio</a>.</p>
+      </details>
     </div>
 
     <p class="ver-actual-linea">Última versión: <strong id="ver-actual">v1.15.0</strong><span class="ver-fecha" id="ver-fecha"></span></p>
