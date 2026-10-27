@@ -450,7 +450,7 @@
     <div class="hero-badges">
       <span class="badge">🖥️ App de escritorio</span>
       <span class="badge">🔒 Sin cuentas ni servidores</span>
-      <span class="badge"><svg class="os-ico"><use href="#ic-win"/></svg> Windows &nbsp;·&nbsp; <svg class="os-ico"><use href="#ic-apple"/></svg> Mac &nbsp;·&nbsp; <span aria-hidden="true">🐧</span> Linux</span>
+      <span class="badge"><svg class="os-ico"><use href="#ic-win"/></svg> Windows &nbsp;·&nbsp; <svg class="os-ico"><use href="#ic-apple"/></svg> Mac &nbsp;·&nbsp; <svg class="os-ico"><use href="#ic-linux"/></svg> Linux</span>
     </div>
     <div class="hero-cta-wrap">
       <a class="hero-cta" href="#descarga">⬇ Descargar</a>
@@ -680,17 +680,20 @@
     <h2>Descarga Liberty</h2>
     <p class="lead">Gratis, sin registro. Elige tu sistema:</p>
 
-    <!-- Iconos reutilizables: logo de Windows y logo de Apple (SVG, se ven en cualquier sistema). -->
+    <!-- Iconos reutilizables: logos de Windows, Apple, Linux (Tux) y Docker, monocromos
+         (currentColor) para que combinen con el texto y se vean en cualquier sistema. -->
     <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
       <symbol id="ic-win" viewBox="0 0 24 24"><path fill="currentColor" d="M3 5.1 10.4 4v7.3H3V5.1zM3 18.9 10.4 20v-7.2H3v6.1zM11.6 3.84 21 2.5v8.8h-9.4V3.84zM11.6 20.16 21 21.5v-8.7h-9.4v7.36z"/></symbol>
       <symbol id="ic-apple" viewBox="0 0 24 24"><path fill="currentColor" d="M16.36 1.43c.06 1.03-.33 2.04-.98 2.78-.68.77-1.77 1.36-2.8 1.28-.1-.99.37-2.03.99-2.7.69-.76 1.85-1.32 2.79-1.36zM19.86 17.4c-.52 1.2-.77 1.72-1.43 2.77-.93 1.47-2.23 3.28-3.84 3.29-1.44.02-1.81-.94-3.76-.93-1.95.01-2.36.95-3.8.93-1.61-.01-2.84-1.65-3.77-3.11-2.6-4.09-2.88-8.89-1.27-11.44 1.15-1.8 2.96-2.85 4.67-2.85 1.74 0 2.83.95 4.27.95 1.4 0 2.25-.96 4.26-.96 1.52 0 3.13.83 4.28 2.26-3.76 2.06-3.14 7.42-.28 9.72z"/></symbol>
+      <symbol id="ic-linux" viewBox="0 0 24 24"><path fill="currentColor" d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.106 1.484.174.334.535.47.94.601.81.2 1.91.135 2.774.6.926.466 1.866.67 2.616.47.526-.116.97-.464 1.208-.946.587-.003 1.23-.269 2.26-.334.699-.058 1.574.267 2.577.2.025.134.063.198.114.333l.003.003c.391.778 1.113 1.132 1.884 1.071.771-.06 1.592-.536 2.257-1.306.631-.765 1.683-1.084 2.378-1.503.348-.199.629-.469.649-.853.023-.4-.2-.811-.714-1.376v-.097l-.003-.003c-.17-.2-.25-.535-.338-.926-.085-.401-.182-.786-.492-1.046h-.003c-.059-.054-.123-.067-.188-.135a.357.357 0 00-.19-.064c.431-1.278.264-2.55-.173-3.694-.533-1.41-1.465-2.638-2.175-3.483-.796-1.005-1.576-1.957-1.56-3.368.026-2.152.236-6.133-3.544-6.139zm.529 3.405h.013c.213 0 .396.062.584.198.19.135.33.332.438.533.105.259.158.459.166.724 0-.02.006-.04.006-.06v.105a.086.086 0 01-.004-.021l-.004-.024a1.807 1.807 0 01-.15.706.953.953 0 01-.213.335.71.71 0 00-.088-.042c-.104-.045-.198-.064-.284-.133a1.312 1.312 0 00-.22-.066c.05-.06.146-.133.183-.198.053-.128.082-.264.088-.402v-.02a1.21 1.21 0 00-.061-.4c-.045-.134-.101-.2-.183-.333-.084-.066-.167-.132-.267-.132h-.016c-.093 0-.176.03-.262.132a.8.8 0 00-.205.334 1.18 1.18 0 00-.09.4v.019c.002.089.008.179.02.267-.193-.067-.438-.135-.607-.202a1.635 1.635 0 01-.018-.2v-.02a1.772 1.772 0 01.15-.768c.082-.22.232-.406.43-.533a.985.985 0 01.594-.2zm-2.962.059h.036c.142 0 .27.048.399.135.146.129.264.288.344.465.09.199.14.4.153.667v.004c.007.134.006.2-.002.266v.08c-.03.007-.056.018-.083.024-.152.055-.274.135-.393.2.012-.09.013-.18.003-.267v-.015c-.012-.133-.04-.2-.081-.333a.613.613 0 00-.166-.267.248.248 0 00-.183-.064h-.021c-.071.006-.13.04-.186.132a.552.552 0 00-.12.27.944.944 0 00-.023.33v.015c.012.135.037.2.08.334.046.134.098.2.166.268.01.009.02.018.034.024-.07.057-.117.07-.176.136a.304.304 0 01-.131.068 2.62 2.62 0 01-.275-.402 1.772 1.772 0 01-.155-.667 1.759 1.759 0 01.08-.668 1.43 1.43 0 01.283-.535c.128-.133.26-.2.418-.2zm1.37 1.706c.332 0 .733.065 1.216.399.293.199.523.269 1.052.468h.003c.255.136.405.266.478.399a.571.571 0 01.016.47c-.123.31-.516.643-1.063.842v.002c-.268.135-.501.333-.775.465-.276.135-.588.292-1.012.267a1.139 1.139 0 01-.448-.067 3.566 3.566 0 01-.322-.198c-.195-.135-.363-.332-.612-.465v-.005h-.005c-.4-.246-.616-.512-.686-.71-.07-.268-.005-.47.193-.6.224-.135.38-.271.483-.336.104-.074.143-.102.176-.131h.002v-.003c.169-.202.436-.47.839-.601.139-.036.294-.065.466-.065zm2.8 2.142c.358 1.417 1.196 3.475 1.735 4.473.286.534.855 1.659 1.102 3.024.156-.005.33.018.513.064.646-1.671-.546-3.467-.81-3.874-.802-1.235-.564-1.558-1.65-1.46-2.95.085-.401.182-.786.492-1.046z"/></symbol>
+      <symbol id="ic-docker" viewBox="0 0 24 24"><path fill="currentColor" d="M13.983 11.078h2.119a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.119a.185.185 0 00-.185.185v1.888c0 .102.083.185.185.185m-2.954-5.43h2.118a.186.186 0 00.186-.186V3.574a.186.186 0 00-.186-.185h-2.118a.185.185 0 00-.185.185v1.888c0 .102.082.185.185.185m0 2.716h2.118a.187.187 0 00.186-.186V6.29a.186.186 0 00-.186-.185h-2.118a.185.185 0 00-.185.185v1.887c0 .102.082.186.185.186m-2.93 0h2.12a.186.186 0 00.184-.186V6.29a.185.185 0 00-.185-.185H8.1a.185.185 0 00-.185.185v1.887c0 .102.083.186.185.186m-2.964 0h2.119a.186.186 0 00.185-.186V6.29a.185.185 0 00-.185-.185H5.136a.186.186 0 00-.186.185v1.887c0 .102.084.186.186.186m5.893 2.715h2.118a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.118a.185.185 0 00-.185.185v1.888c0 .102.082.185.185.185m-2.93 0h2.12a.185.185 0 00.184-.185V9.006a.185.185 0 00-.184-.186h-2.12a.185.185 0 00-.184.185v1.888c0 .102.083.185.185.185m-2.964 0h2.119a.185.185 0 00.185-.185V9.006a.185.185 0 00-.185-.186h-2.119a.186.186 0 00-.186.185v1.888c0 .102.084.185.186.185m-2.92 0h2.12a.185.185 0 00.184-.185V9.006a.185.185 0 00-.184-.186h-2.12a.185.185 0 00-.185.185v1.888c0 .103.083.185.185.185M23.763 9.89c-.065-.051-.672-.51-1.954-.51-.338.001-.676.03-1.01.087-.248-1.7-1.653-2.53-1.716-2.566l-.344-.199-.226.327c-.284.438-.49.922-.612 1.43-.23.97-.09 1.882.403 2.661-.595.332-1.55.413-1.744.42H.751a.751.751 0 00-.75.748 11.376 11.376 0 00.692 4.062c.545 1.428 1.355 2.48 2.41 3.124 1.18.723 3.1 1.137 5.275 1.137.983.003 1.963-.086 2.93-.266a12.248 12.248 0 003.823-1.389c.98-.567 1.86-1.288 2.61-2.136 1.252-1.418 1.998-2.997 2.553-4.4h.221c1.372 0 2.215-.549 2.68-1.009.309-.293.55-.65.707-1.046l.098-.288z"/></symbol>
     </defs></svg>
 
     <div class="os-selector" role="tablist" aria-label="Elige tu sistema operativo">
       <button class="os-tab" type="button" data-os="win" role="tab" aria-selected="true"><svg class="os-ico"><use href="#ic-win"/></svg> Windows</button>
       <button class="os-tab" type="button" data-os="mac" role="tab" aria-selected="false"><svg class="os-ico"><use href="#ic-apple"/></svg> Mac</button>
-      <button class="os-tab" type="button" data-os="lin" role="tab" aria-selected="false"><span aria-hidden="true">🐧</span> Linux</button>
-      <button class="os-tab" type="button" data-os="docker" role="tab" aria-selected="false"><span aria-hidden="true">🐳</span> Docker</button>
+      <button class="os-tab" type="button" data-os="lin" role="tab" aria-selected="false"><svg class="os-ico"><use href="#ic-linux"/></svg> Linux</button>
+      <button class="os-tab" type="button" data-os="docker" role="tab" aria-selected="false"><svg class="os-ico"><use href="#ic-docker"/></svg> Docker</button>
     </div>
 
     <!-- Windows -->
@@ -727,12 +730,12 @@
     <!-- Linux -->
     <div class="os-panel" data-os="lin" hidden>
       <a class="btn-descarga btn-lin" href="https://github.com/AlonsoVine/liberty-app" target="_blank" rel="noopener">
-        <span class="big" aria-hidden="true">🐧</span>
+        <span class="big" aria-hidden="true"><svg class="os-ico"><use href="#ic-linux"/></svg></span>
         <span class="dl-txt">Ver el código fuente<small>Se ejecuta con Python</small></span>
       </a>
       <p class="plataforma">Cualquier Linux con Python 3.10 o superior</p>
       <div class="aviso-azul">
-        <span class="ico" aria-hidden="true">🐧</span>
+        <span class="ico" aria-hidden="true"><svg class="os-ico"><use href="#ic-linux"/></svg></span>
         <p><strong>En Linux se ejecuta desde el código.</strong> No hay un binario para Linux, pero el proyecto es de <strong>código abierto</strong>. Descarga o clona <a href="https://github.com/AlonsoVine/liberty-app" target="_blank" rel="noopener">el repositorio</a> y arráncalo con <code>python -m app</code> (o con el script incluido <code>Iniciar.command</code>). Necesitas Python 3.10 o superior. También puedes usar <strong>Docker</strong> (pestaña de al lado). Sigue siendo 100 % local.</p>
       </div>
     </div>
@@ -740,12 +743,12 @@
     <!-- Docker -->
     <div class="os-panel" data-os="docker" hidden>
       <a class="btn-descarga btn-lin" href="https://github.com/AlonsoVine/liberty-app#ejecutar-en-docker-raspberry-pi-nas" target="_blank" rel="noopener">
-        <span class="big" aria-hidden="true">🐳</span>
+        <span class="big" aria-hidden="true"><svg class="os-ico"><use href="#ic-docker"/></svg></span>
         <span class="dl-txt">Ver la guía de Docker<small>Imagen multiarch · Raspberry Pi, NAS…</small></span>
       </a>
       <p class="plataforma">Una sola instancia para toda la casa · linux/amd64 y linux/arm64</p>
       <div class="aviso-azul">
-        <span class="ico" aria-hidden="true">🐳</span>
+        <span class="ico" aria-hidden="true"><svg class="os-ico"><use href="#ic-docker"/></svg></span>
         <p><strong>Para servidores caseros.</strong> Imagen oficial <code>ghcr.io/alonsovine/liberty</code>: ten Liberty siempre encendido (p. ej. en una Raspberry Pi) y entra desde varios dispositivos. <strong>Liberty no tiene usuarios ni contraseña</strong>, así que ponla detrás de una <strong>VPN privada</strong> (Tailscale) o un proxy con autenticación y <strong>nunca la expongas a internet</strong>.</p>
       </div>
       <details class="verificar">
