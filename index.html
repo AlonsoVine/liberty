@@ -31,7 +31,7 @@
   "operatingSystem": "Windows, macOS, Linux",
   "url": "https://alonsovine.github.io/liberty/",
   "downloadUrl": "https://github.com/AlonsoVine/liberty/releases/latest/download/Liberty.exe",
-  "softwareVersion": "1.16.0",
+  "softwareVersion": "1.16.1",
   "image": "https://alonsovine.github.io/liberty/og.png",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
   "author": { "@type": "Person", "name": "Alonso Viñé", "url": "https://github.com/AlonsoVine" }
@@ -755,7 +755,7 @@
         <summary><code>docker-compose.yml</code> de ejemplo</summary>
         <pre><code>services:
   liberty:
-    image: ghcr.io/alonsovine/liberty:1.16.0     # la última versión publicada
+    image: ghcr.io/alonsovine/liberty:1.16.1     # la última versión publicada
     restart: unless-stopped
     ports: ["127.0.0.1:8765:8765"]               # solo este equipo; el resto, por VPN
     volumes: ["/mnt/datos/liberty:/data"]        # tus datos (haz copias de esta carpeta)
