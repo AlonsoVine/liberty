@@ -31,7 +31,7 @@
   "operatingSystem": "Windows, macOS, Linux",
   "url": "https://alonsovine.github.io/liberty/",
   "downloadUrl": "https://github.com/AlonsoVine/liberty/releases/latest/download/Liberty.exe",
-  "softwareVersion": "1.16.1",
+  "softwareVersion": "1.17.0",
   "image": "https://alonsovine.github.io/liberty/og.png",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
   "author": { "@type": "Person", "name": "Alonso Viñé", "url": "https://github.com/AlonsoVine" }
@@ -478,6 +478,7 @@
       <!-- Fila inferior: scroll hacia la derecha -->
       <div class="cards-row der">
         <div class="cards-track" data-cards-track>
+          <div class="card"><span class="ico">🏠</span><h3>Inmuebles</h3><p>Cada piso con su ficha: valor y su evolución, hipoteca, inquilinos y contratos, lo que te deja el alquiler y avisos si un cobro no llega.</p></div>
           <div class="card"><span class="ico">👥</span><h3>Titulares</h3><p>Asigna cada activo o deuda a sus titulares y conoce el reparto real del patrimonio.</p></div>
           <div class="card"><span class="ico">📄</span><h3>Informe fiscal</h3><p>Obtén un resumen orientado a tus obligaciones fiscales a partir de tus datos.</p></div>
           <div class="card"><span class="ico">🥧</span><h3>Distribución</h3><p>Visualiza cómo se reparte tu patrimonio por tipo de activo, titular o categoría.</p></div>
@@ -527,6 +528,7 @@
         <h3>Patrimonio completo</h3>
         <ul>
           <li>Cuentas, efectivo, inversiones e inmuebles</li>
+          <li>Inmuebles aparte: inquilinos, contratos y rentabilidad del alquiler</li>
           <li>Deudas: hipoteca, préstamos, tarjetas</li>
           <li>Reservados y colchón de liquidez</li>
           <li>Varios titulares y reparto por persona</li>
@@ -755,7 +757,7 @@
         <summary><code>docker-compose.yml</code> de ejemplo</summary>
         <pre><code>services:
   liberty:
-    image: ghcr.io/alonsovine/liberty:1.16.1     # la última versión publicada
+    image: ghcr.io/alonsovine/liberty:1.17.0     # la última versión publicada
     restart: unless-stopped
     ports: ["127.0.0.1:8765:8765"]               # solo este equipo; el resto, por VPN
     volumes: ["/mnt/datos/liberty:/data"]        # tus datos (haz copias de esta carpeta)
@@ -771,7 +773,7 @@
       </details>
     </div>
 
-    <p class="ver-actual-linea">Última versión: <strong id="ver-actual">v1.16.0</strong><span class="ver-fecha" id="ver-fecha"></span></p>
+    <p class="ver-actual-linea">Última versión: <strong id="ver-actual">v1.17.0</strong><span class="ver-fecha" id="ver-fecha"></span></p>
     <div class="descargas-count" id="descargas-count" aria-live="polite"></div>
     <div class="sellos" aria-label="Garantías">
       <span class="sello"><span class="ck">✓</span> Gratis</span>
