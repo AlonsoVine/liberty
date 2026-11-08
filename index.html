@@ -105,8 +105,9 @@ code{font-family:ui-monospace,"Cascadia Code",Consolas,monospace;font-size:.86em
 .rotulo b{font-family:var(--serif);font-style:italic;font-weight:500;letter-spacing:0;text-transform:none;font-size:1rem;color:var(--oro)}
 .rotulo::after{content:"";width:46px;height:1px;background:currentColor;opacity:.5}
 .lead{font-size:clamp(1.05rem,1.4vw,1.2rem);color:var(--tinta2);max-width:680px;margin-bottom:40px}
-section{padding:clamp(80px,11vw,150px) 0;position:relative}
+section{padding:clamp(72px,8.5vw,124px) 0;position:relative}
 .cv{content-visibility:auto;contain-intrinsic-size:auto 1100px}
+.sin-cv .cv{content-visibility:visible}
 
 /* ================= aparición al hacer scroll ================= */
 .js .rv{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease-o),transform .9s var(--ease-o);transition-delay:calc(var(--d,0) * 90ms)}
@@ -173,10 +174,13 @@ section{padding:clamp(80px,11vw,150px) 0;position:relative}
 .hero{position:relative;overflow:hidden;padding:150px 0 0;min-height:100svh;display:flex;flex-direction:column}
 .hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,1fr);gap:56px;align-items:center;flex:1}
 .hero-eyebrow{display:inline-flex;align-items:center;gap:10px;padding:6px 14px 6px 6px;border:1px solid var(--n-linea);border-radius:999px;font-size:.86rem;color:var(--n-tinta2);margin-bottom:26px;text-decoration:none;background:rgba(243,239,230,.03)}
-.hero-eyebrow:hover{color:var(--n-tinta)}
+.noche a.hero-eyebrow{color:var(--n-tinta2)}
+.noche a.hero-eyebrow:hover{color:var(--n-tinta);text-decoration:none}
 .hero-eyebrow .pill{background:var(--oro-v);color:#1b1306;font-weight:700;font-size:.74rem;padding:3px 9px;border-radius:999px;letter-spacing:.02em}
-.hero-icon{width:56px;height:56px;border-radius:15px;margin-bottom:28px;box-shadow:0 18px 40px -12px rgba(0,0,0,.7);transition:transform .6s var(--ease-o)}
-.hero:hover .hero-icon{transform:translateY(-4px) rotate(-4deg) scale(1.04)}
+.hero-icon{width:34px;height:34px;border-radius:10px;box-shadow:0 10px 24px -8px rgba(0,0,0,.7);transition:transform .6s var(--ease-o)}
+.hero:hover .hero-icon{transform:translateY(-3px) rotate(-6deg) scale(1.08)}
+.hero-eyebrow .flecha{width:15px;height:15px;transition:transform .4s var(--ease-o)}
+.hero-eyebrow:hover .flecha{transform:translateX(4px)}
 .hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(2.9rem,6.6vw,6rem);letter-spacing:-.035em;line-height:.98;margin-bottom:28px;font-variation-settings:"opsz" 144}
 .hero h1 em{font-style:italic;color:var(--oro-v);font-weight:400}
 .hero h1 .l{display:block;overflow:hidden;padding-bottom:.08em;margin-bottom:-.08em}
@@ -230,9 +234,7 @@ section{padding:clamp(80px,11vw,150px) 0;position:relative}
 .tp-fila{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:10px 0;border-bottom:1px solid var(--n-linea);font-size:.92rem}
 .tp-fila b{color:var(--n-tinta);font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
 .tp-fila small{color:var(--n-tinta3)}
-.punto-vivo{position:absolute;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:#fff;box-shadow:0 0 0 4px rgba(255,255,255,.18)}
-.punto-vivo::after{content:"";position:absolute;inset:-8px;border-radius:50%;border:1px solid rgba(255,255,255,.6);animation:latido 2.4s var(--ease) infinite}
-@keyframes latido{0%{transform:scale(.4);opacity:1}100%{transform:scale(1.9);opacity:0}}
+.tp-fila b small{color:inherit;font-size:.78em;opacity:.7}
 .flotante{position:absolute;display:flex;align-items:center;gap:10px;background:rgba(18,21,27,.92);border:1px solid rgba(243,239,230,.14);border-radius:14px;padding:10px 14px;font-size:.82rem;color:var(--n-tinta2);
   box-shadow:0 24px 50px -20px rgba(0,0,0,.9);white-space:nowrap}
 .flotante b{display:block;color:var(--n-tinta);font-size:1rem;font-variant-numeric:tabular-nums}
@@ -242,7 +244,7 @@ section{padding:clamp(80px,11vw,150px) 0;position:relative}
 .flot-2 .ico{background:rgba(226,174,76,.16);color:var(--oro-v)}
 .js .flotante{opacity:0;transition:opacity .9s var(--ease) 1.6s}
 .js .listo .flotante{opacity:1}
-.flot-1 > *,.flot-2 > *{animation:flota 7s ease-in-out infinite}
+.flot-1 > *,.flot-2 > *{animation:flota 10s ease-in-out infinite}
 .flot-2 > *{animation-delay:-3.5s}
 @keyframes flota{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 
@@ -257,7 +259,6 @@ section{padding:clamp(80px,11vw,150px) 0;position:relative}
 .cinta .s{font-weight:600;font-variant-numeric:tabular-nums}
 .cinta .s.up{color:var(--n-verde)}
 .cinta .s.dn{color:var(--n-rojo)}
-.cinta-nota{position:absolute;right:0;top:0;bottom:0;display:flex;align-items:center;padding:0 16px;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--n-tinta3)}
 @keyframes cinta{to{transform:translateX(-50%)}}
 
 /* ================= ECUACIÓN (libro de cuentas) ================= */
@@ -267,14 +268,24 @@ section{padding:clamp(80px,11vw,150px) 0;position:relative}
 .asiento .op{font-family:var(--sans);font-size:clamp(2.2rem,4.4vw,3.8rem);line-height:.8;color:var(--tinta);font-weight:200;text-align:center;align-self:center}
 .asiento .que h3{font-size:clamp(1.1rem,1.6vw,1.35rem);margin:0 0 4px}
 .asiento .que p{margin:0;font-size:.95rem;color:var(--tinta3)}
-.asiento .v{font-family:var(--serif);font-size:clamp(2.1rem,5.4vw,4.6rem);color:var(--tinta);letter-spacing:-.03em;line-height:1;font-variation-settings:"opsz" 144;text-align:right}
+.asiento .v{white-space:nowrap;font-family:var(--serif);font-size:clamp(2.1rem,5.4vw,4.6rem);color:var(--tinta);letter-spacing:-.03em;line-height:1;font-variation-settings:"opsz" 144;text-align:right}
 .asiento.total{border-bottom:0;border-top:2px solid var(--tinta);margin-top:-1px}
 .asiento.total::after{content:"";grid-column:1/-1;height:6px;border-top:1px solid var(--tinta);border-bottom:1px solid var(--tinta);margin-top:18px}
 .asiento.total .v{color:var(--oro)}
+.asiento.total.negativo .v{color:var(--rojo)}
 .asiento.debe .v{color:var(--rojo)}
 .libro-nota{margin-top:26px;font-size:.92rem;color:var(--tinta3);max-width:720px}
-.desglose{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:8px;font-size:.86rem;color:var(--tinta3)}
-.desglose span{font-variant-numeric:tabular-nums}
+.desglose{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.partida{display:inline-flex;align-items:center;gap:8px;font:inherit;font-size:.86rem;font-weight:500;color:var(--tinta);background:var(--hoja);border:1px solid var(--linea2);border-radius:999px;padding:5px 6px 5px 12px;cursor:pointer;transition:transform .3s var(--ease-o)}
+.partida span{font-variant-numeric:tabular-nums;color:var(--tinta2);background:var(--papel2);border-radius:999px;padding:2px 9px}
+.partida::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--oro-v);transition:transform .3s var(--ease-o)}
+.debe .partida::before{background:var(--rojo)}
+.partida:hover{transform:translateY(-2px)}
+.partida[aria-pressed="false"]{color:var(--tinta3);text-decoration:line-through;background:transparent;border-style:dashed}
+.partida[aria-pressed="false"] span{background:transparent}
+.partida[aria-pressed="false"]::before{transform:scale(.4)}
+.ec-pista{display:flex;align-items:center;gap:10px;margin:22px 0 0;font-size:.92rem;color:var(--tinta3)}
+.ec-pista .ico{width:18px;height:18px;color:var(--oro);flex:none}
 
 /* Odómetro: cada dígito es una columna 0-9 que se desplaza con transform */
 .odo{display:inline-flex;white-space:nowrap;font-variant-numeric:tabular-nums lining-nums}
@@ -284,6 +295,7 @@ section{padding:clamp(80px,11vw,150px) 0;position:relative}
 .odo .s{display:inline-block;line-height:1}
 
 /* ================= QUÉ ES (marquesina de tarjetas) ================= */
+.marq-tit{font-size:.78rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--tinta3);margin-top:36px;margin-bottom:4px}
 .cards-marquee{display:flex;flex-direction:column;gap:18px;margin-top:8px}
 .cards-row{overflow:hidden;padding:8px 0 14px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
 .cards-track{display:flex;gap:18px;width:max-content}
@@ -305,7 +317,7 @@ section{padding:clamp(80px,11vw,150px) 0;position:relative}
 .recorrido{background:var(--papel2)}
 .rec-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:64px}
 .rec-pasos{list-style:none;margin:0;padding:0}
-.rec-paso{min-height:68vh;display:flex;flex-direction:column;justify-content:center;padding:40px 0;border-left:1px solid var(--linea2);padding-left:32px;position:relative}
+.rec-paso{min-height:58vh;display:flex;flex-direction:column;justify-content:center;padding:40px 0;border-left:1px solid var(--linea2);padding-left:32px;position:relative}
 .rec-paso::before{content:"";position:absolute;left:-1px;top:0;bottom:0;width:2px;background:var(--oro);transform:scaleY(0);transform-origin:top;transition:transform .8s var(--ease-o)}
 .rec-paso.activo::before{transform:scaleY(1)}
 .rec-paso .n{font-family:var(--serif);font-style:italic;color:var(--oro);font-size:1.1rem;margin-bottom:10px}
@@ -346,20 +358,8 @@ section{padding:clamp(80px,11vw,150px) 0;position:relative}
 .feat ul{list-style:none;margin:0;padding:0}
 .feat li{position:relative;padding-left:20px;margin:7px 0;color:var(--tinta2);font-size:.95rem;line-height:1.45}
 .feat li::before{content:"";position:absolute;left:2px;top:.62em;width:7px;height:7px;border-radius:2px;background:var(--oro-v);transform:rotate(45deg)}
-.feat .nuevo{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--verde);border:1px solid currentColor;border-radius:999px;padding:1px 7px;margin-left:6px;vertical-align:2px}
-.feat-cifra{font-family:var(--serif);font-size:3.2rem;line-height:1;color:var(--tinta);letter-spacing:-.03em;margin:4px 0 6px}
 @media (max-width:1060px){.bento{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:640px){.bento{grid-template-columns:minmax(0,1fr)}.feat.ancha{grid-column:span 1}}
-
-/* ================= CIFRAS ================= */
-.cifras{padding:0;background:var(--papel)}
-.cifras-fila{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-top:1px solid var(--linea2);border-bottom:1px solid var(--linea2)}
-.cifra{padding:36px 22px;border-right:1px solid var(--linea)}
-.cifra:last-child{border-right:0}
-.cifra .v{font-family:var(--serif);font-size:clamp(2.4rem,4.4vw,3.6rem);color:var(--tinta);line-height:1;letter-spacing:-.03em;margin-bottom:10px;font-variation-settings:"opsz" 144}
-.cifra .v small{font-size:.42em;letter-spacing:0;margin-left:4px;color:var(--tinta3)}
-.cifra p{margin:0;font-size:.9rem;color:var(--tinta3)}
-@media (max-width:900px){.cifras-fila{grid-template-columns:repeat(2,minmax(0,1fr))}.cifra{border-bottom:1px solid var(--linea)}.cifra:nth-child(2n){border-right:0}.cifra:last-child{grid-column:1/-1;border-bottom:0}}
 
 /* ================= CÓMO FUNCIONA (línea de tiempo) ================= */
 .steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;position:relative;counter-reset:paso}
@@ -399,6 +399,9 @@ section{padding:clamp(80px,11vw,150px) 0;position:relative}
 .compara .et.o{left:14px;top:auto;bottom:14px;background:rgba(0,0,0,.6);color:#fff}
 .compara .et.c{right:14px;top:auto;bottom:14px;background:rgba(255,255,255,.85);color:#111}
 .dos-col{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:48px;align-items:center}
+.dos-col.arriba{align-items:start}
+.sub-h3{font-family:var(--serif);font-weight:500;font-size:clamp(1.6rem,2.6vw,2.2rem);letter-spacing:-.02em;margin-bottom:10px;font-variation-settings:"opsz" 144}
+.sub-p{color:var(--tinta3);margin-bottom:22px}
 .movil-par{display:flex;gap:18px;justify-content:center;align-items:flex-start}
 .telefono{width:min(46%,230px);border-radius:34px;padding:9px;background:#0c0e12;border:1px solid var(--linea2);box-shadow:0 40px 80px -36px rgba(17,19,23,.6)}
 .telefono img{border-radius:26px;width:100%;height:auto}
@@ -406,9 +409,12 @@ section{padding:clamp(80px,11vw,150px) 0;position:relative}
 @media (max-width:900px){.dos-col{grid-template-columns:minmax(0,1fr)}}
 
 /* ================= GALERÍA (carruseles con pestañas) ================= */
-.gal-tabs{display:inline-flex;gap:4px;padding:5px;border:1px solid var(--linea2);border-radius:999px;margin-bottom:22px;flex-wrap:wrap;background:var(--hoja)}
+.gal-tabs{display:inline-flex;gap:2px;padding:5px;border:1px solid var(--linea2);border-radius:999px;margin-bottom:22px;background:var(--hoja);max-width:100%}
 .gal-tab{font:inherit;font-size:.94rem;font-weight:600;color:var(--tinta2);background:none;border:0;padding:9px 18px;border-radius:999px;cursor:pointer}
 .gal-tab:hover{color:var(--tinta)}
+.gal-tab{white-space:nowrap}
+@media (max-width:520px){.gal-tab{padding:9px 10px;font-size:.86rem}}
+@media (max-width:370px){.gal-tab{padding:9px 7px;font-size:.8rem}}
 .gal-tab[aria-selected="true"]{background:var(--tinta);color:var(--papel)}
 .gal-panel[hidden]{display:none}
 .carousel-block h3{display:none}
@@ -432,7 +438,9 @@ section{padding:clamp(80px,11vw,150px) 0;position:relative}
 .carousel.parado .car-dot.active::after{transition:none}
 .single-shot{border-radius:16px;overflow:hidden;border:1px solid var(--linea2);box-shadow:0 50px 100px -50px rgba(17,19,23,.5)}
 .single-shot img{width:100%;height:auto;cursor:zoom-in}
-@media (max-width:600px){.car-btn{width:40px;height:40px;margin-top:-20px}.car-prev{left:8px}.car-next{right:8px}}
+.rec-img-movil img,.telefono img{cursor:zoom-in}
+img[role="button"]:focus-visible{outline:3px solid var(--oro-v);outline-offset:-3px}
+@media (max-width:600px){.car-btn{top:auto;bottom:8px;margin-top:0;width:38px;height:38px}.car-prev{left:auto;right:54px}.car-next{right:10px}.car-pie{padding:10px 104px 10px 14px;min-height:56px}.car-dot{width:14px}.car-dots{gap:4px;flex-wrap:nowrap}.car-caption{font-size:.84rem}}
 
 /* ================= PRIVACIDAD (bóveda) ================= */
 .privacidad{background:var(--papel2)}
@@ -441,7 +449,8 @@ section{padding:clamp(80px,11vw,150px) 0;position:relative}
 .boveda .centro .ico{width:34px;height:34px;margin:0 auto 6px}
 .rayo{position:absolute;left:50%;top:50%;width:46%;height:2px;transform-origin:0 50%;transform:rotate(var(--a))}
 .rayo::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:repeating-linear-gradient(90deg,var(--linea2) 0 5px,transparent 5px 10px)}
-.rayo .paq{position:absolute;left:30%;top:-3px;width:7px;height:7px;border-radius:50%;background:var(--oro);animation:rebota 3.2s var(--ease) infinite;animation-delay:var(--dl)}
+.rayo .paq{position:absolute;left:30%;top:-3px;width:7px;height:7px;border-radius:50%;background:var(--oro);opacity:0}
+.boveda.dentro .rayo .paq{animation:rebota 3.2s var(--ease) 3;animation-delay:calc(var(--dl) + .6s)}
 @keyframes rebota{0%{transform:translateX(0);opacity:0}15%{opacity:1}55%{transform:translateX(160%);opacity:1}62%{transform:translateX(150%);opacity:0}100%{opacity:0}}
 .nodo{position:absolute;left:50%;top:50%;transform:rotate(var(--a)) translateX(var(--r)) rotate(calc(var(--a) * -1));width:0;height:0}
 .nodo > span{position:absolute;transform:translate(-50%,-50%);display:grid;place-items:center;gap:4px;font-size:.78rem;color:var(--tinta3);white-space:nowrap;text-align:center}
@@ -459,8 +468,10 @@ section{padding:clamp(80px,11vw,150px) 0;position:relative}
 #descarga .wrap{position:relative;z-index:1}
 #descarga h2{font-size:clamp(2.6rem,6vw,5rem)}
 #descarga .lead{margin-left:auto;margin-right:auto}
-.os-selector{display:inline-flex;gap:4px;background:rgba(243,239,230,.05);border:1px solid rgba(243,239,230,.16);border-radius:999px;padding:5px;margin:4px 0 30px;flex-wrap:wrap;justify-content:center}
-.os-tab{display:inline-flex;align-items:center;gap:8px;background:none;border:0;color:var(--n-tinta2);font:inherit;font-weight:600;font-size:.98rem;padding:10px 20px;border-radius:999px;cursor:pointer}
+.os-selector{display:inline-flex;gap:2px;background:rgba(243,239,230,.05);border:1px solid rgba(243,239,230,.16);border-radius:999px;padding:5px;margin:4px 0 30px;max-width:100%}
+.os-tab{display:inline-flex;align-items:center;gap:8px;background:none;border:0;color:var(--n-tinta2);font:inherit;font-weight:600;font-size:.98rem;padding:10px 20px;border-radius:999px;cursor:pointer;white-space:nowrap}
+@media (max-width:520px){.os-tab{padding:9px 10px;font-size:.86rem;gap:5px}}
+@media (max-width:370px){.os-tab{padding:9px 7px;font-size:.8rem}}
 .os-tab:hover{color:var(--n-tinta)}
 .os-tab[aria-selected="true"]{background:var(--n-tinta);color:#14161b}
 .os-panel[hidden]{display:none}
@@ -547,6 +558,9 @@ footer a{color:var(--oro-v)}
 .fab-descarga{position:fixed;right:20px;bottom:20px;z-index:70;display:inline-flex;align-items:center;gap:9px;background:var(--oro-v);color:#1b1306;font-weight:700;font-size:1rem;
   padding:13px 22px;border-radius:999px;text-decoration:none;box-shadow:0 14px 34px -10px rgba(0,0,0,.45);opacity:0;transform:translateY(16px) scale(.96);pointer-events:none;transition:opacity .4s var(--ease),transform .5s var(--ease-o)}
 .fab-descarga .ico{width:18px;height:18px}
+@media (min-width:981px){.fab-descarga{width:58px;height:58px;padding:0;justify-content:center;border-radius:50%}.fab-descarga .fab-txt{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}.fab-descarga .ico{width:22px;height:22px}}
+.nav .btn-oro{transition:transform .35s var(--ease-o),opacity .35s var(--ease)}
+.fab-on .nav .btn-oro{opacity:0;pointer-events:none;transform:translateY(-6px)}
 .fab-descarga.visible{opacity:1;transform:none;pointer-events:auto}
 .fab-descarga.visible:hover{transform:translateY(-3px);text-decoration:none}
 .lightbox{position:fixed;inset:0;z-index:120;display:none;background:rgba(8,9,12,.94);align-items:center;justify-content:center;padding:28px;cursor:zoom-out}
@@ -560,7 +574,10 @@ footer a{color:var(--oro-v)}
 
 /* ================= responsive ================= */
 @media (max-width:1060px){
-  .hero .wrap{grid-template-columns:minmax(0,1fr);gap:64px}
+  .hero .wrap{grid-template-columns:minmax(0,1fr);gap:0}
+  .hero-txt{display:contents}
+  .escena{order:1;margin-top:48px !important}
+  .hero-badges{order:2;margin-top:44px}
   .escena{max-width:620px;width:100%;margin:0 auto}
   .rec-grid{grid-template-columns:minmax(0,1fr);gap:0}
   .rec-fijo{display:none}
@@ -572,7 +589,12 @@ footer a{color:var(--oro-v)}
 @media (max-width:640px){
   body{font-size:16px}
   .wrap{padding:0 20px}
-  .hero{padding-top:118px}
+  .hero{padding-top:96px}
+  .hero-eyebrow{margin-bottom:22px;font-size:.8rem;gap:9px}
+  .hero h1{font-size:2.7rem;margin-bottom:18px}
+  .hero-sub{margin-bottom:24px;font-size:1rem}
+  .hero-ctas .btn{padding:12px 16px;font-size:.95rem}
+  .escena{margin-top:34px !important}
   .flot-1{display:none}
   .flot-2{right:-4px;top:-30px}
   .pantalla{display:none}
@@ -590,7 +612,7 @@ footer a{color:var(--oro-v)}
   *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;transition-delay:0s !important}
   .cards-row,.cinta{overflow-x:auto;-webkit-mask-image:none;mask-image:none}
   .cards-track,.cinta-pista{animation:none !important}
-  .rayo .paq,.punto-vivo::after,.flotante > *{animation:none !important}
+  .rayo .paq,.flotante > *{animation:none !important}
   .rayo .paq{opacity:1;transform:translateX(120%)}
 }
 
@@ -678,7 +700,7 @@ footer a{color:var(--oro-v)}
     </nav>
     <div class="nav-acc">
       <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Cambiar a modo oscuro"><svg class="ico i-luna" aria-hidden="true"><use href="#i-luna"/></svg><svg class="ico i-sol" aria-hidden="true"><use href="#i-sol"/></svg></button>
-      <a class="btn btn-oro btn-sm" href="#descarga"><svg class="ico" aria-hidden="true"><use href="#i-bajada"/></svg>Descargar</a>
+      <a class="btn btn-oro btn-sm" id="nav-descarga" href="#descarga"><svg class="ico" aria-hidden="true"><use href="#i-bajada"/></svg>Descargar</a>
     </div>
   </div>
   <div class="progreso" id="progreso" aria-hidden="true"></div>
@@ -691,7 +713,7 @@ footer a{color:var(--oro-v)}
   <div class="foco" aria-hidden="true"></div>
   <div class="wrap">
     <div class="hero-txt">
-      <img class="hero-icon ent" style="--d:0" src="icono-512.png" alt="Icono de Liberty" width="56" height="56">
+      <a class="hero-eyebrow ent" style="--d:0" href="#descarga"><img class="hero-icon" src="icono-512.png" alt="" width="34" height="34"><span class="pill">1.20</span><span>Nuevo diseño y un hogar de ejemplo completo</span><svg class="ico flecha" aria-hidden="true"><use href="#i-flecha"/></svg></a>
       <h1 id="titulo"><span class="l"><span style="--i:0">Todo lo que</span></span><span class="l"><span style="--i:1">tienes, en un</span></span><span class="l"><span style="--i:2"><em>solo número.</em></span></span></h1>
       <p class="hero-sub ent" style="--d:1">Liberty reúne las cuentas, inversiones, inmuebles y deudas de tu hogar en una app de escritorio y te dice <strong>cuánto tienes, cuánto ganas y cómo evoluciona</strong>. Gratis y 100 % local: tus datos nunca salen de tu ordenador.</p>
       <div class="hero-ctas ent" style="--d:2">
@@ -726,8 +748,8 @@ footer a{color:var(--oro-v)}
             </div></div></div>
           </div>
           <div class="tp-filas">
-            <div class="tp-fila"><span>Cartera neta <small>· inversiones, cuentas y deudas</small></span><b>153.415 €</b></div>
-            <div class="tp-fila"><span>Inmuebles netos <small>· 396.500 € − hipotecas</small></span><b>159.540 €</b></div>
+            <div class="tp-fila"><span>Cartera neta <small>· inversiones, cuentas y deudas</small></span><b>153.415<small>,40</small> €</b></div>
+            <div class="tp-fila"><span>Inmuebles netos <small>· 396.500 € − hipotecas</small></span><b>159.540<small>,17</small> €</b></div>
           </div>
         </div>
         <div class="flotante flot-1" aria-hidden="true"><div><svg class="ico"><use href="#i-grafica"/></svg></div><div><span>TIR de la cartera</span><b>+11,17 %</b></div></div>
@@ -777,21 +799,23 @@ footer a{color:var(--oro-v)}
       <div class="asiento rv">
         <span class="op" aria-hidden="true"></span>
         <div class="que"><h3>Todo lo que tienes</h3><p>Cuentas, fondos, acciones, cripto, oro, pensiones e inmuebles.</p>
-          <div class="desglose"><span>Cartera 163.581 €</span><span>Inmuebles 396.500 €</span></div></div>
-        <div class="v" data-odo="560081" data-suf=" €">560.081 €</div>
+          <div class="desglose" role="group" aria-label="Partidas de lo que tienes"><button type="button" class="partida" data-lado="t" data-v="163581.55" aria-pressed="true">Cartera <span>163.582 €</span></button><button type="button" class="partida" data-lado="t" data-v="396500" aria-pressed="true">Inmuebles <span>396.500 €</span></button></div></div>
+        <div class="v" id="ec-t" data-odo="560082" data-suf=" €">560.082 €</div>
       </div>
       <div class="asiento debe rv">
         <span class="op" aria-hidden="true">−</span>
         <div class="que"><h3>Todo lo que debes</h3><p>Hipotecas, préstamo del coche y tarjeta, con su cuota y su interés.</p>
-          <div class="desglose"><span>Hipotecas 236.960 €</span><span>Otras deudas 10.165 €</span></div></div>
-        <div class="v" data-odo="247125" data-suf=" €">247.125 €</div>
+          <div class="desglose" role="group" aria-label="Partidas de lo que debes"><button type="button" class="partida" data-lado="d" data-v="236959.83" aria-pressed="true">Hipotecas <span>236.960 €</span></button><button type="button" class="partida" data-lado="d" data-v="10166.15" aria-pressed="true">Coche y tarjeta <span>10.166 €</span></button></div></div>
+        <div class="v" id="ec-d" data-odo="247126" data-suf=" €">247.126 €</div>
       </div>
       <div class="asiento total rv">
         <span class="op" aria-hidden="true">=</span>
         <div class="que"><h3>Lo que es tuyo</h3><p>Tu patrimonio neto, actualizado cada vez que anotas o cambian los precios.</p></div>
-        <div class="v" data-odo="312956" data-suf=" €">312.956 €</div>
+        <div class="v" id="ec-p" data-odo="312956" data-suf=" €">312.956 €</div>
       </div>
     </div>
+    <p class="ec-pista rv"><svg class="ico" aria-hidden="true"><use href="#i-ajustes"/></svg>Pulsa una partida para quitarla o volver a sumarla y mira cómo cambia la cuenta.</p>
+    <p class="sr" id="ec-anuncio" aria-live="polite"></p>
     <p class="libro-nota rv">Y debajo de esa cifra, todo lo demás: rentabilidad real (TIR), dinero libre, colchón, ingresos y gastos, cuánto te falta para vivir de tus rentas y cómo ha cambiado cada mes.</p>
   </div>
 </section>
@@ -803,27 +827,28 @@ footer a{color:var(--oro-v)}
     <h2 id="t-quees" class="rv" style="--d:1">El Excel que nunca terminaste, ya hecho.</h2>
     <p class="lead rv" style="--d:2">Liberty reúne <strong>todo el patrimonio de tu hogar</strong> —cuentas, fondos, acciones, cripto, planes de pensiones, inmuebles e hipotecas— con tu <strong>rentabilidad real</strong>, tus ingresos y gastos y la evolución mes a mes. Sin fórmulas que mantener y sin que tus datos salgan de tu equipo.</p>
   </div>
-  <div class="cards-marquee rv" style="--d:3" role="region" aria-label="Para qué sirve Liberty">
+  <p class="wrap marq-tit rv" style="--d:3">Lo que puedes llevar en Liberty</p>
+  <div class="cards-marquee rv" style="--d:3" role="region" aria-label="Lo que puedes llevar en Liberty">
     <div class="cards-row izq">
       <div class="cards-track" data-cards-track>
-        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-cartera"/></svg></span><h3>Patrimonio completo</h3><p>Cuentas, inversiones, inmuebles y deudas, todo en una misma vista consolidada.</p></div>
-        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-hoja"/></svg></span><h3>Ingresos y gastos</h3><p>Categorías, tendencias, mapa de calor y presupuesto: entiende a dónde va tu dinero.</p></div>
-        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-grafica"/></svg></span><h3>Rentabilidad y evolución</h3><p>Rentabilidad real (TIR), plusvalías y cómo evoluciona tu patrimonio en el tiempo.</p></div>
-        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-carpeta"/></svg></span><h3>Multi-patrimonio</h3><p>Varios patrimonios independientes desde la misma aplicación.</p></div>
-        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-rayo"/></svg></span><h3>Precios al día</h3><p>Actualiza el valor de fondos, acciones y cripto con un solo clic.</p></div>
-        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-disco"/></svg></span><h3>Copias de seguridad</h3><p>Copias automáticas y manuales que restauras cuando quieras; todo bajo tu control.</p></div>
-        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-bandera"/></svg></span><h3>Libertad financiera</h3><p>Cuántos meses vivirías con lo que tienes y cuánto de tu gasto cubren ya tus rentas.</p></div>
+        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-cartera"/></svg></span><h3>Cuentas y efectivo</h3><p>Saldo de cada banco, con lo reservado y el colchón aparte.</p></div>
+        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-grafica"/></svg></span><h3>Fondos indexados</h3><p>Precio diario automático, con lo aportado, la plusvalía y la TIR.</p></div>
+        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-tarta"/></svg></span><h3>ETF y acciones</h3><p>Cotización automática, también en otras divisas.</p></div>
+        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-rayo"/></svg></span><h3>Criptomonedas</h3><p>Bitcoin y compañía, con su precio al día.</p></div>
+        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-monedas"/></svg></span><h3>Oro y metales</h3><p>Monedas o lingotes, con el valor que les des.</p></div>
+        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-escudo"/></svg></span><h3>Planes de pensiones</h3><p>Valor y aportaciones, con su rentabilidad real.</p></div>
+        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-disco"/></svg></span><h3>Seguros de ahorro</h3><p>PIAS y similares: lo aportado y lo que valen hoy.</p></div>
       </div>
     </div>
     <div class="cards-row der">
       <div class="cards-track" data-cards-track>
-        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-casa"/></svg></span><h3>Inmuebles</h3><p>Cada piso con su ficha: valor, hipoteca, inquilinos y contratos, lo que te deja el alquiler y avisos si un cobro no llega.</p></div>
-        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-personas"/></svg></span><h3>Titulares</h3><p>Asigna cada activo o deuda a sus titulares y conoce el reparto real del patrimonio.</p></div>
-        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-documento"/></svg></span><h3>Informe fiscal</h3><p>Un resumen para la declaración: ganancias, pérdidas y rendimientos del ahorro.</p></div>
-        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-tarta"/></svg></span><h3>Distribución</h3><p>Cómo se reparte tu patrimonio por tipo de activo, titular, entidad o geografía.</p></div>
-        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-tarjeta"/></svg></span><h3>Deudas y vencimientos</h3><p>Préstamos, cuotas, intereses y las fechas que se van acercando.</p></div>
-        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-importar"/></svg></span><h3>Importa tus datos</h3><p>Trae inversiones y movimientos del banco (Excel/CSV o con ayuda de una IA) sin partir de cero.</p></div>
-        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-candado"/></svg></span><h3>Sin cuentas ni servidores</h3><p>Sin registro ni nube: todo funciona en tu equipo, sin conexión obligatoria.</p></div>
+        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-calendario"/></svg></span><h3>Letras y depósitos</h3><p>Con su vencimiento, para que te avise antes.</p></div>
+        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-personas"/></svg></span><h3>Crowdfunding</h3><p>También lo que va en pérdidas: se ve tal cual.</p></div>
+        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-casa"/></svg></span><h3>Pisos y casas</h3><p>Ficha, valor estimado e hipoteca enlazada.</p></div>
+        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-edificio"/></svg></span><h3>Garajes y trasteros</h3><p>Lo que valen y lo que te deja el alquiler.</p></div>
+        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-documento"/></svg></span><h3>Hipotecas</h3><p>Capital pendiente, cuota, interés y fecha de fin.</p></div>
+        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-tarjeta"/></svg></span><h3>Préstamos y tarjetas</h3><p>Lo que debes y cuánto pagas al mes.</p></div>
+        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-hoja"/></svg></span><h3>Ingresos y gastos</h3><p>Cada apunte con su categoría, titular y factura.</p></div>
       </div>
     </div>
   </div>
@@ -950,8 +975,8 @@ footer a{color:var(--oro-v)}
         <span class="feat-ico"><svg class="ico" aria-hidden="true"><use href="#i-bandera"/></svg></span>
         <h3>Control y planificación</h3>
         <ul>
-          <li>Libertad financiera: meses de vida con lo disponible y renta pasiva que ya cubre tu gasto <span class="nuevo">1.19</span></li>
-          <li>Alertas de precio: «avísame si cae un 10 %» o «si supera…» <span class="nuevo">1.19</span></li>
+          <li>Libertad financiera: meses de vida con lo disponible y renta pasiva que ya cubre tu gasto</li>
+          <li>Alertas de precio: «avísame si cae un 10 %» o «si supera…»</li>
           <li>Objetivos de asignación, concentración y alertas configurables</li>
           <li>Vencimientos de depósitos y deudas · informe fiscal anual</li>
         </ul>
@@ -969,10 +994,10 @@ footer a{color:var(--oro-v)}
         <span class="feat-ico"><svg class="ico" aria-hidden="true"><use href="#i-ajustes"/></svg></span>
         <h3>A tu manera</h3>
         <ul>
-          <li>Inicio a tu gusto: ordena, oculta o junta tarjetas <span class="nuevo">1.19</span></li>
+          <li>Inicio a tu gusto: ordena, oculta o junta tarjetas</li>
           <li>Ocultar importes con un clic, para enseñar la pantalla sin enseñar cifras</li>
           <li>Deshacer al borrar (Ctrl+Z) y búsqueda global con Ctrl+K</li>
-          <li>Tema claro y oscuro, tipografía propia y accesible con teclado <span class="nuevo">1.20</span></li>
+          <li>Tema claro y oscuro, tipografía propia y accesible con teclado</li>
         </ul>
       </div>
       <div class="feat ancha rv" style="--d:1">
@@ -989,25 +1014,12 @@ footer a{color:var(--oro-v)}
   </div>
 </section>
 
-<!-- ======== CIFRAS ======== -->
-<section class="cifras" aria-label="Liberty en cifras">
-  <div class="wrap">
-    <div class="cifras-fila">
-      <div class="cifra rv"><div class="v" data-odo="0" data-suf=" €">0 €</div><p>Lo que cuesta. Hoy y siempre.</p></div>
-      <div class="cifra rv" style="--d:1"><div class="v" data-odo="0">0</div><p>Cuentas que crear o contraseñas que recordar.</p></div>
-      <div class="cifra rv" style="--d:2"><div class="v" data-odo="0">0</div><p>Datos tuyos enviados a un servidor.</p></div>
-      <div class="cifra rv" style="--d:3"><div class="v"><span data-odo="1">1</span><small>archivo</small></div><p>Un ejecutable de unos 13 MB. Sin instalar.</p></div>
-      <div class="cifra rv" style="--d:4"><div class="v" data-odo="4">4</div><p>Formas de usarlo: Windows, Mac, Linux y Docker.</p></div>
-    </div>
-  </div>
-</section>
-
 <!-- ======== CÓMO FUNCIONA ======== -->
 <section class="cv" id="como-funciona" aria-labelledby="t-como">
   <div class="wrap">
     <p class="rotulo rv"><b>05</b>Cómo funciona</p>
-    <h2 id="t-como" class="rv" style="--d:1">Nada que instalar. Nada que configurar.</h2>
-    <p class="lead rv" style="--d:2">Liberty es un único programa que se abre en tu navegador y guarda los datos en tu equipo. La primera vez te recibe con un hogar de ejemplo para que lo pruebes todo.</p>
+    <h2 id="t-como" class="rv" style="--d:1">Descargar, abrir y empezar.</h2>
+    <p class="lead rv" style="--d:2">Sin cuentas que crear ni nada que configurar. Liberty se abre en tu navegador y guarda los datos en tu equipo; la primera vez te recibe con un hogar de ejemplo para que lo pruebes todo.</p>
     <ol class="steps" id="steps">
       <li class="step rv"><span class="bola">1</span><h3>Abres la app</h3><p>En Windows, doble clic en <code>Liberty.exe</code>. En Mac, abre el <code>.dmg</code> y arrastra Liberty a Aplicaciones.</p></li>
       <li class="step rv" style="--d:1"><span class="bola">2</span><h3>Se abre en tu navegador</h3><p>La app se sirve en tu propio equipo, en <code>127.0.0.1</code>. Todo ocurre dentro de tu ordenador.</p></li>
@@ -1052,6 +1064,7 @@ footer a{color:var(--oro-v)}
           <div class="carousel-viewport" data-track>
             <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Inicio: tu patrimonio, cómo ha crecido y tu libertad financiera"><img src="capturas/panel/inicio.webp" alt="Inicio: tu patrimonio, cómo ha crecido y tu libertad financiera" loading="lazy" width="1920" height="1200"></div>
             <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Cartera: tu mes de un vistazo y la cartera neta"><img src="capturas/panel/cartera.webp" alt="Cartera: tu mes de un vistazo y la cartera neta" loading="lazy" width="1920" height="1200"></div>
+            <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Cartera en tema claro"><img src="capturas/panel/cartera_claro.webp" alt="Cartera en tema claro" loading="lazy" width="1920" height="1200"></div>
             <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Distribución: componentes de la cartera"><img src="capturas/panel/distribucion.webp" alt="Distribución: componentes de la cartera" loading="lazy" width="1920" height="1200"></div>
             <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Ficha de un activo: fondo indexado MSCI World"><img src="capturas/panel/ficha.webp" alt="Ficha de un activo: fondo indexado MSCI World" loading="lazy" width="1920" height="1200"></div>
             <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Rentabilidad de la cartera por activo"><img src="capturas/panel/rentabilidad.webp" alt="Rentabilidad de la cartera por activo" loading="lazy" width="1920" height="1200"></div>
@@ -1063,7 +1076,7 @@ footer a{color:var(--oro-v)}
           </div>
           <button class="car-btn car-prev" type="button" data-prev aria-label="Captura anterior"><svg class="ico" aria-hidden="true"><use href="#i-izq"/></svg></button>
           <button class="car-btn car-next" type="button" data-next aria-label="Captura siguiente"><svg class="ico" aria-hidden="true"><use href="#i-der"/></svg></button>
-          <div class="car-pie"><span class="car-caption" data-caption aria-live="polite"></span><div class="car-dots" data-dots role="tablist" aria-label="Seleccionar captura del Panel"></div></div>
+          <div class="car-pie"><span class="car-caption" data-caption aria-live="off"></span><div class="car-dots" data-dots role="group" aria-label="Seleccionar captura del Panel"></div></div>
         </div>
       </div>
     </div>
@@ -1082,7 +1095,7 @@ footer a{color:var(--oro-v)}
           </div>
           <button class="car-btn car-prev" type="button" data-prev aria-label="Captura anterior"><svg class="ico" aria-hidden="true"><use href="#i-izq"/></svg></button>
           <button class="car-btn car-next" type="button" data-next aria-label="Captura siguiente"><svg class="ico" aria-hidden="true"><use href="#i-der"/></svg></button>
-          <div class="car-pie"><span class="car-caption" data-caption aria-live="polite"></span><div class="car-dots" data-dots role="tablist" aria-label="Seleccionar captura de Mis datos"></div></div>
+          <div class="car-pie"><span class="car-caption" data-caption aria-live="off"></span><div class="car-dots" data-dots role="group" aria-label="Seleccionar captura de Mis datos"></div></div>
         </div>
       </div>
     </div>
@@ -1100,7 +1113,7 @@ footer a{color:var(--oro-v)}
           </div>
           <button class="car-btn car-prev" type="button" data-prev aria-label="Captura anterior"><svg class="ico" aria-hidden="true"><use href="#i-izq"/></svg></button>
           <button class="car-btn car-next" type="button" data-next aria-label="Captura siguiente"><svg class="ico" aria-hidden="true"><use href="#i-der"/></svg></button>
-          <div class="car-pie"><span class="car-caption" data-caption aria-live="polite"></span><div class="car-dots" data-dots role="tablist" aria-label="Seleccionar captura de Documentos"></div></div>
+          <div class="car-pie"><span class="car-caption" data-caption aria-live="off"></span><div class="car-dots" data-dots role="group" aria-label="Seleccionar captura de Documentos"></div></div>
         </div>
       </div>
     </div>
@@ -1112,10 +1125,10 @@ footer a{color:var(--oro-v)}
       </div>
     </div>
 
-    <div class="dos-col" style="margin-top:clamp(70px,9vw,120px)">
+    <div class="dos-col arriba" style="margin-top:clamp(64px,8vw,104px)">
       <div class="rv">
-        <h3 style="font-family:var(--serif);font-weight:500;font-size:clamp(1.6rem,2.6vw,2.2rem);letter-spacing:-.02em;margin-bottom:10px">Claro u oscuro, como prefieras</h3>
-        <p style="color:var(--tinta3);margin-bottom:20px">Arrastra para comparar los dos temas de la app.</p>
+        <h3 class="sub-h3">Claro u oscuro, como prefieras</h3>
+        <p class="sub-p">Arrastra para comparar los dos temas de la app.</p>
         <div class="compara" id="compara">
           <img src="capturas/panel/inicio.webp" alt="" loading="lazy" width="1920" height="1200">
           <img class="claro" src="capturas/panel/inicio_claro.webp" alt="" loading="lazy" width="1920" height="1200">
@@ -1126,8 +1139,8 @@ footer a{color:var(--oro-v)}
         </div>
       </div>
       <div class="rv" style="--d:1">
-        <h3 style="font-family:var(--serif);font-weight:500;font-size:clamp(1.6rem,2.6vw,2.2rem);letter-spacing:-.02em;margin-bottom:10px">También en el móvil</h3>
-        <p style="color:var(--tinta3);margin-bottom:24px">Con Docker en un servidor de casa y una VPN privada, la abres desde el móvil. La interfaz se adapta a pantallas pequeñas.</p>
+        <h3 class="sub-h3">También en el móvil</h3>
+        <p class="sub-p">Con Docker en un servidor de casa y una VPN privada, la abres desde el móvil. La interfaz se adapta a pantallas pequeñas.</p>
         <div class="movil-par">
           <div class="telefono"><img src="capturas/movil/inicio.webp" alt="Inicio de Liberty en un móvil" loading="lazy" width="780" height="1688"></div>
           <div class="telefono"><img src="capturas/movil/inmuebles_claro.webp" alt="Inmuebles de Liberty en un móvil, tema claro" loading="lazy" width="780" height="1688"></div>
@@ -1368,7 +1381,7 @@ footer a{color:var(--oro-v)}
 
 <!-- Botón de descarga flotante -->
 <a class="fab-descarga" id="fab-descarga" href="#descarga" aria-label="Ir a la descarga de Liberty" tabindex="-1" aria-hidden="true">
-  <svg class="ico" aria-hidden="true"><use href="#i-bajada"/></svg> Descargar
+  <svg class="ico" aria-hidden="true"><use href="#i-bajada"/></svg><span class="fab-txt">Descargar</span>
 </a>
 
 <!-- Lightbox de capturas -->
@@ -1407,14 +1420,28 @@ footer a{color:var(--oro-v)}
   /* ---------- Con movimiento reducido, cinta y tarjetas se desplazan a mano: que sean enfocables ---------- */
   if(QUIETO){ document.querySelectorAll(".cinta, .cards-row").forEach(function(z){ z.tabIndex = 0; }); }
 
+  /* ---------- Anclas exactas: content-visibility estima la altura de lo que aún no se ha pintado;
+     antes de saltar a un ancla se desactiva para que el destino se calcule con las alturas reales ---------- */
+  function alturasReales(){ if(!root.classList.contains("sin-cv")){ root.classList.add("sin-cv"); void document.body.offsetHeight; } }
+  if(location.hash.length > 1) alturasReales();
+  document.addEventListener("click", function(e){
+    var a = e.target.closest ? e.target.closest('a[href^="#"]') : null;
+    if(a && a.getAttribute("href").length > 1) alturasReales();
+  }, true);
+  window.addEventListener("hashchange", alturasReales);
+
   /* ---------- Entrada del hero ---------- */
   requestAnimationFrame(function(){ requestAnimationFrame(function(){ document.body.classList.add("listo"); }); });
 
   /* ---------- Odómetro: cifras que giran como un contador ---------- */
   var FMT = new Intl.NumberFormat("es-ES");
-  function montaOdo(el){
-    var n = parseInt(el.getAttribute("data-odo"), 10);
-    var texto = FMT.format(n) + (el.getAttribute("data-suf") || "");
+  // Monta las columnas de dígitos; si hay cifra previa, arranca desde ella (alineada por la derecha).
+  function montaOdo(el, n, previo){
+    if(n === undefined) n = parseInt(el.getAttribute("data-odo"), 10);
+    el._n = n;
+    var texto = FMT.format(n).replace("-", "−") + (el.getAttribute("data-suf") || "");
+    var antes = previo === undefined ? [] : FMT.format(previo).replace(/\D/g, "").split("").map(Number);
+    var total = texto.replace(/\D/g, "").length;
     var sr = document.createElement("span"); sr.className = "sr"; sr.textContent = texto;
     var caja = document.createElement("span");
     caja.className = "odo"; caja.setAttribute("aria-hidden", "true");
@@ -1422,7 +1449,10 @@ footer a{color:var(--oro-v)}
     texto.split("").forEach(function(ch){
       if(/\d/.test(ch)){
         var d = document.createElement("span"); d.className = "d";
-        var col = document.createElement("span"); col.style.setProperty("--k", k++);
+        var col = document.createElement("span"); col.style.setProperty("--k", k);
+        var j = antes.length - (total - k); var ini = j >= 0 ? antes[j] : 0;
+        if(ini) col.style.transform = "translateY(" + (-ini * 10) + "%)";
+        k++;
         for(var i=0;i<10;i++){ var c = document.createElement("i"); c.textContent = i; col.appendChild(c); }
         d.appendChild(col); caja.appendChild(d); digitos.push([col, +ch]);
       } else {
@@ -1441,12 +1471,38 @@ footer a{color:var(--oro-v)}
       es.forEach(function(e){
         if(!e.isIntersecting) return;
         var el = e.target; ioOdo.unobserve(el);
+        if(el._n !== undefined) return; // ya lo montó la ecuación interactiva
         var g = montaOdo(el);
         requestAnimationFrame(function(){ requestAnimationFrame(function(){ setTimeout(g, el.closest(".hero") ? 550 : 60); }); });
       });
     }, {rootMargin:"0px 0px -15% 0px"});
     odos.forEach(function(el){ ioOdo.observe(el); });
   }
+
+  /* ---------- La ecuación se puede tocar: quita o suma partidas ---------- */
+  (function(){
+    var bs = Array.prototype.slice.call(document.querySelectorAll(".partida"));
+    var eT = document.getElementById("ec-t"), eD = document.getElementById("ec-d"), eP = document.getElementById("ec-p");
+    var anuncio = document.getElementById("ec-anuncio");
+    if(!bs.length || !eT || !eD || !eP) return;
+    function suma(lado){ return bs.reduce(function(a, b){ return a + (b.getAttribute("data-lado") === lado && b.getAttribute("aria-pressed") === "true" ? +b.getAttribute("data-v") : 0); }, 0); }
+    function pon(el, n){
+      var previo = el._n === undefined ? parseInt(el.getAttribute("data-odo"), 10) : el._n;
+      if(previo === n && el._n !== undefined) return;
+      el.setAttribute("data-odo", n);
+      var g = montaOdo(el, n, previo);
+      if(QUIETO) g(); else requestAnimationFrame(function(){ requestAnimationFrame(g); });
+    }
+    bs.forEach(function(b){
+      b.addEventListener("click", function(){
+        b.setAttribute("aria-pressed", b.getAttribute("aria-pressed") === "true" ? "false" : "true");
+        var t = suma("t"), d = suma("d"), p = Math.round(t - d);
+        pon(eT, Math.round(t)); pon(eD, Math.round(d)); pon(eP, p);
+        eP.closest(".asiento").classList.toggle("negativo", p < 0);
+        if(anuncio) anuncio.textContent = "Tienes " + FMT.format(Math.round(t)) + " €, debes " + FMT.format(Math.round(d)) + " €. Es tuyo: " + FMT.format(p) + " €.";
+      });
+    });
+  })();
 
   /* ---------- Aparición al hacer scroll ---------- */
   (function(){
@@ -1522,11 +1578,20 @@ footer a{color:var(--oro-v)}
     window.addEventListener("scroll", function(){ if(!pend){ pend = true; requestAnimationFrame(pinta); } }, {passive:true});
     window.addEventListener("resize", pinta);
     pinta();
+    // Sección activa: la que cruza la mitad de la pantalla; cada sección cuenta para su enlace del menú.
     var enlaces = Array.prototype.slice.call(document.querySelectorAll(".nav-links a"));
-    var io = new IntersectionObserver(function(es){
-      es.forEach(function(e){ if(e.isIntersecting){ enlaces.forEach(function(a){ a.setAttribute("aria-current", String(a.getAttribute("href") === "#" + e.target.id)); }); } });
-    }, {rootMargin:"-45% 0px -50% 0px"});
-    enlaces.forEach(function(a){ var s = document.querySelector(a.getAttribute("href")); if(s) io.observe(s); });
+    var GRUPO = {"ecuacion":"#que-es","que-es":"#que-es","recorrido":"#recorrido","caracteristicas":"#caracteristicas","como-funciona":"#caracteristicas","para-quien":"#caracteristicas","capturas":"#caracteristicas","privacidad":"#privacidad","faq":"#faq"};
+    var secciones = Array.prototype.slice.call(document.querySelectorAll("main > section[id]"));
+    var actual;
+    function marca(){
+      var mitad = window.innerHeight / 2, dest = null;
+      for(var i=0;i<secciones.length;i++){ var r = secciones[i].getBoundingClientRect(); if(r.top <= mitad && r.bottom > mitad){ dest = GRUPO[secciones[i].id] || null; break; } }
+      if(dest === actual) return; actual = dest;
+      enlaces.forEach(function(a){ if(a.getAttribute("href") === dest) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current"); });
+    }
+    var pendM = false;
+    window.addEventListener("scroll", function(){ if(!pendM){ pendM = true; requestAnimationFrame(function(){ pendM = false; marca(); }); } }, {passive:true});
+    marca();
   })();
 
   /* ---------- Recorrido: la pantalla fija cambia con cada paso ---------- */
@@ -1612,6 +1677,7 @@ footer a{color:var(--oro-v)}
   (function(){
     var fab = document.getElementById("fab-descarga");
     var dl  = document.getElementById("descarga");
+    var navDl = document.getElementById("nav-descarga");
     if(!fab) return;
     function toggle(){
       var pasadoHero = window.scrollY > 600;
@@ -1622,6 +1688,9 @@ footer a{color:var(--oro-v)}
       fab.classList.toggle("visible", ver);
       fab.tabIndex = ver ? 0 : -1;
       fab.setAttribute("aria-hidden", String(!ver));
+      // Un solo «Descargar» a la vista: con el flotante fuera, se retira el del menú.
+      document.body.classList.toggle("fab-on", ver);
+      if(navDl){ navDl.tabIndex = ver ? -1 : 0; if(ver) navDl.setAttribute("aria-hidden", "true"); else navDl.removeAttribute("aria-hidden"); }
     }
     window.addEventListener("scroll", toggle, {passive:true});
     window.addEventListener("resize", toggle);
@@ -1648,7 +1717,11 @@ footer a{color:var(--oro-v)}
       if(antes && antes.focus) antes.focus();
     }
     document.querySelectorAll(".slide img, .single-shot img, .rec-img-movil img, .telefono img").forEach(function(el){
+      el.setAttribute("role", "button");
+      el.setAttribute("aria-label", "Ampliar: " + el.alt);
+      if(!el.closest(".slide")) el.tabIndex = 0;
       el.addEventListener("click", function(){ abrir(el.currentSrc || el.src, el.alt); });
+      el.addEventListener("keydown", function(e){ if(e.key === "Enter" || e.key === " "){ e.preventDefault(); e.stopPropagation(); abrir(el.currentSrc || el.src, el.alt); } });
     });
     box.addEventListener("click", function(e){ if(e.target !== cerrar) cierra(); });
     cerrar.addEventListener("click", cierra);
@@ -1679,9 +1752,8 @@ footer a{color:var(--oro-v)}
       var d = document.createElement("button");
       d.type = "button";
       d.className = "car-dot";
-      d.setAttribute("role","tab");
       d.setAttribute("aria-label","Ir a la captura " + (i+1) + ": " + s.getAttribute("aria-label"));
-      d.addEventListener("click", function(){ goto(i); reset(); });
+      d.addEventListener("click", function(){ goto(i, true); reset(); });
       dotsBox.appendChild(d);
       dots.push(d);
     });
@@ -1691,26 +1763,27 @@ footer a{color:var(--oro-v)}
         var on = (i === idx);
         s.classList.toggle("active", on);
         s.setAttribute("aria-hidden", on ? "false" : "true");
+        var im = s.querySelector("img"); if(im) im.tabIndex = on ? 0 : -1;
       });
       dots.forEach(function(d, i){
         var on = (i === idx);
         d.classList.remove("active");
-        d.setAttribute("aria-selected", on ? "true" : "false");
+        if(on) d.setAttribute("aria-current", "true"); else d.removeAttribute("aria-current");
       });
       if(dots[idx]) requestAnimationFrame(function(){ dots[idx].classList.add("active"); });
       if(cap) cap.textContent = (idx + 1) + " / " + slides.length + " · " + slides[idx].getAttribute("aria-label");
     }
     function visible(){ return car.offsetParent !== null; }
-    function goto(i){ idx = (i + slides.length) % slides.length; render(); }
-    function avanza(){ goto(idx + 1); }
-    function retrocede(){ goto(idx - 1); }
+    function goto(i, mano){ idx = (i + slides.length) % slides.length; if(cap) cap.setAttribute("aria-live", mano ? "polite" : "off"); render(); }
+    function avanza(mano){ goto(idx + 1, mano === true); }
+    function retrocede(mano){ goto(idx - 1, mano === true); }
 
     function start(){ if(!timer && slides.length > 1 && visible() && !QUIETO){ car.classList.remove("parado"); timer = setInterval(function(){ if(visible()) avanza(); }, INTERVALO); } }
     function stop(){ car.classList.add("parado"); if(timer){ clearInterval(timer); timer = null; } }
     function reset(){ stop(); start(); }
 
-    prev.addEventListener("click", function(){ retrocede(); reset(); });
-    next.addEventListener("click", function(){ avanza();    reset(); });
+    prev.addEventListener("click", function(){ retrocede(true); reset(); });
+    next.addEventListener("click", function(){ avanza(true); reset(); });
 
     // Pausa al pasar el ratón / foco
     car.addEventListener("mouseenter", stop);
@@ -1724,14 +1797,14 @@ footer a{color:var(--oro-v)}
     track.addEventListener("touchend", function(e){
       if(x0 === null) return;
       var dx = e.changedTouches[0].clientX - x0;
-      if(Math.abs(dx) > 40){ dx < 0 ? avanza() : retrocede(); }
+      if(Math.abs(dx) > 40){ if(dx < 0) avanza(true); else retrocede(true); }
       x0 = null; start();
     });
 
     // Teclado (flechas) cuando el carrusel tiene el foco
     car.addEventListener("keydown", function(e){
-      if(e.key === "ArrowLeft"){ retrocede(); reset(); }
-      else if(e.key === "ArrowRight"){ avanza(); reset(); }
+      if(e.key === "ArrowLeft"){ retrocede(true); reset(); }
+      else if(e.key === "ArrowRight"){ avanza(true); reset(); }
     });
 
     // Pausar si la pestaña no está visible; arrancar al cambiar de pestaña de la galería
