@@ -183,7 +183,7 @@ section{padding:clamp(72px,8.5vw,124px) 0;position:relative}
 .con-foco:hover .foco{opacity:1}
 
 /* ================= HERO ================= */
-.hero{position:relative;overflow:hidden;padding:150px 0 0;min-height:100svh;display:flex;flex-direction:column}
+.hero{position:relative;overflow:hidden;padding:108px 0 0;min-height:100svh;display:flex;flex-direction:column}
 .hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,1fr);gap:56px;align-items:center;flex:1}
 .hero-eyebrow{display:inline-flex;align-items:center;gap:10px;padding:6px 14px 6px 6px;border:1px solid var(--n-linea);border-radius:999px;font-size:.86rem;color:var(--n-tinta2);margin-bottom:26px;text-decoration:none;background:rgba(243,239,230,.03)}
 .noche a.hero-eyebrow{color:var(--n-tinta2)}
@@ -204,6 +204,15 @@ section{padding:clamp(72px,8.5vw,124px) 0;position:relative}
 .hero-sub strong{color:var(--n-tinta);font-weight:600}
 .hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:34px}
 .hero-badges{display:flex;gap:8px 18px;flex-wrap:wrap;font-size:.88rem;color:var(--n-tinta3);padding:0;margin:0;list-style:none}
+/* Portátiles (poca altura): el hero entero, con las insignias bajo los botones, cabe al cargar */
+@media (min-width:1061px) and (max-height:960px){
+  .hero{padding-top:92px}
+  .hero-eyebrow{margin-bottom:18px}
+  .hero h1{font-size:clamp(2.9rem,min(6.6vw,9.4vh),6rem);margin-bottom:20px}
+  .hero-sub{margin-bottom:24px}
+  .hero-ctas{margin-bottom:22px}
+  .hero .flot-2{top:84px;right:-34px}
+}
 .hero-badges li{display:inline-flex;align-items:center;gap:8px}
 .hero-badges .ico{width:16px;height:16px;color:var(--oro-v)}
 .hero .ent{animation:entra .9s var(--ease-o) both;animation-delay:calc(var(--d) * 90ms + 300ms)}
@@ -784,7 +793,7 @@ footer a{color:var(--oro-v)}
   <div class="foco" aria-hidden="true"></div>
   <div class="wrap">
     <div class="hero-txt">
-      <a class="hero-eyebrow ent" style="--d:0" href="#descarga"><img class="hero-icon" src="icono-512.png" alt="" width="34" height="34"><span class="pill">1.20</span><span>La app estrena diseño y un hogar de ejemplo completo</span><svg class="ico flecha" aria-hidden="true"><use href="#i-flecha"/></svg></a>
+      <a class="hero-eyebrow ent" style="--d:0" href="#descarga"><img class="hero-icon" src="icono-512.png" alt="" width="34" height="34"><span class="pill" id="ver-hero">v1.20.0</span><span>La app estrena nueva versión y funcionalidades</span><svg class="ico flecha" aria-hidden="true"><use href="#i-flecha"/></svg></a>
       <h1 id="titulo"><span class="l"><span style="--i:0">Todo lo que</span></span><span class="l"><span style="--i:1">tienes, en un</span></span><span class="l"><span style="--i:2"><em>solo número.</em></span></span></h1>
       <p class="hero-sub ent" style="--d:1">Liberty reúne las cuentas, inversiones, inmuebles y deudas de tu hogar en una app de escritorio y te dice <strong>cuánto tienes, cuánto ganas y cómo evoluciona</strong>. Gratis y 100 % local: tus datos nunca salen de tu ordenador.</p>
       <div class="hero-ctas ent" style="--d:2">
@@ -2035,7 +2044,37 @@ footer a{color:var(--oro-v)}
     if(dest) dest.scrollIntoView({behavior:"instant", block:"start"});
   }
 
-  /* ---------- Descargas, versión y novedades (una sola petición, al acercarse a la descarga) ---------- */
+  /* ---------- Releases de GitHub: una sola petición compartida (hero y sección de descarga) ---------- */
+  var PIDE = null;
+  function pideReleases(){
+    if(PIDE) return PIDE;
+    var CLAVE = "liberty-releases", cache = null;
+    try { cache = JSON.parse(localStorage.getItem(CLAVE) || "null"); } catch(e){}
+    PIDE = (cache && Date.now() - cache.t < 15 * 60 * 1000 && Array.isArray(cache.d))
+      ? Promise.resolve(cache.d)
+      : fetch("https://api.github.com/repos/AlonsoVine/liberty/releases?per_page=100")
+          .then(function(r){ if(!r.ok) throw new Error("http " + r.status); return r.json(); })
+          .then(function(d){
+            try { localStorage.setItem(CLAVE, JSON.stringify({t: Date.now(), d: d.map(function(x){
+              return {tag_name:x.tag_name, draft:x.draft, prerelease:x.prerelease, published_at:x.published_at, body:x.body,
+                assets:(x.assets||[]).map(function(a){ return {name:a.name, download_count:a.download_count}; })}; })})); } catch(e){}
+            return d;
+          });
+    PIDE.catch(function(){ PIDE = null; }); // si falla, el siguiente que la pida lo reintenta
+    return PIDE;
+  }
+  function ultimaRelease(releases){
+    if(!Array.isArray(releases)) return null;
+    for(var i=0;i<releases.length;i++){ if(!releases[i].draft && !releases[i].prerelease) return releases[i]; }
+    return releases[0] || null;
+  }
+  function etiquetaVersion(rel){
+    var tag = rel && (rel.tag_name || "").trim();
+    if(!tag) return null;
+    return tag.charAt(0) === "v" ? tag : "v" + tag;
+  }
+
+  /* ---------- Descargas, versión y novedades (al acercarse a la descarga) ---------- */
   function cargaReleases(){
     var elCount = document.getElementById("descargas-count");
     var elVer   = document.getElementById("ver-actual");
@@ -2047,18 +2086,7 @@ footer a{color:var(--oro-v)}
       // Suma el download_count de TODOS los assets Liberty.exe de TODAS las releases:
       // el total es acumulativo e histórico, independiente de la versión y no se reinicia.
       // Se guarda 15 min en el navegador: recargar la página no gasta el cupo de la API de GitHub.
-      var CLAVE = "liberty-releases", cache = null;
-      try { cache = JSON.parse(localStorage.getItem(CLAVE) || "null"); } catch(e){}
-      var pide = (cache && Date.now() - cache.t < 15 * 60 * 1000 && Array.isArray(cache.d))
-        ? Promise.resolve(cache.d)
-        : fetch("https://api.github.com/repos/AlonsoVine/liberty/releases?per_page=100")
-            .then(function(r){ if(!r.ok) throw new Error("http " + r.status); return r.json(); })
-            .then(function(d){
-              try { localStorage.setItem(CLAVE, JSON.stringify({t: Date.now(), d: d.map(function(x){
-                return {tag_name:x.tag_name, draft:x.draft, prerelease:x.prerelease, published_at:x.published_at, body:x.body,
-                  assets:(x.assets||[]).map(function(a){ return {name:a.name, download_count:a.download_count}; })}; })})); } catch(e){}
-              return d;
-            });
+      var pide = pideReleases();
       pide
         .then(function(releases){
           if(!Array.isArray(releases)) throw new Error("formato");
@@ -2079,12 +2107,10 @@ footer a{color:var(--oro-v)}
             if(QUIETO) gC(); else requestAnimationFrame(function(){ requestAnimationFrame(gC); });
           }
           // Última versión publicada (la primera que no sea borrador ni prelanzamiento).
-          var ult = null;
-          for(var i=0;i<releases.length;i++){ if(!releases[i].draft && !releases[i].prerelease){ ult = releases[i]; break; } }
-          if(!ult) ult = releases[0];
+          var ult = ultimaRelease(releases);
           if(ult){
-            var tag = (ult.tag_name || "").trim();
-            if(tag){ if(tag.charAt(0) !== "v") tag = "v" + tag; if(elVer) elVer.textContent = tag; }
+            var tag = etiquetaVersion(ult);
+            if(tag && elVer) elVer.textContent = tag;
             if(elFecha && ult.published_at){
               try{ elFecha.textContent = " · " + new Date(ult.published_at).toLocaleDateString("es-ES",{day:"numeric",month:"short",year:"numeric"}); }catch(e){}
             }
@@ -2099,6 +2125,12 @@ footer a{color:var(--oro-v)}
       if(elCount) elCount.style.display = "none";
     }
   }
+  /* La píldora del hero muestra siempre la misma versión que «Última versión» (se pide tras la carga) */
+  (function(){
+    var pill = document.getElementById("ver-hero"); if(!pill) return;
+    function pon(){ try { pideReleases().then(function(d){ var t = etiquetaVersion(ultimaRelease(d)); if(t) pill.textContent = t; }).catch(function(){}); } catch(e){} }
+    if(document.readyState === "complete") setTimeout(pon, 0); else window.addEventListener("load", pon, {once:true});
+  })();
   (function(){
     var zona = document.getElementById("descarga");
     if(location.hash.length > 1 || !zona || !("IntersectionObserver" in window)){ cargaReleases(); return; }
