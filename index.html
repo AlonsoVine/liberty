@@ -149,10 +149,6 @@ section{padding:clamp(72px,8.5vw,124px) 0;position:relative}
 .btn-sm{padding:9px 16px;font-size:.92rem}
 .progreso{position:absolute;left:0;right:0;bottom:-1px;height:2px;background:linear-gradient(90deg,var(--oro-v),#f5d48f);transform-origin:left;transform:scaleX(0)}
 @media (max-width:980px){.nav-links{display:none}.nav-acc{margin-left:auto}}
-.theme-toggle .i-play{display:none}
-.pausado .theme-toggle .i-play{display:block}
-.pausado .theme-toggle .i-pausa{display:none}
-#pausa[aria-pressed="true"]{background:rgba(226,174,76,.18);border-color:rgba(226,174,76,.5)}
 .nav-menu{position:relative;display:none}
 .nav-menu > summary{list-style:none}
 .nav-menu > summary::-webkit-details-marker{display:none}
@@ -163,8 +159,8 @@ section{padding:clamp(72px,8.5vw,124px) 0;position:relative}
 .nav-menu-panel a:hover,.nav-menu-panel a[aria-current="true"]{color:var(--n-tinta);background:rgba(243,239,230,.07)}
 @media (max-width:980px){.nav-menu{display:block}}
 @media (max-width:400px){.nav-acc{gap:6px}.nav-acc .theme-toggle{width:36px;height:36px}}
-/* Pausa global (WCAG 2.2.2): para cinta, marquesina, tarjetas flotantes y paquetes de la bóveda */
-.pausado .cinta-pista,.pausado .cards-track,.pausado .flotante > *,.pausado .rayo .paq{animation-play-state:paused !important}
+/* Pausa (WCAG 2.2.2): cinta y marquesina se paran al pasar el ratón, al enfocarlas o tocándolas */
+.cinta:focus-within .cinta-pista,.cinta.parado .cinta-pista,.cards-marquee.parado .cards-track{animation-play-state:paused}
 
 /* ================= banda nocturna (hero, descarga y pie) ================= */
 .noche{background:var(--noche);color:var(--n-tinta2)}
@@ -240,7 +236,10 @@ section{padding:clamp(72px,8.5vw,124px) 0;position:relative}
 .tp-ley span::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--c)}
 .tp-graf{position:relative;border-top:1px solid var(--n-linea);padding-top:16px}
 .tp-graf-cab{display:flex;justify-content:space-between;align-items:baseline;font-size:.84rem;margin-bottom:6px;gap:10px;flex-wrap:wrap}
-.tp-graf-cab b{color:var(--n-tinta);font-weight:600}
+.tp-graf-cab b{color:var(--n-tinta);font-weight:600;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tp-graf-cab{flex-wrap:nowrap}
+.tp-graf-cab .sube{flex-shrink:0;white-space:nowrap}
+@media (max-width:600px){.tp-graf-cab{display:grid;gap:2px}}
 .tp-graf-cab .sube{color:var(--n-verde);font-weight:600}
 .limpia{overflow:hidden}
 .limpia > div{transform:translateX(-100%);transition:transform 2s var(--ease-o) .7s}
@@ -263,7 +262,7 @@ section{padding:clamp(72px,8.5vw,124px) 0;position:relative}
 .tp-cifra.rapido .odo .d > span{transition-duration:.45s;transition-delay:0s}
 .tp-filas{display:grid;gap:0;margin-top:14px;border-top:1px solid var(--n-linea)}
 .tp-fila{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:10px 0;border-bottom:1px solid var(--n-linea);font-size:.92rem}
-.tp-fila b{color:var(--n-tinta);font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tp-fila b{color:var(--n-tinta);font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap;min-width:7.4em;text-align:right}
 .tp-fila small{color:var(--n-tinta3)}
 .tp-fila b small{color:inherit;font-size:.78em;opacity:.7}
 .flotante{position:absolute;display:flex;align-items:center;gap:10px;background:rgba(18,21,27,.92);border:1px solid rgba(243,239,230,.14);border-radius:14px;padding:10px 14px;font-size:.82rem;color:var(--n-tinta2);
@@ -740,8 +739,6 @@ footer a{color:var(--oro-v)}
   <symbol id="i-linkedin" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="2.5"/><path d="M8 10.5v6M8 7.5h.01M12 16.5v-6M12 13c0-1.6 1-2.6 2.3-2.6s2 .9 2 2.6v3.5"/></symbol>
   <symbol id="i-github" viewBox="0 0 24 24"><path d="M9 19.5c-4 1.2-4-2-5.5-2.5M14.5 21.5v-3.4a3 3 0 0 0-.8-2.3c2.7-.3 5.6-1.3 5.6-6a4.6 4.6 0 0 0-1.3-3.2 4.3 4.3 0 0 0-.1-3.2s-1-.3-3.4 1.3a11.7 11.7 0 0 0-6 0C6.1 1.1 5 1.4 5 1.4a4.3 4.3 0 0 0-.1 3.2 4.6 4.6 0 0 0-1.3 3.2c0 4.6 2.9 5.6 5.6 6a3 3 0 0 0-.8 2.2v3.5"/></symbol>
   <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></symbol>
-  <symbol id="i-pausa" viewBox="0 0 24 24"><path d="M9 5.5v13M15 5.5v13"/></symbol>
-  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5 18.5 12 8 18.5z"/></symbol>
   <symbol id="i-rayo" viewBox="0 0 24 24"><path d="M13 3 5 13.5h6L10 21l8-10.5h-6z"/></symbol>
 </defs></svg>
 
@@ -759,7 +756,6 @@ footer a{color:var(--oro-v)}
       </ul>
     </nav>
     <div class="nav-acc">
-      <button class="theme-toggle" id="pausa" type="button" aria-pressed="false" aria-label="Pausar el movimiento de la página" title="Pausar el movimiento"><svg class="ico i-pausa" aria-hidden="true"><use href="#i-pausa"/></svg><svg class="ico i-play" aria-hidden="true"><use href="#i-play"/></svg></button>
       <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Cambiar a modo oscuro"><svg class="ico i-luna" aria-hidden="true"><use href="#i-luna"/></svg><svg class="ico i-sol" aria-hidden="true"><use href="#i-sol"/></svg></button>
       <a class="btn btn-oro btn-sm" id="nav-descarga" href="#descarga"><svg class="ico" aria-hidden="true"><use href="#i-bajada"/></svg>Descargar</a>
       <details class="nav-menu" id="nav-menu">
@@ -1497,14 +1493,13 @@ footer a{color:var(--oro-v)}
     });
   })();
 
-  /* ---------- Pausar todo el movimiento (WCAG 2.2.2), recordado entre visitas ---------- */
+  /* ---------- Pausa (WCAG 2.2.2): la cinta y las tarjetas se paran con el ratón encima, al enfocarlas o tocándolas ---------- */
   (function(){
-    var b = document.getElementById("pausa"); if(!b) return;
-    function aplica(on){ root.classList.toggle("pausado", on); b.setAttribute("aria-pressed", String(on)); b.setAttribute("aria-label", on ? "Reanudar el movimiento de la página" : "Pausar el movimiento de la página"); b.title = on ? "Reanudar el movimiento" : "Pausar el movimiento"; document.dispatchEvent(new Event("pausa")); }
-    var guardado = false; try { guardado = localStorage.getItem("liberty-pausa") === "1"; } catch(e){}
-    if(guardado) aplica(true);
-    b.addEventListener("click", function(){ var on = !root.classList.contains("pausado"); aplica(on); try { localStorage.setItem("liberty-pausa", on ? "1" : "0"); } catch(e){} });
-    if(QUIETO) b.hidden = true; // con movimiento reducido ya no hay nada en marcha
+    try { localStorage.removeItem("liberty-pausa"); } catch(e){}
+    document.querySelectorAll(".cinta, .cards-marquee").forEach(function(z){
+      if(!QUIETO) z.tabIndex = 0;
+      z.addEventListener("click", function(){ z.classList.toggle("parado"); });
+    });
   })();
 
   /* ---------- Menú de secciones en móvil: se cierra al elegir, con Esc o al tocar fuera ---------- */
@@ -1618,7 +1613,7 @@ footer a{color:var(--oro-v)}
     var barra = document.querySelectorAll("#tp-barra i"), leyC = document.getElementById("tp-ley-c"), leyI = document.getElementById("tp-ley-i");
     var cuando = document.getElementById("tp-cuando"), sube = document.getElementById("tp-sube");
     var fC = document.getElementById("tp-f-c"), fI = document.getElementById("tp-f-i");
-    var HITOS = {0:"Compra del piso en alquiler",24:"Compra de la casa",30:"Compra del trastero",50:"Compra del garaje",54:"Empieza a registrar la cartera"};
+    var HITOS = {0:"Compra del piso alquilado",24:"Compra de la casa",30:"Compra del trastero",50:"Compra del garaje",54:"Empieza la cartera"};
     var N = S.t.length - 1, MAXV = S.t[N], MESES = ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
     var MESES_L = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
     var F2 = new Intl.NumberFormat("es-ES", {minimumFractionDigits:2, maximumFractionDigits:2, useGrouping:"always"});
@@ -1969,7 +1964,7 @@ footer a{color:var(--oro-v)}
     function retrocede(mano){ goto(idx - 1, mano === true); }
 
     var sobre = false;
-    function retenido(){ return sobre || car.contains(document.activeElement) || root.classList.contains("pausado"); }
+    function retenido(){ return sobre || car.contains(document.activeElement); }
     function start(){ if(!timer && slides.length > 1 && visible() && !QUIETO && !retenido()){ car.classList.remove("parado"); timer = setInterval(function(){ if(visible()) avanza(); }, INTERVALO); } }
     function stop(){ car.classList.add("parado"); if(timer){ clearInterval(timer); timer = null; } }
     function reset(){ stop(); start(); }
@@ -1982,7 +1977,6 @@ footer a{color:var(--oro-v)}
     car.addEventListener("mouseleave", function(){ sobre = false; start(); });
     car.addEventListener("focusin",  stop);
     car.addEventListener("focusout", function(){ setTimeout(start, 0); });
-    document.addEventListener("pausa", function(){ if(root.classList.contains("pausado")) stop(); else start(); });
 
     // Swipe en móvil
     var x0 = null;
