@@ -72,3 +72,12 @@ Cada ambigüedad del encargo, resuelta y anotada aquí sin preguntar.
   - Lighthouse no puede interceptarla. Su «errors-in-console» (Best Practices 96) es ese 403 de cupo agotado, igual que en la base.
 - **Botón flotante.** Cuando está oculto no recibe foco (`tabindex=-1`, `aria-hidden`).
 - **Lightbox.** Atrapa el foco y lo devuelve al cerrarse. Ahora también amplía las capturas del recorrido en móvil y las de los teléfonos.
+
+## Decisiones de las vueltas 2 y 3
+- **`content-visibility` se mantiene** (Perf en móvil 72–86 sin él), pero se apaga justo antes de seguir un ancla interna o al llegar con #, para que el salto sea exacto.
+- **El botón flotante de descarga es solo de escritorio.** En móvil, el «Descargar» del menú (fijo y siempre visible) cumple la misma función sin tapar texto.
+- **Pausa global de movimiento** en el menú (WCAG 2.2.2), recordada entre visitas. Con `prefers-reduced-motion` se oculta porque ya no hay nada en marcha.
+- **El contador, la versión y las novedades se piden al acercarse a la descarga.** Menos cupo de la API de GitHub y menos trabajo en la carga. La regla del contador (suma histórica de todos los assets) no cambia.
+- **La gráfica del hero usa la serie real** del hogar de ejemplo (91 meses, de `serieHogar`) y hitos que salen de las fechas de compra de los inmuebles de ese ejemplo. No hay datos inventados.
+- **El paso «Cartera» del recorrido usa la captura de Rentabilidad.** La de Cartera muestra otra «cartera neta» y chocaría con la cifra del hero.
+- **Se cierra en 3 vueltas** por decisión del usuario, con ponderada final de 8,0 (listón de 8,8 no alcanzado) y sin pérdidas de inventario.

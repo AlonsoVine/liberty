@@ -249,11 +249,16 @@ section{padding:clamp(72px,8.5vw,124px) 0;position:relative}
 .tp-graf svg{width:100%;height:auto;overflow:visible}
 .tp-lienzo{position:relative;border-radius:6px}
 .tp-lienzo.foco{outline:2px solid var(--oro-v);outline-offset:6px}
+.tp-lienzo{touch-action:pan-y}
 .tp-lienzo input{position:absolute;inset:-8px 0;width:100%;height:calc(100% + 16px);margin:0;opacity:0;cursor:ew-resize;touch-action:pan-y}
+@media (hover:none){.tp-lienzo input{pointer-events:none}}
 .tp-cur{position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(rgba(255,255,255,.55),rgba(255,255,255,.08));opacity:0;transition:opacity .3s var(--ease);pointer-events:none}
 .tp-cur i{position:absolute;left:-5px;top:-5px;width:11px;height:11px;border-radius:50%;background:#fff;box-shadow:0 0 0 4px rgba(255,255,255,.18)}
 .tp-lienzo.activo .tp-cur{opacity:1}
+.tp-hitos{position:absolute;left:0;right:0;bottom:-7px;height:7px;pointer-events:none}
+.tp-hito{position:absolute;top:0;width:7px;height:7px;margin-left:-3.5px;border-radius:50%;background:var(--oro-v);box-shadow:0 0 0 3px rgba(226,174,76,.18)}
 .tp-pista{margin:8px 0 0;font-size:.74rem;color:var(--n-tinta3);display:flex;align-items:center;gap:6px}
+.tp-pista-hito{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--oro-v);margin-right:2px}
 .tp-pista::before{content:"\2194";color:var(--oro-v);font-size:.95rem}
 .tp-cifra.rapido .odo .d > span{transition-duration:.45s;transition-delay:0s}
 .tp-filas{display:grid;gap:0;margin-top:14px;border-top:1px solid var(--n-linea)}
@@ -476,7 +481,7 @@ section{padding:clamp(72px,8.5vw,124px) 0;position:relative}
 .single-shot img{width:100%;height:auto;cursor:zoom-in}
 .rec-img-movil img,.telefono img{cursor:zoom-in}
 img[role="button"]:focus-visible{outline:3px solid var(--oro-v);outline-offset:-3px}
-@media (max-width:600px){.car-btn{top:auto;bottom:8px;margin-top:0;width:38px;height:38px}.car-prev{left:auto;right:54px}.car-next{right:10px}.car-pie{padding:10px 104px 10px 14px;min-height:56px}.car-dot{width:14px}.car-dots{gap:4px;flex-wrap:nowrap}.car-caption{font-size:.84rem}}
+@media (max-width:600px){.car-btn{top:auto;bottom:8px;margin-top:0;width:38px;height:38px}.car-prev{left:auto;right:54px}.car-next{right:10px}.car-pie{padding:10px 104px 10px 14px;min-height:56px}.car-dots{display:none}.car-caption{font-size:.84rem}}
 
 /* ================= PRIVACIDAD (bóveda) ================= */
 .privacidad{background:var(--papel2)}
@@ -497,6 +502,7 @@ img[role="button"]:focus-visible{outline:3px solid var(--oro-v);outline-offset:-
 .nodo > span{position:absolute;transform:translate(-50%,-50%);display:grid;place-items:center;gap:4px;font-size:.78rem;color:var(--tinta3);white-space:nowrap;text-align:center}
 .nodo .ico{width:42px;height:42px;max-width:none;flex:none;padding:10px;border-radius:50%;border:1px solid var(--linea2);background:var(--papel);color:var(--tinta3)}
 .nodo > span{min-width:72px}
+@media (max-width:380px){.nodo{--r:36cqw !important}}
 .nodo small{display:block;font-size:.68rem;color:var(--tinta3);margin-top:-2px}
 .nodo.ok .ico{border-color:var(--oro);color:var(--oro);background:var(--hoja)}
 .nodo.ok > span{color:var(--tinta);font-weight:600}
@@ -545,6 +551,8 @@ img[role="button"]:focus-visible{outline:3px solid var(--oro-v);outline-offset:-
 .verificar,.novedades{max-width:640px;margin:16px auto 0;text-align:left;font-size:.92rem}
 .verificar summary,.novedades>summary{cursor:pointer;color:var(--n-tinta2);text-align:center;list-style:none;font-weight:500;padding:6px;border-radius:8px}
 .verificar summary::-webkit-details-marker,.novedades>summary::-webkit-details-marker{display:none}
+.verificar summary::after,.novedades>summary::after{content:"+";display:inline-block;margin-left:10px;font-weight:400;font-size:1.15em;line-height:1;color:var(--oro-v);transition:transform .3s var(--ease-o)}
+.verificar[open] summary::after,.novedades[open]>summary::after{transform:rotate(45deg)}
 .verificar summary:hover,.novedades>summary:hover{color:var(--n-tinta);text-decoration:underline}
 .verificar p{color:var(--n-tinta2);margin:12px 0 8px}
 .verificar pre{background:rgba(0,0,0,.35);border:1px solid rgba(243,239,230,.12);color:var(--n-tinta);border-radius:12px;padding:14px 16px;margin:12px 0 8px;overflow-x:auto;font-size:.8rem;line-height:1.55;text-align:left}
@@ -751,7 +759,7 @@ footer a{color:var(--oro-v)}
       </ul>
     </nav>
     <div class="nav-acc">
-      <button class="theme-toggle" id="pausa" type="button" aria-pressed="false" aria-label="Pausar el movimiento de la página"><svg class="ico i-pausa" aria-hidden="true"><use href="#i-pausa"/></svg><svg class="ico i-play" aria-hidden="true"><use href="#i-play"/></svg></button>
+      <button class="theme-toggle" id="pausa" type="button" aria-pressed="false" aria-label="Pausar el movimiento de la página" title="Pausar el movimiento"><svg class="ico i-pausa" aria-hidden="true"><use href="#i-pausa"/></svg><svg class="ico i-play" aria-hidden="true"><use href="#i-play"/></svg></button>
       <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Cambiar a modo oscuro"><svg class="ico i-luna" aria-hidden="true"><use href="#i-luna"/></svg><svg class="ico i-sol" aria-hidden="true"><use href="#i-sol"/></svg></button>
       <a class="btn btn-oro btn-sm" id="nav-descarga" href="#descarga"><svg class="ico" aria-hidden="true"><use href="#i-bajada"/></svg>Descargar</a>
       <details class="nav-menu" id="nav-menu">
@@ -813,11 +821,12 @@ footer a{color:var(--oro-v)}
                 <path d="M62.0 164.8 L68.8 164.8 L75.7 164.8 L82.5 164.8 L89.4 164.8 L96.2 164.8 L103.1 164.8 L109.9 164.8 L116.8 164.8 L123.6 164.8 L130.4 164.8 L137.3 164.8 L144.1 164.8 L151.0 164.8 L157.8 164.8 L164.7 164.8 L171.5 164.8 L178.4 164.8 L185.2 164.8 L192.0 164.8 L198.9 164.8 L205.7 164.8 L212.6 164.8 L219.4 164.8 L226.3 152.1 L233.1 151.9 L240.0 151.8 L246.8 151.6 L253.6 151.4 L260.5 151.2 L267.3 148.3 L274.2 148.1 L281.0 148.0 L287.9 147.8 L294.7 147.6 L301.6 147.4 L308.4 147.3 L315.2 147.1 L322.1 146.9 L328.9 146.7 L335.8 146.6 L342.6 146.4 L349.5 146.2 L356.3 146.0 L363.2 145.9 L370.0 145.7 L376.8 145.5 L383.7 145.3 L390.5 145.2 L397.4 145.0 L404.2 138.8 L411.1 138.7 L417.9 138.5 L424.8 138.3 L431.6 105.6 L438.4 103.9 L445.3 102.4 L452.1 95.9 L459.0 94.7 L465.8 94.6 L472.7 100.7 L479.5 99.6 L486.4 98.1 L493.2 97.2 L500.0 96.4 L506.9 95.0 L513.7 91.5 L520.6 90.7 L527.4 86.9 L534.3 84.1 L541.1 84.9 L548.0 84.9 L554.8 85.5 L561.6 84.7 L568.5 83.3 L575.3 82.1 L582.2 78.9 L589.0 77.2 L595.9 76.4 L602.7 72.7 L609.6 71.2 L616.4 68.4 L623.2 67.6 L630.1 65.2 L636.9 62.8 L643.8 62.2 L650.6 59.8 L657.5 57.0 L664.3 52.9 L671.2 51.6 L678.0 51.0 " fill="none" stroke="#fff" stroke-width="2.2" vector-effect="non-scaling-stroke"/>
               </svg>
             </div></div></div>
+              <span class="tp-hitos" aria-hidden="true"><i class="tp-hito" style="left:0.000%"></i><i class="tp-hito" style="left:26.667%"></i><i class="tp-hito" style="left:33.333%"></i><i class="tp-hito" style="left:55.556%"></i><i class="tp-hito" style="left:60.000%"></i></span>
               <span class="tp-cur" id="tp-cur" aria-hidden="true"><i></i></span>
               <label class="sr" for="tp-rango">Recorre mes a mes la evolución del patrimonio del hogar de ejemplo</label>
               <input type="range" id="tp-rango" min="0" max="90" step="1" value="90" aria-valuetext="noviembre de 2026: 312.956 euros">
             </div>
-            <p class="tp-pista" aria-hidden="true">Desliza sobre la gráfica para viajar en el tiempo</p>
+            <p class="tp-pista" aria-hidden="true">Desliza sobre la gráfica para viajar en el tiempo · <span class="tp-pista-hito"></span>hitos del hogar</p>
           </div>
           <div class="tp-filas" aria-hidden="true">
             <div class="tp-fila"><span>Cartera neta <small>· inversiones, cuentas y deudas</small></span><b id="tp-f-c">153.415<small>,40</small> €</b></div>
@@ -1491,7 +1500,7 @@ footer a{color:var(--oro-v)}
   /* ---------- Pausar todo el movimiento (WCAG 2.2.2), recordado entre visitas ---------- */
   (function(){
     var b = document.getElementById("pausa"); if(!b) return;
-    function aplica(on){ root.classList.toggle("pausado", on); b.setAttribute("aria-pressed", String(on)); b.setAttribute("aria-label", on ? "Reanudar el movimiento de la página" : "Pausar el movimiento de la página"); document.dispatchEvent(new Event("pausa")); }
+    function aplica(on){ root.classList.toggle("pausado", on); b.setAttribute("aria-pressed", String(on)); b.setAttribute("aria-label", on ? "Reanudar el movimiento de la página" : "Pausar el movimiento de la página"); b.title = on ? "Reanudar el movimiento" : "Pausar el movimiento"; document.dispatchEvent(new Event("pausa")); }
     var guardado = false; try { guardado = localStorage.getItem("liberty-pausa") === "1"; } catch(e){}
     if(guardado) aplica(true);
     b.addEventListener("click", function(){ var on = !root.classList.contains("pausado"); aplica(on); try { localStorage.setItem("liberty-pausa", on ? "1" : "0"); } catch(e){} });
@@ -1609,9 +1618,11 @@ footer a{color:var(--oro-v)}
     var barra = document.querySelectorAll("#tp-barra i"), leyC = document.getElementById("tp-ley-c"), leyI = document.getElementById("tp-ley-i");
     var cuando = document.getElementById("tp-cuando"), sube = document.getElementById("tp-sube");
     var fC = document.getElementById("tp-f-c"), fI = document.getElementById("tp-f-i");
+    var HITOS = {0:"Compra del piso en alquiler",24:"Compra de la casa",30:"Compra del trastero",50:"Compra del garaje",54:"Empieza a registrar la cartera"};
     var N = S.t.length - 1, MAXV = S.t[N], MESES = ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
     var MESES_L = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
-    var F2 = new Intl.NumberFormat("es-ES", {minimumFractionDigits:2, maximumFractionDigits:2});
+    var F2 = new Intl.NumberFormat("es-ES", {minimumFractionDigits:2, maximumFractionDigits:2, useGrouping:"always"});
+    var MIL = new Intl.NumberFormat("es-ES", {useGrouping:"always"});
     function mes(i, largo){ var p = S.f[i].split("-"); return (largo ? MESES_L : MESES)[+p[1] - 1] + (largo ? " de " : " ") + p[0]; }
     function euros(el, v){ var t = F2.format(v).split(","); el.innerHTML = t[0] + "<small>," + t[1] + "</small> €"; }
     // y del SVG (viewBox 62 40 616 146; 0 € en y=184 y el último total en y=51)
@@ -1630,8 +1641,12 @@ footer a{color:var(--oro-v)}
       if(barra.length === 2){ barra[0].style.flexGrow = Math.max(0, c); barra[1].style.flexGrow = Math.max(0, m); }
       if(leyC) leyC.textContent = "Cartera " + pc + " %"; if(leyI) leyI.textContent = "Inmuebles " + (100 - pc) + " %";
       if(fC) euros(fC, c); if(fI) euros(fI, m);
-      if(cuando) cuando.textContent = i === N ? "Cómo ha crecido" : "Así estaba en " + mes(i);
-      if(sube){ var dlt = i >= 12 ? S.t[i] - S.t[i - 12] : S.t[i] - S.t[0]; sube.textContent = (dlt >= 0 ? "+" : "\u2212") + FMT.format(Math.abs(Math.round(dlt))) + " € en " + (i >= 12 ? "12 meses" : i + (i === 1 ? " mes" : " meses")); }
+      var hito = null; for(var hk in HITOS){ if(i >= +hk && i <= +hk + 3) hito = HITOS[hk]; }
+      if(cuando) cuando.textContent = i === N ? "Cómo ha crecido" : (hito ? mes(i) + " · " + hito : "Así estaba en " + mes(i));
+      if(sube){
+        if(i === 0) sube.textContent = "Punto de partida";
+        else { var dlt = i >= 12 ? S.t[i] - S.t[i - 12] : S.t[i] - S.t[0]; sube.textContent = (dlt >= 0 ? "+" : "\u2212") + MIL.format(Math.abs(Math.round(dlt))) + " € en " + (i >= 12 ? "12 meses" : i + (i === 1 ? " mes" : " meses")); }
+      }
       var w = lienzo.clientWidth, h = lienzo.clientHeight;
       var x = i / N * w, y = (yDe(S.t[i]) - 40) / 146 * h;
       cur.style.transform = "translateX(" + x.toFixed(1) + "px)";
@@ -1650,7 +1665,19 @@ footer a{color:var(--oro-v)}
       });
       lienzo.addEventListener("pointerleave", function(){ if(document.activeElement === rango) return; lienzo.classList.remove("activo"); rango.value = N; ve(N); });
     } else {
-      rango.addEventListener("change", function(){ setTimeout(function(){ if(document.activeElement !== rango){ lienzo.classList.remove("activo"); } }, 1600); });
+      // En táctil el control invisible no recibe el dedo (así un scroll que empieza aquí no cambia el mes):
+      // se recorre solo con un gesto claramente horizontal y, al soltar, la tarjeta vuelve al mes actual.
+      var x0 = null, y0 = 0, recorre = false, vuelta = null;
+      function aMes(e){ var r = lienzo.getBoundingClientRect(); return Math.round((e.clientX - r.left) / r.width * N); }
+      lienzo.addEventListener("pointerdown", function(e){ x0 = e.clientX; y0 = e.clientY; recorre = false; clearTimeout(vuelta); });
+      lienzo.addEventListener("pointermove", function(e){
+        if(x0 === null) return;
+        if(!recorre){ var dx = Math.abs(e.clientX - x0), dy = Math.abs(e.clientY - y0); if(dy > 10 && dy >= dx){ x0 = null; return; } if(dx > 10 && dx > dy) recorre = true; else return; }
+        lienzo.classList.add("activo"); rango.value = Math.max(0, Math.min(N, aMes(e))); ve(+rango.value);
+      });
+      function suelta(){ x0 = null; clearTimeout(vuelta); vuelta = setTimeout(function(){ lienzo.classList.remove("activo"); rango.value = N; ve(N); }, 1800); }
+      lienzo.addEventListener("pointerup", suelta);
+      lienzo.addEventListener("pointercancel", suelta);
     }
   })();
 
@@ -1730,14 +1757,18 @@ footer a{color:var(--oro-v)}
     pinta();
     // Sección activa: la que cruza la mitad de la pantalla; cada sección cuenta para su enlace del menú.
     var enlaces = Array.prototype.slice.call(document.querySelectorAll(".nav-links a, .nav-menu-panel a"));
-    var GRUPO = {"ecuacion":"#que-es","que-es":"#que-es","recorrido":"#recorrido","caracteristicas":"#caracteristicas","como-funciona":"#caracteristicas","para-quien":"#caracteristicas","capturas":"#caracteristicas","privacidad":"#privacidad","faq":"#faq","capturas-menu":"#capturas"};
+    var GRUPO = {"ecuacion":"#que-es","que-es":"#que-es","recorrido":"#recorrido","caracteristicas":"#caracteristicas","como-funciona":"#caracteristicas","para-quien":"#caracteristicas","capturas":"#caracteristicas","privacidad":"#privacidad","faq":"#faq"};
+    var GRUPO_M = {"ecuacion":"#que-es","que-es":"#que-es","recorrido":"#recorrido","caracteristicas":"#caracteristicas","como-funciona":"#caracteristicas","para-quien":"#caracteristicas","capturas":"#capturas","privacidad":"#privacidad","descarga":"#descarga","faq":"#faq"};
     var secciones = Array.prototype.slice.call(document.querySelectorAll("main > section[id]"));
     var actual;
     function marca(){
       var mitad = window.innerHeight / 2, dest = null;
       for(var i=0;i<secciones.length;i++){ var r = secciones[i].getBoundingClientRect(); if(r.top <= mitad && r.bottom > mitad){ dest = GRUPO[secciones[i].id] || null; break; } }
-      if(dest === actual) return; actual = dest;
-      enlaces.forEach(function(a){ if(a.getAttribute("href") === dest) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current"); });
+      var id = null;
+      for(var j=0;j<secciones.length;j++){ var rr = secciones[j].getBoundingClientRect(); if(rr.top <= mitad && rr.bottom > mitad){ id = secciones[j].id; break; } }
+      var clave = dest + "|" + id; if(clave === actual) return; actual = clave;
+      var destM = GRUPO_M[id] || null;
+      enlaces.forEach(function(a){ var d2 = a.closest(".nav-menu-panel") ? destM : dest; if(a.getAttribute("href") === d2) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current"); });
     }
     var pendM = false;
     window.addEventListener("scroll", function(){ if(!pendM){ pendM = true; requestAnimationFrame(function(){ pendM = false; marca(); }); } }, {passive:true});
@@ -2048,8 +2079,10 @@ footer a{color:var(--oro-v)}
           });
           setTimeout(recolocaAncla, 0);
           if(elCount){
-            elCount.innerHTML = "<strong>" + new Intl.NumberFormat("es-ES").format(total) + "</strong> descargas";
+            elCount.innerHTML = "<strong data-odo=\"" + total + "\">" + new Intl.NumberFormat("es-ES").format(total) + "</strong> descargas";
             elCount.style.display = "";
+            var odoC = elCount.querySelector("strong"), gC = montaOdo(odoC, total);
+            if(QUIETO) gC(); else requestAnimationFrame(function(){ requestAnimationFrame(gC); });
           }
           // Última versión publicada (la primera que no sea borrador ni prelanzamiento).
           var ult = null;

@@ -182,3 +182,37 @@ El usuario decide cerrar en 3 vueltas: la vuelta 3 aplica todo lo anterior, se a
 - móvil: 89–97/100/100.
 
 El trabajo del hilo principal es igual o menor que en la v2 (estilo y layout 1018 ms frente a 1111). La diferencia es ruido de cuándo cae la tarea larga. BP sube a 100 porque esta vez la API respondió.
+
+**Veredicto del árbitro, vuelta 3:** D 8,0 · U 7,8 · C 8,0 · Co 8,5 → **ponderada 8,0** (6,3 → 7,6 → 8,0).
+- **Correcciones y novedades:** todas las de la vuelta 2 resueltas.
+- **Inventario:** 22 se conservan, 8 mejoran, 1 cambia por diseño (el flotante solo en escritorio), 1 degradación leve (E2) y 0 perdidos.
+- **Veredicto:** se puede publicar si antes se corrigen B1 (en táctil la tarjeta se queda en una fecha antigua) y M1 (puntos táctiles del carrusel demasiado pequeños).
+- **Listón:** no se alcanza (8,8). El usuario había decidido cerrar en 3 vueltas.
+
+### Cierre (después del árbitro de la vuelta 3)
+- **B1.**
+  - En táctil, el control invisible no recibe el dedo.
+  - La gráfica solo se recorre con un gesto claramente horizontal, y al soltar vuelve sola al mes actual en 1,8 s.
+  - Medido con eventos táctiles reales: un scroll vertical sobre la gráfica mueve la página y la cifra sigue en 312.956 €; el gesto horizontal lleva a junio de 2021 y vuelve.
+- **M1.** Por debajo de 600 px se quitan los puntos del carrusel; quedan las flechas de 38 px y el «6 / 11». axe con WCAG 2.2 a 390 px da 0.
+- **M2.** Hitos REALES del ejemplo sobre la gráfica:
+  - piso en alquiler, mayo de 2019;
+  - casa, mayo de 2021;
+  - trastero, noviembre de 2021;
+  - garaje, julio de 2023;
+  - empieza a registrarse la cartera, noviembre de 2023.
+
+  El rótulo de la gráfica nombra el hito al pasar por él, así que la parte plana ya cuenta algo.
+- **m1.** El menú móvil marca su propia sección, incluidas Capturas y Descarga.
+- **m2.** Las cifras de la gráfica llevan punto de miles («+4.948 €»), y el primer mes dice «Punto de partida».
+- **m3.** «Verificar integridad» y «Novedades» llevan +/−.
+- **m4.** Por debajo de 380 px los nodos de la bóveda se acercan.
+- **m5.** El botón de pausa tiene `title`.
+- **Mejora gratuita aplicada:** el contador de descargas gira con el odómetro.
+
+**Checks ampliados** (axe con WCAG 2.1 y 2.2, también a 390 px, y 80 tabulaciones):
+- consola limpia;
+- sin scroll horizontal de 360 a 1920 px;
+- axe 0 en claro, en oscuro y a 390;
+- 80 paradas de foco, todas visibles;
+- solo transform y opacity.
