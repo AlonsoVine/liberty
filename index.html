@@ -3,703 +3,1186 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Liberty — Gestor del patrimonio del hogar</title>
-<meta name="description" content="Liberty: aplicación de escritorio 100% local y privada para gestionar el patrimonio de tu hogar. Sin cuentas, sin servidores, sin telemetría.">
+<title>Liberty — Todo el patrimonio de tu hogar, en un solo número</title>
+<meta name="description" content="Liberty reúne cuentas, inversiones, inmuebles y deudas de tu hogar en una app de escritorio gratuita y 100 % local: patrimonio neto, rentabilidad real, ingresos y gastos, sin cuentas ni nube.">
+<meta name="theme-color" content="#0b0d11">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="icono-512.png">
 <link rel="canonical" href="https://alonsovine.github.io/liberty/">
 <link rel="preconnect" href="https://api.github.com"><link rel="dns-prefetch" href="https://api.github.com">
-<meta property="og:title" content="Liberty — Gestor del patrimonio del hogar">
-<meta property="og:description" content="Gestiona todo el patrimonio de tu hogar en una app de escritorio 100% local y privada.">
+<link rel="preload" href="fuentes/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fuentes/geist.woff2" as="font" type="font/woff2" crossorigin>
+<meta property="og:title" content="Liberty — Todo el patrimonio de tu hogar, en un solo número">
+<meta property="og:description" content="Cuentas, inversiones, inmuebles y deudas en una app de escritorio gratuita y 100 % local. Sin cuentas, sin nube, sin telemetría.">
 <meta property="og:image" content="https://alonsovine.github.io/liberty/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Liberty: tu patrimonio, 312.956 €, con la curva de cómo ha crecido">
 <meta property="og:url" content="https://alonsovine.github.io/liberty/">
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="Liberty">
 <meta property="og:locale" content="es_ES">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Liberty — Gestor del patrimonio del hogar">
-<meta name="twitter:description" content="App de escritorio 100% local y privada para gestionar el patrimonio de tu hogar.">
+<meta name="twitter:title" content="Liberty — Todo el patrimonio de tu hogar, en un solo número">
+<meta name="twitter:description" content="App de escritorio gratuita y 100 % local para el patrimonio de tu hogar.">
 <meta name="twitter:image" content="https://alonsovine.github.io/liberty/og.png">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
   "name": "Liberty",
-  "description": "Aplicación de escritorio 100% local y privada para gestionar el patrimonio del hogar: cuentas, inversiones, inmuebles y deudas, con titulares, ingresos/gastos e informe fiscal.",
+  "description": "Aplicación de escritorio 100% local y privada para gestionar el patrimonio del hogar: cuentas, inversiones, inmuebles y deudas, con titulares, ingresos/gastos, libertad financiera e informe fiscal.",
   "applicationCategory": "FinanceApplication",
-  "operatingSystem": "Windows, macOS, Linux",
+  "operatingSystem": "Windows, macOS, Linux, Docker",
   "url": "https://alonsovine.github.io/liberty/",
   "downloadUrl": "https://github.com/AlonsoVine/liberty/releases/latest/download/Liberty.exe",
   "softwareVersion": "1.20.0",
   "image": "https://alonsovine.github.io/liberty/og.png",
+  "screenshot": "https://alonsovine.github.io/liberty/capturas/panel/inicio.webp",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
   "author": { "@type": "Person", "name": "Alonso Viñé", "url": "https://github.com/AlonsoVine" }
 }
 </script>
 <style>
-  :root{
-    --azul:#143a7a;
-    --azul-osc:#0e2b5c;
-    --azul-claro:#2b5bb5;
-    --oro:#e0a83a;
-    --oro-osc:#c68e22;
-    --tinta:#1a2236;
-    --texto:#2a3344;
-    --suave:#5a6678;
-    --fondo:#f6f8fc;
-    --tarjeta:#ffffff;
-    --borde:#e2e8f2;
-    --sombra:0 1px 3px rgba(16,30,60,.06),0 8px 28px rgba(16,30,60,.08);
-    --radio:16px;
-    --max:1080px;
-    --footer-bg:#1a2236;
-  }
-  /* Modo oscuro: SOLO cuando el usuario lo activa (claro por defecto) */
-  :root[data-theme="dark"]{
-    --azul-claro:#6ea0ec;
-    --tinta:#eef2f8;
-    --texto:#c3ccdb;
-    --suave:#8d9ab0;
-    --fondo:#0e1320;
-    --tarjeta:#161d2c;
-    --borde:rgba(255,255,255,.10);
-    --sombra:0 1px 3px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.45);
-    --footer-bg:#0a0e18;
-  }
-  :root[data-theme="dark"] code{background:#1f2838;color:#e2c98a}
-  :root[data-theme="dark"] .faq-item code,:root[data-theme="dark"] .card code{background:#1f2838;color:#e2c98a}
-  :root[data-theme="dark"] .aviso{background:#2a2412;border-color:#5a4a1e}
-  :root[data-theme="dark"] .aviso p{color:#d8c89a}
-  :root[data-theme="dark"] .aviso code{background:#1f2838;border-color:#5a4a1e;color:#e2c98a}
-  /* Botón de cambio de tema */
-  .theme-toggle{
-    position:fixed;top:14px;right:16px;z-index:60;
-    width:42px;height:42px;border-radius:50%;cursor:pointer;
-    border:1px solid rgba(255,255,255,.28);
-    background:rgba(14,28,56,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
-    color:#fff;font-size:1.1rem;line-height:1;
-    display:flex;align-items:center;justify-content:center;
-    transition:transform .2s,background .2s,border-color .2s;
-  }
-  .theme-toggle:hover{transform:scale(1.08);background:rgba(14,28,56,.72)}
-  .theme-toggle:focus-visible{outline:2px solid var(--oro);outline-offset:2px}
-  :root[data-theme="dark"] .theme-toggle{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.22)}
-  :root[data-theme="dark"] .theme-toggle:hover{background:rgba(255,255,255,.2)}
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{
-    margin:0;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    color:var(--texto);
-    background:var(--fondo);
-    line-height:1.6;
-    -webkit-font-smoothing:antialiased;
-  }
-  a{color:var(--azul-claro);text-decoration:none}
-  a:hover{text-decoration:underline}
-  @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
-  .wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
-  h1,h2,h3{color:var(--tinta);line-height:1.25;margin:0 0 .5em}
-  h2{font-size:1.7rem;margin-top:0}
-  p{margin:0 0 1em}
+@font-face{font-family:"Geist";src:url("fuentes/geist.woff2") format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Fraunces";src:url("fuentes/fraunces.woff2") format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
 
-  /* ---------- Cabecera ---------- */
-  header.hero{
-    background:linear-gradient(160deg,var(--azul) 0%,var(--azul-osc) 100%);
-    color:#eaf0fb;
-    text-align:center;
-    padding:64px 20px 72px;
-    position:relative;
-    overflow:hidden;
-  }
-  header.hero::after{
-    content:"";position:absolute;left:0;right:0;bottom:-1px;height:40px;z-index:2;
-    background:var(--fondo);
-    clip-path:polygon(0 100%,100% 100%,100% 0);
-  }
-  /* Foco de luz que sigue al ratón por la zona azul */
-  header.hero::before{
-    content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
-    background:radial-gradient(560px circle at var(--mx,50%) var(--my,22%),
-      rgba(224,168,58,.28), rgba(43,91,181,.20) 42%, transparent 72%);
-    opacity:0;transition:opacity .6s ease;
-  }
-  header.hero:hover::before{opacity:1}
-  header.hero .wrap{position:relative;z-index:1}
-  .hero-icon{width:104px;height:104px;border-radius:24px;box-shadow:0 10px 30px rgba(0,0,0,.35);margin-bottom:18px;transition:transform .4s ease}
-  header.hero:hover .hero-icon{transform:translateY(-3px) scale(1.03)}
-  header.hero h1{color:#fff;font-size:2.8rem;margin:0 0 .15em;letter-spacing:-.01em}
-  .hero-sub{font-size:1.2rem;color:#c7d6f2;max-width:620px;margin:0 auto 26px}
-  .hero-badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px}
-  .hero-cta-wrap{margin-top:26px}
-  .hero-cta{
-    display:inline-flex;align-items:center;gap:9px;
-    background:linear-gradient(180deg,var(--oro) 0%,var(--oro-osc) 100%);
-    color:#2a1e00;font-weight:700;font-size:1.05rem;
-    padding:13px 30px;border-radius:12px;
-    box-shadow:0 6px 18px rgba(224,168,58,.35);transition:transform .15s,box-shadow .15s;
-  }
-  .hero-cta:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(224,168,58,.45);text-decoration:none}
-  .badge{
-    display:inline-flex;align-items:center;gap:7px;
-    background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);
-    color:#eaf0fb;padding:7px 14px;border-radius:999px;font-size:.9rem;font-weight:500;
-  }
+/* ================= tokens ================= */
+:root{
+  color-scheme:light;
+  --papel:#f4f1ea; --papel2:#ebe6db; --hoja:#fbfaf6;
+  --tinta:#111317; --tinta2:#3a3f47; --tinta3:#5b616b;
+  --linea:rgba(17,19,23,.12); --linea2:rgba(17,19,23,.2);
+  --azul:#1f4fa6; --azul-v:#2a68cf; --oro:#7a520a; --oro-v:#e2ae4c;
+  --verde:#1d7748; --rojo:#b2382f;
+  --sombra:0 1px 2px rgba(17,19,23,.06),0 18px 50px -24px rgba(17,19,23,.28);
+  /* banda «terminal» (siempre oscura) */
+  --noche:#0b0d11; --noche2:#12151b; --noche3:#1a1e26;
+  --n-tinta:#f3efe6; --n-tinta2:#b8bfca; --n-tinta3:#8e96a3; --n-linea:rgba(243,239,230,.1);
+  --n-verde:#4fcf8e; --n-rojo:#ff8a7e; --n-azul:#7fb0ff;
+  --serif:"Fraunces",Georgia,"Times New Roman",serif;
+  --sans:"Geist",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --max:1200px; --ease:cubic-bezier(.2,.7,.1,1); --ease-o:cubic-bezier(.16,1,.3,1);
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --papel:#0e1014; --papel2:#151820; --hoja:#12151a;
+  --tinta:#f1eee7; --tinta2:#c2c7cf; --tinta3:#959ca7;
+  --linea:rgba(241,238,231,.1); --linea2:rgba(241,238,231,.18);
+  --azul:#86b2ff; --azul-v:#2a68cf; --oro:#e2ae4c; --oro-v:#e2ae4c;
+  --verde:#4fcf8e; --rojo:#ff8a7e;
+  --sombra:0 1px 2px rgba(0,0,0,.4),0 24px 60px -28px rgba(0,0,0,.8);
+}
 
-  /* ---------- Secciones ---------- */
-  section{padding:56px 0}
-  section.alt{background:var(--tarjeta);border-top:1px solid var(--borde);border-bottom:1px solid var(--borde)}
-  .lead{font-size:1.12rem;color:var(--suave);max-width:720px;margin-bottom:28px}
+/* ================= base ================= */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:84px}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{margin:0;font-family:var(--sans);font-size:17px;line-height:1.6;color:var(--tinta2);background:var(--papel);
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:clip}
+img,svg{display:block;max-width:100%}
+a{color:var(--azul);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.2em}
+a:hover{text-decoration-thickness:2px}
+h1,h2,h3,h4{color:var(--tinta);margin:0 0 .5em;line-height:1.08;font-weight:600}
+h2{font-family:var(--serif);font-weight:500;font-size:clamp(2.1rem,4.6vw,3.6rem);letter-spacing:-.02em;font-variation-settings:"opsz" 144}
+h3{font-size:1.08rem;letter-spacing:-.005em}
+p{margin:0 0 1em}
+code{font-family:ui-monospace,"Cascadia Code",Consolas,monospace;font-size:.86em;background:var(--papel2);border:1px solid var(--linea);border-radius:6px;padding:.08em .4em;color:var(--tinta)}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 28px}
+.num{font-variant-numeric:lining-nums tabular-nums}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:2px solid var(--azul-v);outline-offset:3px;border-radius:6px}
+.oscuro :focus-visible,.noche :focus-visible{outline-color:var(--oro-v)}
+::selection{background:var(--oro-v);color:#111}
+.saltar{position:fixed;left:16px;top:-60px;z-index:200;background:var(--tinta);color:var(--papel);padding:10px 16px;border-radius:10px;font-weight:600;text-decoration:none}
+.saltar:focus{top:12px}
 
-  /* Cards en dos filas con auto-scroll en direcciones opuestas */
-  .cards-marquee{display:flex;flex-direction:column;gap:18px}
-  .cards-row{
-    overflow:hidden;
-    -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
-            mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
-  }
-  .cards-track{display:flex;gap:18px;width:max-content;will-change:transform}
-  .cards-row.izq .cards-track{animation:marquee-izq 44s linear infinite}
-  .cards-row.der .cards-track{animation:marquee-der 44s linear infinite}
-  .cards-marquee:hover .cards-track{animation-play-state:paused}
-  @keyframes marquee-izq{from{transform:translateX(0)}      to{transform:translateX(-50%)}}
-  @keyframes marquee-der{from{transform:translateX(-50%)}   to{transform:translateX(0)}}
-  .card{
-    background:var(--tarjeta);border:1px solid var(--borde);border-radius:var(--radio);
-    padding:22px 20px;box-shadow:var(--sombra);
-    flex:0 0 272px;width:272px;
-    transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;
-  }
-  .card:hover{transform:translateY(-4px);box-shadow:0 6px 16px rgba(16,30,60,.1),0 16px 40px rgba(16,30,60,.12);border-color:#cdd9ee}
-  section.alt .card{background:var(--fondo)}
-  .card .ico{font-size:1.5rem;line-height:1;margin-bottom:10px;display:block}
-  .card h3{font-size:1.08rem;margin-bottom:.35em}
-  .card p{font-size:.96rem;color:var(--suave);margin:0}
-  @media (prefers-reduced-motion:reduce){
-    .cards-row{overflow-x:auto;-webkit-mask-image:none;mask-image:none}
-    .cards-track{animation:none !important}
-  }
+.ico{width:1.25em;height:1.25em;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.os-ico{width:1.1em;height:1.1em;flex:0 0 auto;display:inline-block;vertical-align:-.14em;fill:currentColor;stroke:none}
 
-  /* ---------- Cómo funciona ---------- */
-  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;counter-reset:paso}
-  .step{position:relative;padding-left:56px}
-  .step::before{
-    counter-increment:paso;content:counter(paso);
-    position:absolute;left:0;top:0;width:40px;height:40px;border-radius:50%;
-    background:var(--azul);color:#fff;font-weight:700;font-size:1.1rem;
-    display:flex;align-items:center;justify-content:center;
-  }
-  .step h3{font-size:1.05rem;margin-bottom:.25em}
-  .step p{font-size:.95rem;color:var(--suave);margin:0}
-  code{background:#eef2fa;border:1px solid var(--borde);border-radius:6px;padding:.1em .45em;font-size:.9em;color:var(--azul-osc)}
+/* Encabezado de sección: rótulo + título + entradilla */
+.rotulo{display:inline-flex;align-items:center;gap:10px;font-size:.78rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--tinta3);margin-bottom:18px}
+.rotulo b{font-family:var(--serif);font-style:italic;font-weight:500;letter-spacing:0;text-transform:none;font-size:1rem;color:var(--oro)}
+.rotulo::after{content:"";width:46px;height:1px;background:currentColor;opacity:.5}
+.lead{font-size:clamp(1.05rem,1.4vw,1.2rem);color:var(--tinta2);max-width:680px;margin-bottom:40px}
+section{padding:clamp(80px,11vw,150px) 0;position:relative}
+.cv{content-visibility:auto;contain-intrinsic-size:auto 1100px}
 
-  /* ---------- Carrusel ---------- */
-  .carousel-block{margin-top:14px}
-  .carousel-block h3{font-size:1.25rem;color:var(--azul-osc);margin-bottom:12px;display:flex;align-items:center;gap:10px}
-  .carousel-block h3 .dot{width:10px;height:10px;border-radius:50%;background:var(--oro);flex:none}
-  .carousel{
-    position:relative;border-radius:var(--radio);overflow:hidden;
-    background:#0e2b5c;box-shadow:var(--sombra);border:1px solid var(--borde);
-  }
-  .carousel-viewport{position:relative;width:100%;aspect-ratio:2220/1300;overflow:hidden}
-  .slide{
-    position:absolute;inset:0;opacity:0;transition:opacity .6s ease;
-    display:flex;align-items:center;justify-content:center;pointer-events:none;
-  }
-  .slide.active{opacity:1;pointer-events:auto}
-  .slide img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
-  .car-btn{
-    position:absolute;top:50%;transform:translateY(-50%);z-index:3;
-    width:44px;height:44px;border-radius:50%;border:none;cursor:pointer;
-    background:rgba(255,255,255,.88);color:var(--azul-osc);
-    font-size:1.5rem;line-height:1;display:flex;align-items:center;justify-content:center;
-    box-shadow:0 2px 10px rgba(0,0,0,.25);transition:background .2s,transform .2s;
-  }
-  .car-btn:hover{background:#fff;transform:translateY(-50%) scale(1.06)}
-  .car-btn:focus-visible{outline:3px solid var(--oro);outline-offset:2px}
-  .car-prev{left:12px}
-  .car-next{right:12px}
-  .car-dots{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:14px 10px;background:rgba(255,255,255,.04)}
-  .car-dot{
-    width:10px;height:10px;border-radius:50%;border:none;padding:0;cursor:pointer;
-    background:rgba(255,255,255,.3);transition:background .2s,transform .2s;
-  }
-  .car-dot.active{background:var(--oro);transform:scale(1.25)}
-  .car-dot:focus-visible{outline:2px solid var(--oro);outline-offset:2px}
-  .car-caption{
-    position:absolute;left:0;right:0;bottom:0;z-index:2;
-    background:linear-gradient(0deg,rgba(14,43,92,.85),rgba(14,43,92,0));
-    color:#fff;font-size:.92rem;font-weight:500;padding:34px 16px 12px;text-align:center;
-  }
-  .single-shot{border-radius:var(--radio);overflow:hidden;box-shadow:var(--sombra);border:1px solid var(--borde)}
-  .single-shot img{width:100%;display:block}
+/* ================= aparición al hacer scroll ================= */
+.js .rv{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease-o),transform .9s var(--ease-o);transition-delay:calc(var(--d,0) * 90ms)}
+.js .rv.dentro{opacity:1;transform:none}
 
-  /* ---------- Descarga ---------- */
-  #descarga{text-align:center;background:linear-gradient(160deg,var(--azul) 0%,var(--azul-osc) 100%);color:#eaf0fb;position:relative;overflow:hidden}
-  /* Mismo foco de luz que el hero, siguiendo al ratón */
-  #descarga::before{
-    content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
-    background:radial-gradient(560px circle at var(--mx,50%) var(--my,50%),
-      rgba(224,168,58,.28), rgba(43,91,181,.20) 42%, transparent 72%);
-    opacity:0;transition:opacity .6s ease;
-  }
-  #descarga:hover::before{opacity:1}
-  #descarga .wrap{position:relative;z-index:1}
-  #descarga h2{color:#fff}
-  #descarga .lead{color:#c7d6f2;margin-left:auto;margin-right:auto}
-  .btn-descarga{
-    display:inline-flex;align-items:center;gap:12px;
-    background:linear-gradient(180deg,var(--oro) 0%,var(--oro-osc) 100%);
-    color:#2a1e00;font-weight:700;font-size:1.25rem;
-    padding:18px 38px;border-radius:14px;margin:8px 0 6px;
-    box-shadow:0 8px 24px rgba(224,168,58,.35);transition:transform .15s,box-shadow .15s;
-  }
-  .btn-descarga:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(224,168,58,.45);text-decoration:none}
-  .btn-descarga .big{font-size:1.5rem}
-  .btn-descarga .dl-txt{display:flex;flex-direction:column;align-items:flex-start;line-height:1.14;text-align:left}
-  .btn-descarga .dl-txt small{font-size:.72rem;font-weight:600;opacity:.72;letter-spacing:.01em}
-  .btn-descarga.btn-mac{background:linear-gradient(180deg,#f4f6fb 0%,#cfd7e6 100%);color:#1a2435;box-shadow:0 8px 24px rgba(170,188,222,.32)}
-  .btn-descarga.btn-mac:hover{box-shadow:0 12px 30px rgba(170,188,222,.5)}
-  .btn-descarga.btn-lin{background:linear-gradient(180deg,#eef1f8 0%,#c9d3e4 100%);color:#1a2435;box-shadow:0 8px 24px rgba(170,188,222,.28)}
-  .btn-descarga.btn-lin:hover{box-shadow:0 12px 30px rgba(170,188,222,.45)}
-  /* Selector de sistema operativo */
-  .os-selector{display:inline-flex;gap:4px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:5px;margin:14px 0 20px}
-  .os-tab{display:inline-flex;align-items:center;gap:8px;background:none;border:0;color:#c7d6f2;font:inherit;font-weight:600;font-size:1rem;padding:9px 18px;border-radius:999px;cursor:pointer;transition:background .15s,color .15s}
-  .os-tab:hover{color:#fff}
-  .os-tab[aria-selected="true"]{background:#fff;color:#16233b}
-  .os-ico{width:1.1em;height:1.1em;flex:0 0 auto;display:inline-block;vertical-align:-.12em}
-  .os-panel[hidden]{display:none}
-  .btn-descarga .os-ico{width:1.55rem;height:1.55rem}
-  .aviso-azul .os-ico{width:1.3em;height:1.3em}
-  @media (max-width:520px){ .os-tab{padding:8px 13px;font-size:.92rem} }
-  .descargas-count{min-height:1.4em;color:#c7d6f2;font-size:1rem;margin-top:6px}
-  .descargas-count strong{color:#fff}
-  .plataforma{color:#9fb6e0;font-size:.9rem;margin-top:10px}
-  .verificar{max-width:620px;margin:18px auto 0;text-align:left;font-size:.9rem}
-  .verificar summary{cursor:pointer;color:#c7d6f2;text-align:center;list-style:none;font-weight:500}
-  .verificar summary::-webkit-details-marker{display:none}
-  .verificar summary:hover{color:#fff;text-decoration:underline}
-  .verificar p{color:#9fb6e0;margin:12px 0 8px}
-  .verificar code{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:#eaf0fb;border-radius:6px;padding:.12em .45em}
-  .verificar code.hash{display:block;word-break:break-all;padding:10px 12px;color:#e7edf8}
-  .verificar pre{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:#eaf0fb;border-radius:8px;padding:12px 14px;margin:12px 0 8px;overflow-x:auto;font-size:.82rem;line-height:1.5;text-align:left}
-  .verificar pre code{background:none;border:0;padding:0;color:inherit;white-space:pre}
-  .ver-versiones{margin:16px 0 0;font-size:.92rem}
-  .ver-versiones a{color:#c7d6f2;font-weight:500}
-  .ver-versiones a:hover{color:#fff}
-  .aviso-azul{
-    display:flex;gap:12px;align-items:flex-start;text-align:left;
-    max-width:620px;margin:18px auto 0;
-    background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);
-    border-radius:12px;padding:14px 16px;
-  }
-  .aviso-azul .ico{font-size:1.3rem;line-height:1.3;flex:none}
-  .aviso-azul p{margin:0;color:#dbe6fa;font-size:.92rem}
-  .aviso-azul strong{color:#fff}
-  .aviso-azul code{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);color:#eaf0fb;border-radius:5px;padding:.06em .4em}
+/* ================= barra de navegación ================= */
+.nav{position:fixed;inset:0 0 auto 0;z-index:80;height:68px;color:var(--n-tinta)}
+.nav::before{content:"";position:absolute;inset:0;background:rgba(11,13,17,.78);-webkit-backdrop-filter:blur(14px) saturate(1.3);backdrop-filter:blur(14px) saturate(1.3);
+  border-bottom:1px solid var(--n-linea);opacity:0;transition:opacity .4s var(--ease)}
+.nav.solida::before{opacity:1}
+.nav .wrap{position:relative;height:100%;display:flex;align-items:center;gap:22px}
+.marca{display:inline-flex;align-items:center;gap:11px;color:var(--n-tinta);text-decoration:none;font-weight:600;letter-spacing:.16em;font-size:.86rem}
+.marca img{width:32px;height:32px;border-radius:9px;transition:transform .5s var(--ease-o)}
+.marca:hover img{transform:rotate(-8deg) scale(1.08)}
+.nav nav{margin-left:auto}
+.nav-links{display:flex;gap:4px;list-style:none;padding:0;margin-top:0;margin-bottom:0}
+.nav-links a{color:var(--n-tinta2);text-decoration:none;font-size:.92rem;padding:8px 12px;border-radius:999px;position:relative}
+.nav-links a::after{content:"";position:absolute;left:12px;right:12px;bottom:4px;height:1px;background:var(--oro-v);transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease-o)}
+.nav-links a:hover{color:var(--n-tinta)}
+.nav-links a:hover::after,.nav-links a[aria-current="true"]::after{transform:scaleX(1)}
+.nav-links a[aria-current="true"]{color:var(--n-tinta)}
+.nav-acc{display:flex;align-items:center;gap:10px}
+.nav-links + .nav-acc{margin-left:6px}
+.theme-toggle{width:40px;height:40px;border-radius:50%;cursor:pointer;border:1px solid rgba(243,239,230,.22);background:rgba(243,239,230,.06);color:var(--n-tinta);display:grid;place-items:center;padding:0;transition:transform .3s var(--ease-o)}
+.theme-toggle:hover{transform:rotate(-14deg) scale(1.06);background:rgba(243,239,230,.12)}
+.theme-toggle .ico{width:19px;height:19px}
+.theme-toggle .i-sol{display:none}
+:root[data-theme="dark"] .theme-toggle .i-sol{display:block}
+:root[data-theme="dark"] .theme-toggle .i-luna{display:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font:inherit;font-weight:600;text-decoration:none;cursor:pointer;border-radius:999px;border:0;
+  padding:13px 24px;line-height:1.1;transition:transform .35s var(--ease-o);position:relative;isolation:isolate}
+.btn:hover{transform:translateY(-2px);text-decoration:none}
+.btn:active{transform:translateY(0) scale(.98)}
+.btn-oro{background:var(--oro-v);color:#1b1306}
+.btn-oro::after{content:"";position:absolute;inset:-6px;border-radius:inherit;z-index:-1;background:radial-gradient(closest-side,rgba(226,174,76,.55),transparent);opacity:0;transition:opacity .4s var(--ease)}
+.btn-oro:hover::after{opacity:1}
+.btn-fantasma{color:var(--n-tinta);border:1px solid rgba(243,239,230,.3);background:transparent}
+.btn-fantasma:hover{background:rgba(243,239,230,.08)}
+.btn-sm{padding:9px 16px;font-size:.92rem}
+.progreso{position:absolute;left:0;right:0;bottom:-1px;height:2px;background:linear-gradient(90deg,var(--oro-v),#f5d48f);transform-origin:left;transform:scaleX(0)}
+@media (max-width:980px){.nav-links{display:none}.nav-acc{margin-left:auto}}
 
-  /* ---------- Descarga: versión, sellos y novedades ---------- */
-  .ver-actual-linea{color:#c7d6f2;font-size:.98rem;margin:4px 0 0}
-  .ver-actual-linea strong{color:#fff}
-  .ver-fecha{color:#9fb6e0}
-  .sellos{display:flex;gap:10px 20px;justify-content:center;flex-wrap:wrap;margin:16px auto 2px;max-width:640px}
-  .sello{display:inline-flex;align-items:center;gap:7px;color:#dbe6fa;font-size:.9rem;font-weight:500}
-  .sello .ck{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;
-    background:rgba(224,168,58,.16);border:1px solid rgba(224,168,58,.4);color:var(--oro);font-size:.68rem;flex:none}
-  .novedades{max-width:620px;margin:14px auto 0;text-align:left;font-size:.92rem}
-  .novedades>summary{cursor:pointer;color:#c7d6f2;text-align:center;list-style:none;font-weight:500}
-  .novedades>summary::-webkit-details-marker{display:none}
-  .novedades>summary:hover{color:#fff;text-decoration:underline}
-  .novedades-cuerpo{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:14px 18px;margin-top:12px;color:#dbe6fa}
-  .novedades-cuerpo h4{color:#fff;font-size:1rem;margin:12px 0 6px}
-  .novedades-cuerpo h4:first-child{margin-top:0}
-  .novedades-cuerpo ul{margin:0 0 8px;padding-left:20px}
-  .novedades-cuerpo li{margin:3px 0}
-  .novedades-cuerpo p{margin:0 0 8px}
-  .novedades-cuerpo code{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);color:#eaf0fb;border-radius:5px;padding:.06em .4em}
+/* ================= banda nocturna (hero, ecuación, descarga) ================= */
+.noche{background:var(--noche);color:var(--n-tinta2)}
+.noche h1,.noche h2,.noche h3{color:var(--n-tinta)}
+.noche .rotulo{color:var(--n-tinta3)}
+.noche .rotulo b{color:var(--oro-v)}
+.noche .lead{color:var(--n-tinta2)}
+.noche a{color:var(--n-azul)}
+.noche a.btn-oro,.noche a.btn-descarga{color:#1b1306}
+.noche a.btn-fantasma{color:var(--n-tinta)}
+.noche a.btn-descarga.btn-mac,.noche a.btn-descarga.btn-lin{color:#14161b}
+.noche code{background:rgba(243,239,230,.08);border-color:rgba(243,239,230,.16);color:var(--n-tinta)}
+.rejilla{position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(var(--n-linea) 1px,transparent 1px),linear-gradient(90deg,var(--n-linea) 1px,transparent 1px);
+  background-size:72px 72px;-webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 40%,#000 30%,transparent 80%);mask-image:radial-gradient(ellipse 80% 70% at 50% 40%,#000 30%,transparent 80%)}
+/* foco de luz que sigue al ratón: un disco que se desplaza con transform */
+.foco{position:absolute;left:0;top:0;width:760px;height:760px;margin:-380px 0 0 -380px;border-radius:50%;pointer-events:none;z-index:0;
+  background:radial-gradient(closest-side,rgba(226,174,76,.22),rgba(42,104,207,.14) 55%,transparent);
+  opacity:0;transform:translate3d(var(--fx,50vw),var(--fy,30vh),0);transition:opacity .8s var(--ease)}
+.con-foco:hover .foco{opacity:1}
 
-  /* ---------- Características (todo lo que puedes hacer) ---------- */
-  .feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
-  .feat{background:var(--tarjeta);border:1px solid var(--borde);border-radius:var(--radio);
-    padding:22px 22px 18px;box-shadow:var(--sombra);transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
-  .feat:hover{transform:translateY(-4px);box-shadow:0 6px 16px rgba(16,30,60,.1),0 16px 40px rgba(16,30,60,.12);border-color:#cdd9ee}
-  .feat-ico{font-size:1.5rem;line-height:1;display:inline-flex;align-items:center;justify-content:center;
-    width:46px;height:46px;border-radius:12px;background:rgba(43,91,181,.10);border:1px solid rgba(43,91,181,.14);margin-bottom:12px}
-  .feat h3{font-size:1.1rem;margin-bottom:.5em}
-  .feat ul{list-style:none;margin:0;padding:0}
-  .feat li{position:relative;padding-left:22px;margin:7px 0;color:var(--texto);font-size:.95rem}
-  .feat li::before{content:"✓";position:absolute;left:0;top:0;color:var(--oro-osc);font-weight:700}
+/* ================= HERO ================= */
+.hero{position:relative;overflow:hidden;padding:150px 0 0;min-height:100svh;display:flex;flex-direction:column}
+.hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,1fr);gap:56px;align-items:center;flex:1}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;padding:6px 14px 6px 6px;border:1px solid var(--n-linea);border-radius:999px;font-size:.86rem;color:var(--n-tinta2);margin-bottom:26px;text-decoration:none;background:rgba(243,239,230,.03)}
+.hero-eyebrow:hover{color:var(--n-tinta)}
+.hero-eyebrow .pill{background:var(--oro-v);color:#1b1306;font-weight:700;font-size:.74rem;padding:3px 9px;border-radius:999px;letter-spacing:.02em}
+.hero-icon{width:56px;height:56px;border-radius:15px;margin-bottom:28px;box-shadow:0 18px 40px -12px rgba(0,0,0,.7);transition:transform .6s var(--ease-o)}
+.hero:hover .hero-icon{transform:translateY(-4px) rotate(-4deg) scale(1.04)}
+.hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(2.9rem,6.6vw,6rem);letter-spacing:-.035em;line-height:.98;margin-bottom:28px;font-variation-settings:"opsz" 144}
+.hero h1 em{font-style:italic;color:var(--oro-v);font-weight:400}
+.hero h1 .l{display:block;overflow:hidden;padding-bottom:.08em;margin-bottom:-.08em}
+.hero h1 .l > span{display:inline-block}
+.hero h1 .l > span{animation:sube 1.1s var(--ease-o) both;animation-delay:calc(var(--i) * 110ms + 80ms)}
+@keyframes sube{from{transform:translateY(105%)}to{transform:none}}
+.hero-sub{font-size:clamp(1.05rem,1.5vw,1.22rem);color:var(--n-tinta2);max-width:560px;margin-bottom:34px}
+.hero-sub strong{color:var(--n-tinta);font-weight:600}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:34px}
+.hero-badges{display:flex;gap:8px 18px;flex-wrap:wrap;font-size:.88rem;color:var(--n-tinta3);padding:0;margin:0;list-style:none}
+.hero-badges li{display:inline-flex;align-items:center;gap:8px}
+.hero-badges .ico{width:16px;height:16px;color:var(--oro-v)}
+.hero .ent{animation:entra .9s var(--ease-o) both;animation-delay:calc(var(--d) * 90ms + 300ms)}
+.hero .hero-sub.ent{animation-name:entraSolo}
+@keyframes entra{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes entraSolo{from{transform:translateY(16px)}to{transform:none}}
 
-  /* ---------- ¿Para quién es? ---------- */
-  .pq-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px 26px;margin-top:6px}
-  .pq{display:flex;gap:13px;align-items:flex-start}
-  .pq-ico{font-size:1.35rem;line-height:1.2;flex:none}
-  .pq h3{font-size:1.02rem;margin:0 0 .2em}
-  .pq p{font-size:.93rem;color:var(--suave);margin:0}
+/* Tarjeta «Tu patrimonio» del hero (réplica viva de la app) */
+.escena{position:relative;perspective:1600px}
+.cuadro{position:relative;transform-style:preserve-3d;transform:rotateX(var(--rx,6deg)) rotateY(var(--ry,-10deg));transition:transform .9s var(--ease-o)}
+.pantalla{position:absolute;inset:-8% -30% auto 18%;border-radius:14px;overflow:hidden;border:1px solid rgba(243,239,230,.12);
+  box-shadow:0 40px 90px -30px rgba(0,0,0,.9);transform:translateZ(-120px);opacity:.55}
+.pantalla img{width:100%;height:auto}
+.pantalla::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,13,17,.1),rgba(11,13,17,.85))}
+.tarjeta-pat{position:relative;background:linear-gradient(180deg,rgba(26,30,38,.92),rgba(18,21,27,.96));border:1px solid rgba(243,239,230,.12);border-radius:22px;padding:28px 28px 22px;
+  box-shadow:0 50px 100px -40px rgba(0,0,0,.95),inset 0 1px 0 rgba(243,239,230,.06);transform:translateZ(40px);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.tp-cab{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.tp-cab h2{font-size:1.25rem;margin:0;letter-spacing:-.01em}
+.tp-cab span{font-size:.84rem;color:var(--n-tinta3)}
+.tp-cifra{font-family:var(--serif);font-size:clamp(2.8rem,5.4vw,4.4rem);font-weight:400;color:var(--n-tinta);letter-spacing:-.03em;line-height:1.05;margin:10px 0 16px;font-variation-settings:"opsz" 144}
+.tp-barra{display:flex;height:8px;border-radius:999px;overflow:hidden;gap:3px;margin-bottom:10px}
+.tp-barra i{display:block;height:100%;border-radius:999px;transform-origin:left;transition:transform 1.4s var(--ease-o) .9s}
+.tp-barra i:first-child{background:#5a9cf0;flex:49}
+.tp-barra i:last-child{background:#24b37d;flex:51;transition-delay:1.1s}
+.js .tp-barra i{transform:scaleX(0)}
+.js .listo .tp-barra i{transform:none}
+.tp-ley{display:flex;gap:18px;font-size:.82rem;color:var(--n-tinta2);margin-bottom:18px}
+.tp-ley span{display:inline-flex;align-items:center;gap:7px}
+.tp-ley span::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--c)}
+.tp-graf{position:relative;border-top:1px solid var(--n-linea);padding-top:16px}
+.tp-graf-cab{display:flex;justify-content:space-between;align-items:baseline;font-size:.84rem;margin-bottom:6px;gap:10px;flex-wrap:wrap}
+.tp-graf-cab b{color:var(--n-tinta);font-weight:600}
+.tp-graf-cab .sube{color:var(--n-verde);font-weight:600}
+.limpia{overflow:hidden}
+.limpia > div{transform:translateX(-100%);transition:transform 2s var(--ease-o) .7s}
+.limpia > div > div{transform:translateX(100%);transition:transform 2s var(--ease-o) .7s}
+.listo .limpia > div,.listo .limpia > div > div{transform:none}
+.tp-graf svg{width:100%;height:auto;overflow:visible}
+.tp-filas{display:grid;gap:0;margin-top:14px;border-top:1px solid var(--n-linea)}
+.tp-fila{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:10px 0;border-bottom:1px solid var(--n-linea);font-size:.92rem}
+.tp-fila b{color:var(--n-tinta);font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tp-fila small{color:var(--n-tinta3)}
+.punto-vivo{position:absolute;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:#fff;box-shadow:0 0 0 4px rgba(255,255,255,.18)}
+.punto-vivo::after{content:"";position:absolute;inset:-8px;border-radius:50%;border:1px solid rgba(255,255,255,.6);animation:latido 2.4s var(--ease) infinite}
+@keyframes latido{0%{transform:scale(.4);opacity:1}100%{transform:scale(1.9);opacity:0}}
+.flotante{position:absolute;display:flex;align-items:center;gap:10px;background:rgba(18,21,27,.92);border:1px solid rgba(243,239,230,.14);border-radius:14px;padding:10px 14px;font-size:.82rem;color:var(--n-tinta2);
+  box-shadow:0 24px 50px -20px rgba(0,0,0,.9);white-space:nowrap}
+.flotante b{display:block;color:var(--n-tinta);font-size:1rem;font-variant-numeric:tabular-nums}
+.flotante .ico{width:30px;height:30px;padding:6px;border-radius:9px;background:rgba(79,207,142,.14);color:var(--n-verde)}
+.flot-1{left:-38px;bottom:22%;transform:translateZ(110px)}
+.flot-2{right:-26px;top:-26px;transform:translateZ(90px)}
+.flot-2 .ico{background:rgba(226,174,76,.16);color:var(--oro-v)}
+.js .flotante{opacity:0;transition:opacity .9s var(--ease) 1.6s}
+.js .listo .flotante{opacity:1}
+.flot-1 > *,.flot-2 > *{animation:flota 7s ease-in-out infinite}
+.flot-2 > *{animation-delay:-3.5s}
+@keyframes flota{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 
-  /* ---------- Preguntas frecuentes ---------- */
-  .faq{max-width:800px}
-  .faq-item{
-    background:var(--fondo);border:1px solid var(--borde);border-radius:12px;
-    margin-bottom:12px;overflow:hidden;transition:border-color .2s,box-shadow .2s;
-  }
-  .faq-item[open]{border-color:#cdd9ee;box-shadow:var(--sombra)}
-  .faq-item summary{
-    cursor:pointer;list-style:none;padding:16px 48px 16px 18px;position:relative;
-    font-weight:600;color:var(--tinta);font-size:1.02rem;
-  }
-  .faq-item summary::-webkit-details-marker{display:none}
-  .faq-item summary::after{
-    content:"+";position:absolute;right:18px;top:50%;transform:translateY(-50%);
-    font-size:1.4rem;font-weight:400;color:var(--azul-claro);transition:transform .2s;
-  }
-  .faq-item[open] summary::after{content:"−";transform:translateY(-50%)}
-  .faq-item summary:hover{color:var(--azul)}
-  .faq-item .faq-body{padding:0 18px 16px;color:var(--suave);font-size:.97rem}
-  .faq-item .faq-body p{margin:0}
-  .faq-item .faq-body a{font-weight:500}
-  .faq-item code{background:#eef2fa;border:1px solid var(--borde);border-radius:6px;padding:.1em .45em;font-size:.9em;color:var(--azul-osc)}
+/* Cinta de cotizaciones */
+.cinta{position:relative;z-index:1;margin-top:clamp(56px,7vw,90px);border-top:1px solid var(--n-linea);border-bottom:1px solid var(--n-linea);background:rgba(243,239,230,.02);overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.cinta-pista{display:flex;width:max-content;animation:cinta 60s linear infinite}
+.cinta:hover .cinta-pista{animation-play-state:paused}
+.cinta ul{display:flex;list-style:none;margin:0;padding:0}
+.cinta li{display:flex;align-items:baseline;gap:10px;padding:15px 28px;border-right:1px solid var(--n-linea);font-size:.88rem;white-space:nowrap;color:var(--n-tinta3)}
+.cinta li b{color:var(--n-tinta);font-weight:500}
+.cinta .s{font-weight:600;font-variant-numeric:tabular-nums}
+.cinta .s.up{color:var(--n-verde)}
+.cinta .s.dn{color:var(--n-rojo)}
+.cinta-nota{position:absolute;right:0;top:0;bottom:0;display:flex;align-items:center;padding:0 16px;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--n-tinta3)}
+@keyframes cinta{to{transform:translateX(-50%)}}
 
-  /* ---------- Avisos ---------- */
-  .aviso{
-    display:flex;gap:16px;align-items:flex-start;
-    background:#fff8e8;border:1px solid #f0d99a;border-radius:var(--radio);
-    padding:20px 22px;box-shadow:var(--sombra);
-  }
-  .aviso .ico{font-size:1.6rem;line-height:1;flex:none}
-  .aviso h3{margin:0 0 .3em;font-size:1.08rem}
-  .aviso p{margin:0;color:#6b5a2a;font-size:.98rem}
-  .aviso code{background:#fff;border-color:#f0d99a;color:#8a6d1f}
+/* ================= ECUACIÓN (libro de cuentas) ================= */
+.ecuacion{background:var(--papel)}
+.libro{margin-top:10px;border-top:2px solid var(--tinta)}
+.asiento{display:grid;grid-template-columns:72px minmax(0,1fr) auto;align-items:end;gap:20px;padding:clamp(20px,2.6vw,34px) 0;border-bottom:1px solid var(--linea2)}
+.asiento .op{font-family:var(--sans);font-size:clamp(2.2rem,4.4vw,3.8rem);line-height:.8;color:var(--tinta);font-weight:200;text-align:center;align-self:center}
+.asiento .que h3{font-size:clamp(1.1rem,1.6vw,1.35rem);margin:0 0 4px}
+.asiento .que p{margin:0;font-size:.95rem;color:var(--tinta3)}
+.asiento .v{font-family:var(--serif);font-size:clamp(2.1rem,5.4vw,4.6rem);color:var(--tinta);letter-spacing:-.03em;line-height:1;font-variation-settings:"opsz" 144;text-align:right}
+.asiento.total{border-bottom:0;border-top:2px solid var(--tinta);margin-top:-1px}
+.asiento.total::after{content:"";grid-column:1/-1;height:6px;border-top:1px solid var(--tinta);border-bottom:1px solid var(--tinta);margin-top:18px}
+.asiento.total .v{color:var(--oro)}
+.asiento.debe .v{color:var(--rojo)}
+.libro-nota{margin-top:26px;font-size:.92rem;color:var(--tinta3);max-width:720px}
+.desglose{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:8px;font-size:.86rem;color:var(--tinta3)}
+.desglose span{font-variant-numeric:tabular-nums}
 
-  /* ---------- Privacidad ---------- */
-  .priv-list{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
-  .priv-list li{display:flex;gap:12px;align-items:flex-start;background:var(--fondo);border:1px solid var(--borde);border-radius:12px;padding:16px 18px}
-  .priv-list .ico{color:#1f8a4c;font-weight:700;font-size:1.2rem;flex:none}
-  .priv-list b{color:var(--tinta)}
-  .priv-list span{color:var(--suave);font-size:.95rem}
+/* Odómetro: cada dígito es una columna 0-9 que se desplaza con transform */
+.odo{display:inline-flex;white-space:nowrap;font-variant-numeric:tabular-nums lining-nums}
+.odo .d{display:inline-block;height:1em;line-height:1;overflow:hidden;position:relative}
+.odo .d > span{display:flex;flex-direction:column;transform:translateY(0);transition:transform 1.8s var(--ease-o);transition-delay:calc(var(--k) * 60ms)}
+.odo .d > span > i{font-style:normal;height:1em;line-height:1;display:block;text-align:center}
+.odo .s{display:inline-block;line-height:1}
 
-  /* ---------- Créditos / footer ---------- */
-  footer{background:var(--footer-bg);color:#c2cbdb;padding:48px 20px 40px;text-align:center}
-  footer h2{color:#fff;font-size:1.4rem}
-  footer p{color:#9aa6bd;max-width:680px;margin:0 auto 1em}
-  footer a{color:#cdbd86}
-  .social{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:22px 0 8px}
-  .social a{
-    display:inline-flex;align-items:center;gap:8px;
-    background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);
-    color:#e7ecf5;padding:10px 18px;border-radius:10px;font-size:.95rem;font-weight:500;
-  }
-  .social a:hover{background:rgba(255,255,255,.14);text-decoration:none}
-  .foot-fine{font-size:.85rem;color:#79839a;margin-top:18px}
+/* ================= QUÉ ES (marquesina de tarjetas) ================= */
+.cards-marquee{display:flex;flex-direction:column;gap:18px;margin-top:8px}
+.cards-row{overflow:hidden;padding:8px 0 14px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+.cards-track{display:flex;gap:18px;width:max-content}
+.cards-row.izq .cards-track{animation:marquee-izq 52s linear infinite}
+.cards-row.der .cards-track{animation:marquee-der 52s linear infinite}
+.cards-marquee:hover .cards-track,.cards-marquee:focus-within .cards-track{animation-play-state:paused}
+@keyframes marquee-izq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes marquee-der{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+.card{background:var(--hoja);border:1px solid var(--linea);border-radius:18px;padding:22px 22px 20px;flex:0 0 290px;width:290px;position:relative;transition:transform .5s var(--ease-o)}
+.card::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:var(--sombra);opacity:0;transition:opacity .5s var(--ease);pointer-events:none}
+.card:hover{transform:translateY(-6px)}
+.card:hover::after{opacity:1}
+.card .c-ico{display:grid;place-items:center;width:44px;height:44px;border-radius:12px;background:var(--papel2);color:var(--tinta);margin-bottom:16px}
+.card .c-ico .ico{width:22px;height:22px}
+.card h3{font-size:1.06rem;margin-bottom:.35em}
+.card p{font-size:.94rem;color:var(--tinta3);margin:0}
 
-  /* ---------- Botón de descarga flotante ---------- */
-  .fab-descarga{
-    position:fixed;right:20px;bottom:20px;z-index:50;
-    display:inline-flex;align-items:center;gap:9px;
-    background:linear-gradient(180deg,var(--oro) 0%,var(--oro-osc) 100%);
-    color:#2a1e00;font-weight:700;font-size:1rem;
-    padding:13px 22px;border-radius:999px;
-    box-shadow:0 6px 20px rgba(16,30,60,.28);
-    opacity:0;visibility:hidden;transform:translateY(14px);
-    transition:opacity .3s ease,transform .3s ease,visibility .3s;
-  }
-  .fab-descarga.visible{opacity:1;visibility:visible;transform:translateY(0)}
-  .fab-descarga:hover{text-decoration:none;transform:translateY(-2px);box-shadow:0 10px 26px rgba(224,168,58,.45)}
+/* ================= RECORRIDO (pantalla fija + pasos) ================= */
+.recorrido{background:var(--papel2)}
+.rec-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:64px}
+.rec-pasos{list-style:none;margin:0;padding:0}
+.rec-paso{min-height:68vh;display:flex;flex-direction:column;justify-content:center;padding:40px 0;border-left:1px solid var(--linea2);padding-left:32px;position:relative}
+.rec-paso::before{content:"";position:absolute;left:-1px;top:0;bottom:0;width:2px;background:var(--oro);transform:scaleY(0);transform-origin:top;transition:transform .8s var(--ease-o)}
+.rec-paso.activo::before{transform:scaleY(1)}
+.rec-paso .n{font-family:var(--serif);font-style:italic;color:var(--oro);font-size:1.1rem;margin-bottom:10px}
+.rec-paso h3{font-family:var(--serif);font-weight:500;font-size:clamp(1.6rem,2.6vw,2.3rem);letter-spacing:-.02em;margin-bottom:14px;font-variation-settings:"opsz" 144}
+.rec-paso p{color:var(--tinta2);max-width:430px}
+.rec-paso ul{list-style:none;padding:0;margin:6px 0 0;display:grid;gap:8px;font-size:.95rem}
+.rec-paso li{display:flex;gap:10px;align-items:flex-start}
+.rec-paso li .ico{width:18px;height:18px;color:var(--verde);margin-top:4px}
+.rec-paso .js-opaco{transform:translateX(0);transition:transform .8s var(--ease-o)}
+.rec-paso.activo .js-opaco{transform:translateX(10px)}
+.rec-paso .n,.rec-paso h3{transition:opacity .6s var(--ease)}
+.rec-img-movil{display:none}
+.rec-fijo{position:sticky;top:calc(50vh - 260px);height:520px;align-self:start}
+.marco{position:relative;height:100%;border-radius:16px;background:#0c0e12;border:1px solid var(--linea2);box-shadow:0 60px 120px -50px rgba(17,19,23,.55);overflow:hidden}
+.marco-barra{display:flex;align-items:center;gap:7px;height:36px;padding:0 14px;background:#15181e;border-bottom:1px solid rgba(255,255,255,.06)}
+.marco-barra i{width:10px;height:10px;border-radius:50%;background:#3a3f48}
+.marco-barra span{margin-left:12px;font-size:.74rem;color:#8e96a3;background:#0c0e12;border-radius:6px;padding:3px 12px;flex:1;max-width:280px}
+.marco-vista{position:absolute;inset:36px 0 0 0}
+.marco-vista img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top left;opacity:0;transform:scale(1.04);transition:opacity .7s var(--ease),transform 1.2s var(--ease-o)}
+.marco-vista img.on{opacity:1;transform:none}
+.rec-cont{position:absolute;right:18px;bottom:16px;display:flex;gap:6px;z-index:2}
+.rec-cont i{width:22px;height:3px;border-radius:2px;background:rgba(255,255,255,.25);overflow:hidden;position:relative}
+.rec-cont i::after{content:"";position:absolute;inset:0;background:var(--oro-v);transform:scaleX(0);transform-origin:left;transition:transform .6s var(--ease-o)}
+.rec-cont i.on::after{transform:none}
 
-  /* ---------- Lightbox de capturas ---------- */
-  .lightbox{
-    position:fixed;inset:0;z-index:100;display:none;
-    background:rgba(8,18,40,.92);
-    align-items:center;justify-content:center;padding:28px;cursor:zoom-out;
-  }
-  .lightbox.open{display:flex}
-  .lightbox img{max-width:100%;max-height:100%;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
-  .lightbox-close{
-    position:absolute;top:16px;right:20px;width:44px;height:44px;border-radius:50%;
-    border:none;cursor:pointer;background:rgba(255,255,255,.92);color:var(--azul-osc);
-    font-size:1.6rem;line-height:1;display:flex;align-items:center;justify-content:center;
-  }
-  .lightbox-close:hover{background:#fff}
-  .slide img,.single-shot img{cursor:zoom-in}
+/* ================= CARACTERÍSTICAS (bento) ================= */
+.bento{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.feat{grid-column:span 1;background:var(--hoja);border:1px solid var(--linea);border-radius:20px;padding:26px 24px 22px;position:relative;overflow:hidden;transition:transform .5s var(--ease-o)}
+.feat.ancha{grid-column:span 2}
+.feat::before{content:"";position:absolute;width:420px;height:420px;left:0;top:0;margin:-210px 0 0 -210px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(closest-side,rgba(226,174,76,.2),transparent);opacity:0;transform:translate(var(--gx,50%),var(--gy,0));transition:opacity .4s var(--ease)}
+.feat:hover::before{opacity:1}
+.feat:hover{transform:translateY(-4px)}
+.feat > *{position:relative}
+.feat-ico{display:grid;place-items:center;width:46px;height:46px;border-radius:13px;background:var(--tinta);color:var(--papel);margin-bottom:18px}
+.feat-ico .ico{width:22px;height:22px}
+.feat h3{font-family:var(--serif);font-weight:500;font-size:1.42rem;letter-spacing:-.015em;margin-bottom:.6em;font-variation-settings:"opsz" 144}
+.feat ul{list-style:none;margin:0;padding:0}
+.feat li{position:relative;padding-left:20px;margin:7px 0;color:var(--tinta2);font-size:.95rem;line-height:1.45}
+.feat li::before{content:"";position:absolute;left:2px;top:.62em;width:7px;height:7px;border-radius:2px;background:var(--oro-v);transform:rotate(45deg)}
+.feat .nuevo{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--verde);border:1px solid currentColor;border-radius:999px;padding:1px 7px;margin-left:6px;vertical-align:2px}
+.feat-cifra{font-family:var(--serif);font-size:3.2rem;line-height:1;color:var(--tinta);letter-spacing:-.03em;margin:4px 0 6px}
+@media (max-width:1060px){.bento{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){.bento{grid-template-columns:minmax(0,1fr)}.feat.ancha{grid-column:span 1}}
 
-  @media (max-width:600px){
-    header.hero{padding:48px 18px 56px}
-    header.hero h1{font-size:2.2rem}
-    .hero-sub{font-size:1.05rem}
-    h2{font-size:1.45rem}
-    section{padding:44px 0}
-    .car-btn{width:38px;height:38px;font-size:1.3rem}
-    .btn-descarga{font-size:1.1rem;padding:16px 28px}
-  }
+/* ================= CIFRAS ================= */
+.cifras{padding:0;background:var(--papel)}
+.cifras-fila{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-top:1px solid var(--linea2);border-bottom:1px solid var(--linea2)}
+.cifra{padding:36px 22px;border-right:1px solid var(--linea)}
+.cifra:last-child{border-right:0}
+.cifra .v{font-family:var(--serif);font-size:clamp(2.4rem,4.4vw,3.6rem);color:var(--tinta);line-height:1;letter-spacing:-.03em;margin-bottom:10px;font-variation-settings:"opsz" 144}
+.cifra .v small{font-size:.42em;letter-spacing:0;margin-left:4px;color:var(--tinta3)}
+.cifra p{margin:0;font-size:.9rem;color:var(--tinta3)}
+@media (max-width:900px){.cifras-fila{grid-template-columns:repeat(2,minmax(0,1fr))}.cifra{border-bottom:1px solid var(--linea)}.cifra:nth-child(2n){border-right:0}.cifra:last-child{grid-column:1/-1;border-bottom:0}}
+
+/* ================= CÓMO FUNCIONA (línea de tiempo) ================= */
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;position:relative;counter-reset:paso}
+.steps::before{content:"";position:absolute;left:0;right:0;top:27px;height:1px;background:var(--linea2)}
+.steps::after{content:"";position:absolute;left:0;right:0;top:27px;height:2px;background:var(--oro);transform-origin:left;transform:scaleX(var(--av,0))}
+.step{position:relative;padding:0 26px 0 0}
+.step .bola{position:relative;z-index:1;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:var(--papel);border:1px solid var(--linea2);margin-bottom:22px;font-family:var(--serif);font-size:1.4rem;color:var(--tinta)}
+.step .bola::after{content:"";position:absolute;inset:-1px;border-radius:50%;background:var(--tinta);transform:scale(0);transition:transform .6s var(--ease-o);z-index:-1}
+.step.hecho .bola{color:var(--papel)}
+.step.hecho .bola::after{transform:scale(1)}
+.step h3{font-size:1.12rem;margin-bottom:.4em}
+.step p{font-size:.95rem;color:var(--tinta3);margin:0}
+@media (max-width:900px){.steps{grid-template-columns:minmax(0,1fr);gap:30px}.steps::before,.steps::after{top:0;bottom:0;left:27px;right:auto;width:1px;height:auto}
+  .steps::after{width:2px;transform-origin:top;transform:scaleY(var(--av,0))}.step{padding:0 0 0 80px}.step .bola{position:absolute;left:0;top:-6px}}
+
+/* ================= PARA QUIÉN ================= */
+.pq-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-top:1px solid var(--linea2)}
+.pq{padding:30px 26px 30px 0;border-right:1px solid var(--linea);margin-right:26px}
+.pq:last-child{border-right:0;margin-right:0}
+.pq-ico{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;border:1px solid var(--linea2);color:var(--tinta);margin-bottom:18px}
+.pq-ico .ico{width:20px;height:20px}
+.pq h3{font-family:var(--serif);font-weight:500;font-size:1.35rem;margin:0 0 .35em;letter-spacing:-.01em}
+.pq p{font-size:.95rem;color:var(--tinta3);margin:0}
+@media (max-width:900px){.pq-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.pq:nth-child(2n){border-right:0;margin-right:0}.pq{border-bottom:1px solid var(--linea)}}
+@media (max-width:560px){.pq-grid{grid-template-columns:minmax(0,1fr)}.pq{border-right:0;margin-right:0}}
+
+/* ================= CLARO / OSCURO (comparador) ================= */
+.compara{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--linea2);box-shadow:var(--sombra);aspect-ratio:16/10;background:#0c0e12;touch-action:pan-y;cursor:ew-resize;user-select:none}
+.compara img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top left;pointer-events:none}
+.compara .claro{clip-path:inset(0 0 0 var(--corte,50%))}
+.compara .asa{position:absolute;top:0;bottom:0;left:0;width:2px;background:var(--oro-v);transform:translateX(calc(var(--corte-px,0px) - 1px));pointer-events:none}
+.compara .asa::after{content:"";position:absolute;top:50%;left:50%;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;background:var(--oro-v);box-shadow:0 10px 30px rgba(0,0,0,.4);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231b1306' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 6l-6 6 6 6M15 6l6 6-6 6'/%3E%3C/svg%3E");background-size:22px;background-repeat:no-repeat;background-position:center}
+.compara input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
+.compara:focus-within{outline:2px solid var(--azul-v);outline-offset:4px}
+.compara .et{position:absolute;top:14px;font-size:.74rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:5px 10px;border-radius:999px;pointer-events:none}
+.compara .et.o{left:14px;top:auto;bottom:14px;background:rgba(0,0,0,.6);color:#fff}
+.compara .et.c{right:14px;top:auto;bottom:14px;background:rgba(255,255,255,.85);color:#111}
+.dos-col{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:48px;align-items:center}
+.movil-par{display:flex;gap:18px;justify-content:center;align-items:flex-start}
+.telefono{width:min(46%,230px);border-radius:34px;padding:9px;background:#0c0e12;border:1px solid var(--linea2);box-shadow:0 40px 80px -36px rgba(17,19,23,.6)}
+.telefono img{border-radius:26px;width:100%;height:auto}
+.telefono:nth-child(2){margin-top:48px}
+@media (max-width:900px){.dos-col{grid-template-columns:minmax(0,1fr)}}
+
+/* ================= GALERÍA (carruseles con pestañas) ================= */
+.gal-tabs{display:inline-flex;gap:4px;padding:5px;border:1px solid var(--linea2);border-radius:999px;margin-bottom:22px;flex-wrap:wrap;background:var(--hoja)}
+.gal-tab{font:inherit;font-size:.94rem;font-weight:600;color:var(--tinta2);background:none;border:0;padding:9px 18px;border-radius:999px;cursor:pointer}
+.gal-tab:hover{color:var(--tinta)}
+.gal-tab[aria-selected="true"]{background:var(--tinta);color:var(--papel)}
+.gal-panel[hidden]{display:none}
+.carousel-block h3{display:none}
+.carousel{position:relative;border-radius:16px;overflow:hidden;background:#0c0e12;border:1px solid var(--linea2);box-shadow:0 50px 100px -50px rgba(17,19,23,.5)}
+.carousel-viewport{position:relative;width:100%;aspect-ratio:16/10;overflow:hidden}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity .7s var(--ease);pointer-events:none}
+.slide.active{opacity:1;pointer-events:auto}
+.slide img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;cursor:zoom-in}
+.car-btn{position:absolute;top:50%;z-index:3;width:48px;height:48px;margin-top:-24px;border-radius:50%;border:1px solid rgba(255,255,255,.2);cursor:pointer;
+  background:rgba(12,14,18,.72);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);color:#fff;display:grid;place-items:center;transition:transform .35s var(--ease-o)}
+.car-btn .ico{width:20px;height:20px}
+.car-btn:hover{transform:scale(1.08)}
+.car-prev{left:14px}.car-next{right:14px}
+.car-pie{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 18px;background:#12151b;border-top:1px solid rgba(255,255,255,.06);flex-wrap:wrap}
+.car-caption{color:#e9e5dc;font-size:.92rem;font-weight:500}
+.car-dots{display:flex;gap:6px;flex-wrap:wrap}
+.car-dot{position:relative;width:26px;height:24px;border:0;padding:0;cursor:pointer;background:none}
+.car-dot::before{content:"";position:absolute;left:0;right:0;top:50%;height:3px;margin-top:-1.5px;border-radius:2px;background:rgba(255,255,255,.28)}
+.car-dot::after{content:"";position:absolute;left:0;right:0;top:50%;height:3px;margin-top:-1.5px;border-radius:2px;background:var(--oro-v);transform:scaleX(0);transform-origin:left}
+.car-dot.active::after{transform:scaleX(1);transition-property:transform;transition-duration:var(--int);transition-timing-function:linear}
+.carousel.parado .car-dot.active::after{transition:none}
+.single-shot{border-radius:16px;overflow:hidden;border:1px solid var(--linea2);box-shadow:0 50px 100px -50px rgba(17,19,23,.5)}
+.single-shot img{width:100%;height:auto;cursor:zoom-in}
+@media (max-width:600px){.car-btn{width:40px;height:40px;margin-top:-20px}.car-prev{left:8px}.car-next{right:8px}}
+
+/* ================= PRIVACIDAD (bóveda) ================= */
+.privacidad{background:var(--papel2)}
+.boveda{position:relative;container-type:inline-size;aspect-ratio:1;max-width:440px;margin:0 auto;width:100%}
+.boveda .centro{position:absolute;left:50%;top:50%;width:34%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:var(--tinta);color:var(--papel);display:grid;place-items:center;text-align:center;font-size:.82rem;font-weight:600;z-index:2;box-shadow:0 0 0 12px color-mix(in srgb,var(--tinta) 8%,transparent),0 0 0 26px color-mix(in srgb,var(--tinta) 4%,transparent)}
+.boveda .centro .ico{width:34px;height:34px;margin:0 auto 6px}
+.rayo{position:absolute;left:50%;top:50%;width:46%;height:2px;transform-origin:0 50%;transform:rotate(var(--a))}
+.rayo::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:repeating-linear-gradient(90deg,var(--linea2) 0 5px,transparent 5px 10px)}
+.rayo .paq{position:absolute;left:30%;top:-3px;width:7px;height:7px;border-radius:50%;background:var(--oro);animation:rebota 3.2s var(--ease) infinite;animation-delay:var(--dl)}
+@keyframes rebota{0%{transform:translateX(0);opacity:0}15%{opacity:1}55%{transform:translateX(160%);opacity:1}62%{transform:translateX(150%);opacity:0}100%{opacity:0}}
+.nodo{position:absolute;left:50%;top:50%;transform:rotate(var(--a)) translateX(var(--r)) rotate(calc(var(--a) * -1));width:0;height:0}
+.nodo > span{position:absolute;transform:translate(-50%,-50%);display:grid;place-items:center;gap:4px;font-size:.78rem;color:var(--tinta3);white-space:nowrap;text-align:center}
+.nodo .ico{width:42px;height:42px;padding:10px;border-radius:50%;border:1px solid var(--linea2);background:var(--papel);color:var(--tinta3)}
+.nodo .ico.tachado{position:relative}
+.nodo .x{position:absolute;left:50%;top:21px;width:48px;height:2px;margin-left:-24px;background:var(--rojo);transform:rotate(-45deg)}
+.priv-list{list-style:none;padding:0;margin:0;display:grid;gap:0;border-top:1px solid var(--linea2)}
+.priv-list li{display:grid;grid-template-columns:36px minmax(0,1fr);gap:14px;align-items:start;padding:18px 0;border-bottom:1px solid var(--linea)}
+.priv-list .ico{width:22px;height:22px;color:var(--verde);margin-top:2px}
+.priv-list b{color:var(--tinta)}
+.priv-list span{color:var(--tinta2);font-size:.98rem}
+
+/* ================= DESCARGA ================= */
+#descarga{overflow:hidden;text-align:center}
+#descarga .wrap{position:relative;z-index:1}
+#descarga h2{font-size:clamp(2.6rem,6vw,5rem)}
+#descarga .lead{margin-left:auto;margin-right:auto}
+.os-selector{display:inline-flex;gap:4px;background:rgba(243,239,230,.05);border:1px solid rgba(243,239,230,.16);border-radius:999px;padding:5px;margin:4px 0 30px;flex-wrap:wrap;justify-content:center}
+.os-tab{display:inline-flex;align-items:center;gap:8px;background:none;border:0;color:var(--n-tinta2);font:inherit;font-weight:600;font-size:.98rem;padding:10px 20px;border-radius:999px;cursor:pointer}
+.os-tab:hover{color:var(--n-tinta)}
+.os-tab[aria-selected="true"]{background:var(--n-tinta);color:#14161b}
+.os-panel[hidden]{display:none}
+.os-panel{animation:aparece .6s var(--ease-o)}
+@keyframes aparece{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.btn-descarga{display:inline-flex;align-items:center;gap:16px;background:var(--oro-v);color:#1b1306;font-weight:700;font-size:1.22rem;padding:18px 34px 18px 26px;border-radius:18px;margin:6px 0 8px;text-decoration:none;position:relative;isolation:isolate;transition:transform .4s var(--ease-o)}
+.btn-descarga::after{content:"";position:absolute;inset:-14px;border-radius:30px;z-index:-1;background:radial-gradient(closest-side,rgba(226,174,76,.45),transparent);opacity:.5;transition:opacity .5s var(--ease),transform .6s var(--ease-o)}
+.btn-descarga:hover{transform:translateY(-3px);text-decoration:none}
+.btn-descarga:hover::after{opacity:1;transform:scale(1.08)}
+.btn-descarga .big{display:grid;place-items:center;width:44px;height:44px;border-radius:12px;background:rgba(27,19,6,.12)}
+.btn-descarga .big .os-ico{width:24px;height:24px}
+.btn-descarga .dl-txt{display:flex;flex-direction:column;align-items:flex-start;line-height:1.15;text-align:left}
+.btn-descarga .dl-txt small{font-size:.76rem;font-weight:600;opacity:.75;margin-top:3px}
+.btn-descarga.btn-mac,.btn-descarga.btn-lin{background:var(--n-tinta);color:#14161b}
+.btn-descarga.btn-mac::after,.btn-descarga.btn-lin::after{background:radial-gradient(closest-side,rgba(243,239,230,.3),transparent)}
+.descargas-count{min-height:1.4em;color:var(--n-tinta2);font-size:1rem;margin-top:10px}
+.descargas-count strong{color:var(--n-tinta);font-family:var(--serif);font-size:1.5rem;font-weight:500;margin:0 4px;font-variant-numeric:tabular-nums}
+.plataforma{color:var(--n-tinta3);font-size:.92rem;margin-top:10px}
+.aviso-azul{display:flex;gap:14px;align-items:flex-start;text-align:left;max-width:640px;margin:20px auto 0;background:rgba(243,239,230,.04);border:1px solid rgba(243,239,230,.12);border-radius:16px;padding:16px 18px}
+.aviso-azul .ico{flex:none;width:auto;height:auto;stroke:none;color:var(--oro-v);margin-top:3px}
+.aviso-azul .os-ico{width:1.3em;height:1.3em}
+.aviso-azul p{margin:0;color:var(--n-tinta2);font-size:.93rem}
+.aviso-azul strong{color:var(--n-tinta)}
+.verificar,.novedades{max-width:640px;margin:16px auto 0;text-align:left;font-size:.92rem}
+.verificar summary,.novedades>summary{cursor:pointer;color:var(--n-tinta2);text-align:center;list-style:none;font-weight:500;padding:6px;border-radius:8px}
+.verificar summary::-webkit-details-marker,.novedades>summary::-webkit-details-marker{display:none}
+.verificar summary:hover,.novedades>summary:hover{color:var(--n-tinta);text-decoration:underline}
+.verificar p{color:var(--n-tinta2);margin:12px 0 8px}
+.verificar pre{background:rgba(0,0,0,.35);border:1px solid rgba(243,239,230,.12);color:var(--n-tinta);border-radius:12px;padding:14px 16px;margin:12px 0 8px;overflow-x:auto;font-size:.8rem;line-height:1.55;text-align:left}
+.verificar pre:focus-visible{outline:2px solid var(--oro-v)}
+.verificar pre code{background:none;border:0;padding:0;color:inherit;white-space:pre}
+.ver-actual-linea{color:var(--n-tinta2);font-size:.98rem;margin:22px 0 0}
+.ver-actual-linea strong{color:var(--n-tinta)}
+.ver-fecha{color:var(--n-tinta3)}
+.sellos{display:flex;gap:10px 22px;justify-content:center;flex-wrap:wrap;margin:18px auto 2px;max-width:660px;padding:0;list-style:none}
+.sello{display:inline-flex;align-items:center;gap:8px;color:var(--n-tinta2);font-size:.92rem;font-weight:500}
+.sello .ck{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:rgba(79,207,142,.14);color:var(--n-verde)}
+.sello .ck .ico{width:12px;height:12px;stroke-width:2.6}
+.novedades-cuerpo{background:rgba(243,239,230,.04);border:1px solid rgba(243,239,230,.12);border-radius:14px;padding:16px 20px;margin-top:12px;color:var(--n-tinta2)}
+.novedades-cuerpo h4{color:var(--n-tinta);font-size:1rem;margin:12px 0 6px}
+.novedades-cuerpo h4:first-child{margin-top:0}
+.novedades-cuerpo ul{margin:0 0 8px;padding-left:20px}
+.novedades-cuerpo li{margin:4px 0}
+.novedades-cuerpo p{margin:0 0 8px}
+.novedades-cuerpo strong{color:var(--n-tinta)}
+.ver-versiones{margin:18px 0 0;font-size:.94rem}
+.ver-versiones a{color:var(--n-tinta2)}
+.ver-versiones a:hover{color:var(--n-tinta)}
+
+/* ================= FAQ ================= */
+.faq-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.4fr);gap:64px}
+.faq{border-top:1px solid var(--linea2)}
+.faq-item{border-bottom:1px solid var(--linea2)}
+.faq-item summary{cursor:pointer;list-style:none;padding:22px 56px 22px 0;position:relative;font-weight:600;color:var(--tinta);font-size:1.08rem;border-radius:6px}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::before,.faq-item summary::after{content:"";position:absolute;right:14px;top:50%;width:16px;height:1.5px;background:var(--tinta);transition:transform .45s var(--ease-o)}
+.faq-item summary::after{transform:rotate(90deg)}
+.faq-item[open] summary::after{transform:rotate(0)}
+.faq-item[open] summary::before{transform:rotate(180deg)}
+.faq-item summary:hover{color:var(--azul)}
+.faq-item .faq-body{padding:0 0 22px;color:var(--tinta2);font-size:1rem;max-width:640px}
+.faq-item[open] .faq-body{animation:aparece .5s var(--ease-o)}
+.faq-item .faq-body p{margin:0}
+@media (max-width:900px){.faq-grid{grid-template-columns:minmax(0,1fr);gap:20px}}
+
+/* ================= PIE ================= */
+footer{background:var(--noche);color:var(--n-tinta2);padding:90px 0 40px;position:relative;overflow:hidden}
+footer h2{color:var(--n-tinta);font-size:clamp(1.8rem,3vw,2.4rem)}
+footer p{color:var(--n-tinta2);max-width:620px}
+footer a{color:var(--oro-v)}
+.pie-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:48px;align-items:end}
+.social{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0 0}
+.social a{display:inline-flex;align-items:center;gap:9px;border:1px solid rgba(243,239,230,.18);color:var(--n-tinta);padding:10px 18px;border-radius:999px;font-size:.94rem;font-weight:500;text-decoration:none;transition:transform .35s var(--ease-o)}
+.social a .ico{width:17px;height:17px}
+.social a:hover{transform:translateY(-2px);background:rgba(243,239,230,.07)}
+.pie-nav{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 24px}
+.pie-nav a{color:var(--n-tinta2);text-decoration:none;font-size:.95rem}
+.pie-nav a:hover{color:var(--n-tinta);text-decoration:underline}
+.pie-marca{font-family:var(--serif);font-size:clamp(5rem,19vw,17rem);line-height:.8;letter-spacing:-.05em;color:transparent;-webkit-text-stroke:1px rgba(243,239,230,.16);margin:70px 0 0;white-space:nowrap;user-select:none;font-variation-settings:"opsz" 144}
+.foot-fine{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.84rem;color:var(--n-tinta3);border-top:1px solid var(--n-linea);padding-top:22px;margin-top:10px}
+@media (max-width:820px){.pie-grid{grid-template-columns:minmax(0,1fr)}}
+
+/* ================= botón flotante y lightbox ================= */
+.fab-descarga{position:fixed;right:20px;bottom:20px;z-index:70;display:inline-flex;align-items:center;gap:9px;background:var(--oro-v);color:#1b1306;font-weight:700;font-size:1rem;
+  padding:13px 22px;border-radius:999px;text-decoration:none;box-shadow:0 14px 34px -10px rgba(0,0,0,.45);opacity:0;transform:translateY(16px) scale(.96);pointer-events:none;transition:opacity .4s var(--ease),transform .5s var(--ease-o)}
+.fab-descarga .ico{width:18px;height:18px}
+.fab-descarga.visible{opacity:1;transform:none;pointer-events:auto}
+.fab-descarga.visible:hover{transform:translateY(-3px);text-decoration:none}
+.lightbox{position:fixed;inset:0;z-index:120;display:none;background:rgba(8,9,12,.94);align-items:center;justify-content:center;padding:28px;cursor:zoom-out}
+.lightbox.open{display:flex;animation:fundido .35s var(--ease)}
+.lightbox.open img{animation:aparece .5s var(--ease-o)}
+@keyframes fundido{from{opacity:0}to{opacity:1}}
+.lightbox img{max-width:100%;max-height:100%;border-radius:12px;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+.lightbox-close{position:absolute;top:16px;right:20px;width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.25);cursor:pointer;background:rgba(255,255,255,.08);color:#fff;display:grid;place-items:center}
+.lightbox-close .ico{width:20px;height:20px}
+.lightbox-close:hover{background:rgba(255,255,255,.18)}
+
+/* ================= responsive ================= */
+@media (max-width:1060px){
+  .hero .wrap{grid-template-columns:minmax(0,1fr);gap:64px}
+  .escena{max-width:620px;width:100%;margin:0 auto}
+  .rec-grid{grid-template-columns:minmax(0,1fr);gap:0}
+  .rec-fijo{display:none}
+  .rec-paso{min-height:0;padding:34px 0 34px 26px}
+  .rec-paso .js-opaco,.rec-paso.activo .js-opaco{transform:none}
+  .rec-img-movil{display:block;margin-top:22px;border-radius:12px;overflow:hidden;border:1px solid var(--linea2);box-shadow:var(--sombra)}
+  .rec-img-movil img{width:100%;height:auto}
+}
+@media (max-width:640px){
+  body{font-size:16px}
+  .wrap{padding:0 20px}
+  .hero{padding-top:118px}
+  .flot-1{display:none}
+  .flot-2{right:-4px;top:-30px}
+  .pantalla{display:none}
+  .tarjeta-pat{padding:22px 18px 16px}
+  .asiento{grid-template-columns:40px minmax(0,1fr);gap:4px 14px}
+  .asiento .v{grid-column:2;text-align:left}
+  .asiento .op{grid-row:span 2}
+  .btn-descarga{font-size:1.05rem;padding:16px 22px 16px 18px}
+  .fab-descarga{right:14px;bottom:14px}
+}
+@media (max-width:400px){.nav .btn-sm{padding:9px 13px}.marca span{display:none}}
+
+/* ================= movimiento reducido: todo quieto y legible ================= */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;transition-delay:0s !important}
+  .cards-row,.cinta{overflow-x:auto;-webkit-mask-image:none;mask-image:none}
+  .cards-track,.cinta-pista{animation:none !important}
+  .rayo .paq,.punto-vivo::after,.flotante > *{animation:none !important}
+  .rayo .paq{opacity:1;transform:translateX(120%)}
+}
+
+/* ================= impresión ================= */
+@media print{
+  .nav,.fab-descarga,.lightbox,.cinta,.foco,.rejilla,.car-btn,.car-dots,.gal-tabs,.compara,.boveda,.pantalla,.flotante{display:none !important}
+  .noche,footer{background:#fff !important;color:#111 !important}
+  .noche h1,.noche h2,.noche h3,.noche p,.noche .lead,footer h2,footer p{color:#111 !important}
+  section{padding:28px 0;break-inside:avoid}
+  .js .rv{opacity:1;transform:none}
+  .gal-panel[hidden]{display:block !important}
+  .slide{position:relative;opacity:1}
+  .carousel-viewport{aspect-ratio:auto}
+}
 </style>
 <script>
-  // Aplica el tema guardado antes de pintar (claro por defecto, sin parpadeo).
+  // Tema guardado antes de pintar (claro por defecto, sin parpadeo) y marca de JS para las animaciones.
   try { if (localStorage.getItem("liberty-tema") === "dark") document.documentElement.setAttribute("data-theme", "dark"); } catch (e) {}
+  document.documentElement.classList.add("js");
 </script>
 </head>
 <body>
-<button class="theme-toggle" id="theme-toggle" type="button" aria-label="Cambiar a modo oscuro">🌙</button>
+<a class="saltar" href="#principal">Saltar al contenido</a>
 
-<!-- ======== CABECERA ======== -->
-<header class="hero">
+<!-- Iconos reutilizables (trazo de línea propio + logos de sistemas en currentColor) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+  <symbol id="ic-win" viewBox="0 0 24 24"><path fill="currentColor" d="M3 5.1 10.4 4v7.3H3V5.1zM3 18.9 10.4 20v-7.2H3v6.1zM11.6 3.84 21 2.5v8.8h-9.4V3.84zM11.6 20.16 21 21.5v-8.7h-9.4v7.36z"/></symbol>
+  <symbol id="ic-apple" viewBox="0 0 24 24"><path fill="currentColor" d="M16.36 1.43c.06 1.03-.33 2.04-.98 2.78-.68.77-1.77 1.36-2.8 1.28-.1-.99.37-2.03.99-2.7.69-.76 1.85-1.32 2.79-1.36zM19.86 17.4c-.52 1.2-.77 1.72-1.43 2.77-.93 1.47-2.23 3.28-3.84 3.29-1.44.02-1.81-.94-3.76-.93-1.95.01-2.36.95-3.8.93-1.61-.01-2.84-1.65-3.77-3.11-2.6-4.09-2.88-8.89-1.27-11.44 1.15-1.8 2.96-2.85 4.67-2.85 1.74 0 2.83.95 4.27.95 1.4 0 2.25-.96 4.26-.96 1.52 0 3.13.83 4.28 2.26-3.76 2.06-3.14 7.42-.28 9.72z"/></symbol>
+  <symbol id="ic-linux" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M12 1.6c-2.9 0-4.6 2.5-4.6 5.8 0 1.5-.6 2.8-1.6 4.2C4.5 13.4 3.8 15.1 3.8 16.8c0 1.2.5 2.3 1.4 3.1-.6.4-.9.9-.9 1.4 0 .9 1.2 1.3 3 1.1 1.2-.1 2.2-.6 2.7-1.1.6.1 1.3.1 2 .1s1.4 0 2-.1c.5.5 1.5 1 2.7 1.1 1.8.2 3-.2 3-1.1 0-.5-.3-1-.9-1.4.9-.8 1.4-1.9 1.4-3.1 0-1.7-.7-3.4-2-5.2-1-1.4-1.6-2.7-1.6-4.2 0-3.3-1.7-5.8-4.6-5.8zM12 9.3c-2.3 0-3.8 2.7-3.8 5.8 0 2.7 1.7 4.6 3.8 4.6s3.8-1.9 3.8-4.6c0-3.1-1.5-5.8-3.8-5.8zM10.2 5.4a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm3.6 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2zM12 7.6l-1.3.9 1.3.8 1.3-.8z"/></symbol>
+  <symbol id="ic-docker" viewBox="0 0 24 24"><path fill="currentColor" d="M13.983 11.078h2.119a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.119a.185.185 0 00-.185.185v1.888c0 .102.083.185.185.185m-2.954-5.43h2.118a.186.186 0 00.186-.186V3.574a.186.186 0 00-.186-.185h-2.118a.185.185 0 00-.185.185v1.888c0 .102.082.185.185.185m0 2.716h2.118a.187.187 0 00.186-.186V6.29a.186.186 0 00-.186-.185h-2.118a.185.185 0 00-.185.185v1.887c0 .102.082.186.185.186m-2.93 0h2.12a.186.186 0 00.184-.186V6.29a.185.185 0 00-.185-.185H8.1a.185.185 0 00-.185.185v1.887c0 .102.083.186.185.186m-2.964 0h2.119a.186.186 0 00.185-.186V6.29a.185.185 0 00-.185-.185H5.136a.186.186 0 00-.186.185v1.887c0 .102.084.186.186.186m5.893 2.715h2.118a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.118a.185.185 0 00-.185.185v1.888c0 .102.082.185.185.185m-2.93 0h2.12a.185.185 0 00.184-.185V9.006a.185.185 0 00-.184-.186h-2.12a.185.185 0 00-.184.185v1.888c0 .102.083.185.185.185m-2.964 0h2.119a.185.185 0 00.185-.185V9.006a.185.185 0 00-.185-.186h-2.119a.186.186 0 00-.186.185v1.888c0 .102.084.185.186.185m-2.92 0h2.12a.185.185 0 00.184-.185V9.006a.185.185 0 00-.184-.186h-2.12a.185.185 0 00-.185.185v1.888c0 .103.083.185.185.185M23.763 9.89c-.065-.051-.672-.51-1.954-.51-.338.001-.676.03-1.01.087-.248-1.7-1.653-2.53-1.716-2.566l-.344-.199-.226.327c-.284.438-.49.922-.612 1.43-.23.97-.09 1.882.403 2.661-.595.332-1.55.413-1.744.42H.751a.751.751 0 00-.75.748 11.376 11.376 0 00.692 4.062c.545 1.428 1.355 2.48 2.41 3.124 1.18.723 3.1 1.137 5.275 1.137.983.003 1.963-.086 2.93-.266a12.248 12.248 0 003.823-1.389c.98-.567 1.86-1.288 2.61-2.136 1.252-1.418 1.998-2.997 2.553-4.4h.221c1.372 0 2.215-.549 2.68-1.009.309-.293.55-.65.707-1.046l.098-.288z"/></symbol>
+  <symbol id="i-casa" viewBox="0 0 24 24"><path d="M3.5 10.5 12 4l8.5 6.5"/><path d="M5.5 9v10.5h13V9"/><path d="M10 19.5v-5h4v5"/></symbol>
+  <symbol id="i-edificio" viewBox="0 0 24 24"><path d="M4.5 20.5V5.5l8-2v17"/><path d="M12.5 8.5h7v12"/><path d="M3 20.5h18M7.5 8.5h2M7.5 12h2M7.5 15.5h2M15.5 12h1.5M15.5 15.5h1.5"/></symbol>
+  <symbol id="i-grafica" viewBox="0 0 24 24"><path d="M3.5 20.5h17"/><path d="M4.5 16 9 11l3.5 3 7-8"/><path d="M15 6h4.5v4.5"/></symbol>
+  <symbol id="i-monedas" viewBox="0 0 24 24"><ellipse cx="9" cy="7" rx="5.5" ry="2.5"/><path d="M3.5 7v4c0 1.4 2.5 2.5 5.5 2.5s5.5-1.1 5.5-2.5V7"/><path d="M9.5 16.4c.5 1.2 2.8 2.1 5.5 2.1 3 0 5.5-1.1 5.5-2.5v-4c0-1.2-1.7-2.2-4-2.4"/></symbol>
+  <symbol id="i-cartera" viewBox="0 0 24 24"><path d="M4 7.5h14.5a1.5 1.5 0 0 1 1.5 1.5v9.5a1.5 1.5 0 0 1-1.5 1.5H5.5A1.5 1.5 0 0 1 4 18.5z"/><path d="M4 7.5 15.5 4v3.5"/><path d="M16 13.5h.01"/></symbol>
+  <symbol id="i-tarta" viewBox="0 0 24 24"><path d="M12 3.5a8.5 8.5 0 1 0 8.5 8.5H12z"/><path d="M15 3.9A8.5 8.5 0 0 1 20.1 9H15z"/></symbol>
+  <symbol id="i-tarjeta" viewBox="0 0 24 24"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3 10h18M7 14.5h4"/></symbol>
+  <symbol id="i-personas" viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3.2"/><path d="M3.5 19.5c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5"/><circle cx="16.5" cy="9.5" r="2.6"/><path d="M16 14.6c2.4 0 4.1 1.6 4.6 4.4"/></symbol>
+  <symbol id="i-documento" viewBox="0 0 24 24"><path d="M6 3.5h8l4.5 4.5v12.5H6z"/><path d="M14 3.5V8h4.5M9 12.5h6M9 16h6"/></symbol>
+  <symbol id="i-nota" viewBox="0 0 24 24"><path d="M5 4.5h14v15H5z"/><path d="M8.5 9h7M8.5 12.5h7M8.5 16h4"/></symbol>
+  <symbol id="i-calendario" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 17h.01M12 17h.01"/></symbol>
+  <symbol id="i-objetivo" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r=".8"/></symbol>
+  <symbol id="i-escudo" viewBox="0 0 24 24"><path d="M12 3.2 19.5 6v5.7c0 4.6-3.2 8.2-7.5 9.3-4.3-1.1-7.5-4.7-7.5-9.3V6z"/><path d="m8.8 12 2.2 2.2 4.2-4.4"/></symbol>
+  <symbol id="i-candado" viewBox="0 0 24 24"><rect x="4.5" y="10.5" width="15" height="10" rx="2"/><path d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7"/><path d="M12 14.5v2.5"/></symbol>
+  <symbol id="i-nube" viewBox="0 0 24 24"><path d="M7 18.5h10.5a4 4 0 0 0 .6-7.95A6 6 0 0 0 6.4 11 3.8 3.8 0 0 0 7 18.5z"/></symbol>
+  <symbol id="i-servidor" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="16" height="6.5" rx="1.5"/><path d="M8 7.3h.01M8 16.8h.01"/></symbol>
+  <symbol id="i-antena" viewBox="0 0 24 24"><path d="M12 13v8"/><circle cx="12" cy="11" r="2"/><path d="M8.2 7.2a5.4 5.4 0 0 0 0 7.6M15.8 7.2a5.4 5.4 0 0 1 0 7.6M5.4 4.4a9.4 9.4 0 0 0 0 13.2M18.6 4.4a9.4 9.4 0 0 1 0 13.2"/></symbol>
+  <symbol id="i-usuario" viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20.5c.8-4 3.8-6.2 7.5-6.2s6.7 2.2 7.5 6.2"/></symbol>
+  <symbol id="i-portatil" viewBox="0 0 24 24"><rect x="4.5" y="5" width="15" height="10.5" rx="1.5"/><path d="M2.5 19h19"/></symbol>
+  <symbol id="i-carpeta" viewBox="0 0 24 24"><path d="M3.5 6.5a1.5 1.5 0 0 1 1.5-1.5h4.5l2 2.5H19a1.5 1.5 0 0 1 1.5 1.5v9a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 18z"/></symbol>
+  <symbol id="i-bajada" viewBox="0 0 24 24"><path d="M12 4v11.5M7 11l5 5 5-5"/><path d="M4.5 20h15"/></symbol>
+  <symbol id="i-ok" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-ajustes" viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></symbol>
+  <symbol id="i-ojo" viewBox="0 0 24 24"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-campana" viewBox="0 0 24 24"><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 1.5h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></symbol>
+  <symbol id="i-bandera" viewBox="0 0 24 24"><path d="M5.5 21V4"/><path d="M5.5 4.5h11l-2 3.5 2 3.5h-11"/></symbol>
+  <symbol id="i-hoja" viewBox="0 0 24 24"><rect x="3.5" y="4" width="17" height="16" rx="1.5"/><path d="M3.5 9h17M3.5 14h17M9.5 4v16M15 4v16"/></symbol>
+  <symbol id="i-importar" viewBox="0 0 24 24"><path d="M12 15V3.5M7.5 8 12 3.5 16.5 8"/><path d="M4.5 13v6.5h15V13"/></symbol>
+  <symbol id="i-disco" viewBox="0 0 24 24"><path d="M5 4h11.5L20 7.5V20H5z"/><path d="M8 4v5h7V4M8 20v-6h8v6"/></symbol>
+  <symbol id="i-flecha" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-izq" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+  <symbol id="i-der" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-luna" viewBox="0 0 24 24"><path d="M19.5 14.5A8 8 0 0 1 9.5 4.5a8 8 0 1 0 10 10z"/></symbol>
+  <symbol id="i-sol" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></symbol>
+  <symbol id="i-web" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.4 2.4 3.5 5.2 3.5 8.5s-1.1 6.1-3.5 8.5c-2.4-2.4-3.5-5.2-3.5-8.5s1.1-6.1 3.5-8.5z"/></symbol>
+  <symbol id="i-linkedin" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="2.5"/><path d="M8 10.5v6M8 7.5h.01M12 16.5v-6M12 13c0-1.6 1-2.6 2.3-2.6s2 .9 2 2.6v3.5"/></symbol>
+  <symbol id="i-github" viewBox="0 0 24 24"><path d="M9 19.5c-4 1.2-4-2-5.5-2.5M14.5 21.5v-3.4a3 3 0 0 0-.8-2.3c2.7-.3 5.6-1.3 5.6-6a4.6 4.6 0 0 0-1.3-3.2 4.3 4.3 0 0 0-.1-3.2s-1-.3-3.4 1.3a11.7 11.7 0 0 0-6 0C6.1 1.1 5 1.4 5 1.4a4.3 4.3 0 0 0-.1 3.2 4.6 4.6 0 0 0-1.3 3.2c0 4.6 2.9 5.6 5.6 6a3 3 0 0 0-.8 2.2v3.5"/></symbol>
+  <symbol id="i-deshacer" viewBox="0 0 24 24"><path d="M9 14 4.5 9.5 9 5"/><path d="M4.5 9.5H14a5.5 5.5 0 0 1 0 11h-3"/></symbol>
+  <symbol id="i-rayo" viewBox="0 0 24 24"><path d="M13 3 5 13.5h6L10 21l8-10.5h-6z"/></symbol>
+</defs></svg>
+
+<!-- ======== NAVEGACIÓN ======== -->
+<header class="nav" id="nav">
   <div class="wrap">
-    <img class="hero-icon" src="icono-512.png" alt="Icono de Liberty">
-    <h1>Liberty</h1>
-    <p class="hero-sub">Reúne tus cuentas, inversiones (fondos, acciones, cripto), planes de pensiones, inmuebles y deudas en una sola app de escritorio y ve de un vistazo <strong>cuánto tienes, cuánto ganas y cómo evoluciona</strong>. 100% local y privado: tus datos nunca salen de tu ordenador.</p>
-    <div class="hero-badges">
-      <span class="badge">🖥️ App de escritorio</span>
-      <span class="badge">🔒 Sin cuentas ni servidores</span>
-      <span class="badge"><svg class="os-ico"><use href="#ic-win"/></svg> Windows &nbsp;·&nbsp; <svg class="os-ico"><use href="#ic-apple"/></svg> Mac &nbsp;·&nbsp; <svg class="os-ico"><use href="#ic-linux"/></svg> Linux</span>
-    </div>
-    <div class="hero-cta-wrap">
-      <a class="hero-cta" href="#descarga">⬇ Descargar</a>
+    <a class="marca" href="#arriba" aria-label="Liberty, volver arriba"><img src="favicon.png" alt="" width="32" height="32"><span>LIBERTY</span></a>
+    <nav aria-label="Secciones">
+      <ul class="nav-links">
+        <li><a href="#que-es">Qué es</a></li>
+        <li><a href="#recorrido">Recorrido</a></li>
+        <li><a href="#caracteristicas">Funciones</a></li>
+        <li><a href="#privacidad">Privacidad</a></li>
+        <li><a href="#faq">Preguntas</a></li>
+      </ul>
+    </nav>
+    <div class="nav-acc">
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Cambiar a modo oscuro"><svg class="ico i-luna" aria-hidden="true"><use href="#i-luna"/></svg><svg class="ico i-sol" aria-hidden="true"><use href="#i-sol"/></svg></button>
+      <a class="btn btn-oro btn-sm" href="#descarga"><svg class="ico" aria-hidden="true"><use href="#i-bajada"/></svg>Descargar</a>
     </div>
   </div>
+  <div class="progreso" id="progreso" aria-hidden="true"></div>
 </header>
 
-<!-- ======== QUÉ ES ======== -->
-<section id="que-es">
+<main id="principal">
+<!-- ======== CABECERA ======== -->
+<section class="hero noche con-foco" id="arriba" aria-labelledby="titulo">
+  <div class="rejilla" aria-hidden="true"></div>
+  <div class="foco" aria-hidden="true"></div>
   <div class="wrap">
-    <h2>¿Qué es y para qué sirve?</h2>
-    <p class="lead">Liberty reúne <strong>todo el patrimonio de tu hogar</strong> —cuentas, fondos, acciones, cripto, planes de pensiones, inmuebles e hipotecas— en un solo sitio, con tu <strong>rentabilidad real (TIR)</strong>, tus ingresos y gastos y la evolución mes a mes. Como el Excel que tendrías que montarte tú, pero ya hecho y sin que tus datos salgan de tu equipo.</p>
-    <div class="cards-marquee" aria-label="Para qué sirve Liberty">
-      <!-- Fila superior: scroll hacia la izquierda -->
-      <div class="cards-row izq">
-        <div class="cards-track" data-cards-track>
-          <div class="card"><span class="ico">🏦</span><h3>Patrimonio completo</h3><p>Cuentas, inversiones, inmuebles y deudas, todo en una misma vista consolidada.</p></div>
-          <div class="card"><span class="ico">💶</span><h3>Ingresos y gastos</h3><p>Analiza tus flujos con gráficos por categoría, tendencias, mapa de calor y presupuesto: entiende a dónde va tu dinero.</p></div>
-          <div class="card"><span class="ico">📈</span><h3>Rentabilidad y evolución</h3><p>Sigue la rentabilidad (TIR), las plusvalías y cómo evoluciona tu patrimonio en el tiempo.</p></div>
-          <div class="card"><span class="ico">🗂️</span><h3>Multi-patrimonio</h3><p>Gestiona varios patrimonios independientes desde la misma aplicación.</p></div>
-          <div class="card"><span class="ico">💱</span><h3>Precios al día</h3><p>Actualiza el valor de tus inversiones —fondos, cripto y más— con un solo clic.</p></div>
-          <div class="card"><span class="ico">💾</span><h3>Copias de seguridad</h3><p>Haz copias de tus datos y restáuralas cuando quieras; todo bajo tu control.</p></div>
-        </div>
+    <div class="hero-txt">
+      <img class="hero-icon ent" style="--d:0" src="icono-512.png" alt="Icono de Liberty" width="56" height="56">
+      <h1 id="titulo"><span class="l"><span style="--i:0">Todo lo que</span></span><span class="l"><span style="--i:1">tienes, en un</span></span><span class="l"><span style="--i:2"><em>solo número.</em></span></span></h1>
+      <p class="hero-sub ent" style="--d:1">Liberty reúne las cuentas, inversiones, inmuebles y deudas de tu hogar en una app de escritorio y te dice <strong>cuánto tienes, cuánto ganas y cómo evoluciona</strong>. Gratis y 100 % local: tus datos nunca salen de tu ordenador.</p>
+      <div class="hero-ctas ent" style="--d:2">
+        <a class="btn btn-oro hero-cta" href="#descarga"><svg class="ico" aria-hidden="true"><use href="#i-bajada"/></svg>Descargar gratis</a>
+        <a class="btn btn-fantasma" href="#recorrido">Ver cómo es <svg class="ico" aria-hidden="true"><use href="#i-flecha"/></svg></a>
       </div>
-      <!-- Fila inferior: scroll hacia la derecha -->
-      <div class="cards-row der">
-        <div class="cards-track" data-cards-track>
-          <div class="card"><span class="ico">🏠</span><h3>Inmuebles</h3><p>Cada piso con su ficha: valor y su evolución, hipoteca, inquilinos y contratos, lo que te deja el alquiler y avisos si un cobro no llega.</p></div>
-          <div class="card"><span class="ico">👥</span><h3>Titulares</h3><p>Asigna cada activo o deuda a sus titulares y conoce el reparto real del patrimonio.</p></div>
-          <div class="card"><span class="ico">📄</span><h3>Informe fiscal</h3><p>Obtén un resumen orientado a tus obligaciones fiscales a partir de tus datos.</p></div>
-          <div class="card"><span class="ico">🥧</span><h3>Distribución</h3><p>Visualiza cómo se reparte tu patrimonio por tipo de activo, titular o categoría.</p></div>
-          <div class="card"><span class="ico">💳</span><h3>Deudas y vencimientos</h3><p>Controla tus préstamos y las fechas de vencimiento que se van acercando.</p></div>
-          <div class="card"><span class="ico">📥</span><h3>Importa tus datos</h3><p>Trae tus inversiones y los movimientos del banco (Excel/CSV o con ayuda de una IA) y empieza sin partir de cero.</p></div>
-          <div class="card"><span class="ico">🔐</span><h3>Sin cuentas ni servidores</h3><p>No hay registro ni nube: todo funciona en tu equipo, sin conexión obligatoria.</p></div>
+      <ul class="hero-badges ent" style="--d:3" aria-label="Características principales">
+        <li><svg class="ico" aria-hidden="true"><use href="#i-portatil"/></svg>App de escritorio</li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-candado"/></svg>Sin cuentas ni servidores</li>
+        <li><svg class="os-ico" aria-hidden="true"><use href="#ic-win"/></svg>Windows · <svg class="os-ico" aria-hidden="true"><use href="#ic-apple"/></svg>Mac · <svg class="os-ico" aria-hidden="true"><use href="#ic-linux"/></svg>Linux · <svg class="os-ico" aria-hidden="true"><use href="#ic-docker"/></svg>Docker</li>
+      </ul>
+    </div>
+
+    <div class="escena" id="escena" aria-label="Ejemplo: la tarjeta «Tu patrimonio» de Liberty" role="img">
+      <div class="cuadro" id="cuadro">
+        <div class="pantalla" aria-hidden="true"><img src="capturas/panel/inicio.webp" alt="" width="1920" height="1200" fetchpriority="low"></div>
+        <div class="tarjeta-pat" aria-hidden="true">
+          <div class="tp-cab"><h2>Tu patrimonio</h2><span>todo lo del hogar: tu cartera y tus inmuebles</span></div>
+          <div class="tp-cifra" data-odo="312956" data-suf=" €">312.956 €</div>
+          <div class="tp-barra"><i></i><i></i></div>
+          <div class="tp-ley"><span style="--c:#5a9cf0">Cartera 49 %</span><span style="--c:#24b37d">Inmuebles 51 %</span></div>
+          <div class="tp-graf">
+            <div class="tp-graf-cab"><b>Cómo ha crecido</b><span class="sube">+59.875 € en 12 meses</span></div>
+            <div class="limpia"><div><div>
+              <svg viewBox="62 40 616 146" preserveAspectRatio="none" style="aspect-ratio:616/146" aria-hidden="true">
+                <defs><linearGradient id="gArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".16"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>
+                <path d="M62.0 164.8 L68.8 164.8 L75.7 164.8 L82.5 164.8 L89.4 164.8 L96.2 164.8 L103.1 164.8 L109.9 164.8 L116.8 164.8 L123.6 164.8 L130.4 164.8 L137.3 164.8 L144.1 164.8 L151.0 164.8 L157.8 164.8 L164.7 164.8 L171.5 164.8 L178.4 164.8 L185.2 164.8 L192.0 164.8 L198.9 164.8 L205.7 164.8 L212.6 164.8 L219.4 164.8 L226.3 152.1 L233.1 151.9 L240.0 151.8 L246.8 151.6 L253.6 151.4 L260.5 151.2 L267.3 148.3 L274.2 148.1 L281.0 148.0 L287.9 147.8 L294.7 147.6 L301.6 147.4 L308.4 147.3 L315.2 147.1 L322.1 146.9 L328.9 146.7 L335.8 146.6 L342.6 146.4 L349.5 146.2 L356.3 146.0 L363.2 145.9 L370.0 145.7 L376.8 145.5 L383.7 145.3 L390.5 145.2 L397.4 145.0 L404.2 138.8 L411.1 138.7 L417.9 138.5 L424.8 138.3 L431.6 105.6 L438.4 103.9 L445.3 102.4 L452.1 95.9 L459.0 94.7 L465.8 94.6 L472.7 100.7 L479.5 99.6 L486.4 98.1 L493.2 97.2 L500.0 96.4 L506.9 95.0 L513.7 91.5 L520.6 90.7 L527.4 86.9 L534.3 84.1 L541.1 84.9 L548.0 84.9 L554.8 85.5 L561.6 84.7 L568.5 83.3 L575.3 82.1 L582.2 78.9 L589.0 77.2 L595.9 76.4 L602.7 72.7 L609.6 71.2 L616.4 68.4 L623.2 67.6 L630.1 65.2 L636.9 62.8 L643.8 62.2 L650.6 59.8 L657.5 57.0 L664.3 52.9 L671.2 51.6 L678.0 51.0  L678 186 L62 186 Z" fill="url(#gArea)" stroke="none"/>
+                <path d="M62.0 184.0 L68.8 184.0 L75.7 184.0 L82.5 184.0 L89.4 184.0 L96.2 184.0 L103.1 184.0 L109.9 184.0 L116.8 184.0 L123.6 184.0 L130.4 184.0 L137.3 184.0 L144.1 184.0 L151.0 184.0 L157.8 184.0 L164.7 184.0 L171.5 184.0 L178.4 184.0 L185.2 184.0 L192.0 184.0 L198.9 184.0 L205.7 184.0 L212.6 184.0 L219.4 184.0 L226.3 184.0 L233.1 184.0 L240.0 184.0 L246.8 184.0 L253.6 184.0 L260.5 184.0 L267.3 184.0 L274.2 184.0 L281.0 184.0 L287.9 184.0 L294.7 184.0 L301.6 184.0 L308.4 184.0 L315.2 184.0 L322.1 184.0 L328.9 184.0 L335.8 184.0 L342.6 184.0 L349.5 184.0 L356.3 184.0 L363.2 184.0 L370.0 184.0 L376.8 184.0 L383.7 184.0 L390.5 184.0 L397.4 184.0 L404.2 184.0 L411.1 184.0 L417.9 184.0 L424.8 184.0 L431.6 147.5 L438.4 146.1 L445.3 143.6 L452.1 142.5 L459.0 141.6 L465.8 141.8 L472.7 148.1 L479.5 147.4 L486.4 146.1 L493.2 145.5 L500.0 145.1 L506.9 143.9 L513.7 140.7 L520.6 140.1 L527.4 138.4 L534.3 137.6 L541.1 138.6 L548.0 138.9 L554.8 139.9 L561.6 139.3 L568.5 138.3 L575.3 137.4 L582.2 136.1 L589.0 134.7 L595.9 134.3 L602.7 130.8 L609.6 129.7 L616.4 128.9 L623.2 128.9 L630.1 126.9 L636.9 124.8 L643.8 124.5 L650.6 123.0 L657.5 121.8 L664.3 120.1 L671.2 119.1 L678.0 118.8 " fill="none" stroke="#5a9cf0" stroke-width="1.6" vector-effect="non-scaling-stroke"/>
+                <path d="M62.0 164.8 L68.8 164.8 L75.7 164.8 L82.5 164.8 L89.4 164.8 L96.2 164.8 L103.1 164.8 L109.9 164.8 L116.8 164.8 L123.6 164.8 L130.4 164.8 L137.3 164.8 L144.1 164.8 L151.0 164.8 L157.8 164.8 L164.7 164.8 L171.5 164.8 L178.4 164.8 L185.2 164.8 L192.0 164.8 L198.9 164.8 L205.7 164.8 L212.6 164.8 L219.4 164.8 L226.3 152.1 L233.1 151.9 L240.0 151.8 L246.8 151.6 L253.6 151.4 L260.5 151.2 L267.3 148.3 L274.2 148.1 L281.0 148.0 L287.9 147.8 L294.7 147.6 L301.6 147.4 L308.4 147.3 L315.2 147.1 L322.1 146.9 L328.9 146.7 L335.8 146.6 L342.6 146.4 L349.5 146.2 L356.3 146.0 L363.2 145.9 L370.0 145.7 L376.8 145.5 L383.7 145.3 L390.5 145.2 L397.4 145.0 L404.2 138.8 L411.1 138.7 L417.9 138.5 L424.8 138.3 L431.6 142.1 L438.4 141.8 L445.3 142.8 L452.1 137.4 L459.0 137.1 L465.8 136.8 L472.7 136.5 L479.5 136.3 L486.4 136.0 L493.2 135.7 L500.0 135.4 L506.9 135.1 L513.7 134.8 L520.6 134.5 L527.4 132.5 L534.3 130.5 L541.1 130.2 L548.0 129.9 L554.8 129.6 L561.6 129.4 L568.5 129.1 L575.3 128.8 L582.2 126.8 L589.0 126.5 L595.9 126.2 L602.7 125.9 L609.6 125.6 L616.4 123.6 L623.2 122.6 L630.1 122.3 L636.9 122.0 L643.8 121.7 L650.6 120.8 L657.5 119.2 L664.3 116.8 L671.2 116.5 L678.0 116.2 " fill="none" stroke="#24b37d" stroke-width="1.6" vector-effect="non-scaling-stroke"/>
+                <path d="M62.0 164.8 L68.8 164.8 L75.7 164.8 L82.5 164.8 L89.4 164.8 L96.2 164.8 L103.1 164.8 L109.9 164.8 L116.8 164.8 L123.6 164.8 L130.4 164.8 L137.3 164.8 L144.1 164.8 L151.0 164.8 L157.8 164.8 L164.7 164.8 L171.5 164.8 L178.4 164.8 L185.2 164.8 L192.0 164.8 L198.9 164.8 L205.7 164.8 L212.6 164.8 L219.4 164.8 L226.3 152.1 L233.1 151.9 L240.0 151.8 L246.8 151.6 L253.6 151.4 L260.5 151.2 L267.3 148.3 L274.2 148.1 L281.0 148.0 L287.9 147.8 L294.7 147.6 L301.6 147.4 L308.4 147.3 L315.2 147.1 L322.1 146.9 L328.9 146.7 L335.8 146.6 L342.6 146.4 L349.5 146.2 L356.3 146.0 L363.2 145.9 L370.0 145.7 L376.8 145.5 L383.7 145.3 L390.5 145.2 L397.4 145.0 L404.2 138.8 L411.1 138.7 L417.9 138.5 L424.8 138.3 L431.6 105.6 L438.4 103.9 L445.3 102.4 L452.1 95.9 L459.0 94.7 L465.8 94.6 L472.7 100.7 L479.5 99.6 L486.4 98.1 L493.2 97.2 L500.0 96.4 L506.9 95.0 L513.7 91.5 L520.6 90.7 L527.4 86.9 L534.3 84.1 L541.1 84.9 L548.0 84.9 L554.8 85.5 L561.6 84.7 L568.5 83.3 L575.3 82.1 L582.2 78.9 L589.0 77.2 L595.9 76.4 L602.7 72.7 L609.6 71.2 L616.4 68.4 L623.2 67.6 L630.1 65.2 L636.9 62.8 L643.8 62.2 L650.6 59.8 L657.5 57.0 L664.3 52.9 L671.2 51.6 L678.0 51.0 " fill="none" stroke="#fff" stroke-width="2.2" vector-effect="non-scaling-stroke"/>
+              </svg>
+            </div></div></div>
+          </div>
+          <div class="tp-filas">
+            <div class="tp-fila"><span>Cartera neta <small>· inversiones, cuentas y deudas</small></span><b>153.415 €</b></div>
+            <div class="tp-fila"><span>Inmuebles netos <small>· 396.500 € − hipotecas</small></span><b>159.540 €</b></div>
+          </div>
         </div>
+        <div class="flotante flot-1" aria-hidden="true"><div><svg class="ico"><use href="#i-grafica"/></svg></div><div><span>TIR de la cartera</span><b>+11,17 %</b></div></div>
+        <div class="flotante flot-2" aria-hidden="true"><div><svg class="ico"><use href="#i-bandera"/></svg></div><div><span>Libertad financiera</span><b>42 % cubierto</b></div></div>
+      </div>
+      <span class="sr">Ejemplo de la tarjeta «Tu patrimonio»: 312.956 euros, 49 % en cartera y 51 % en inmuebles, con una subida de 59.875 euros en 12 meses.</span>
+    </div>
+  </div>
+
+  <div class="cinta" role="region" aria-label="Cifras del hogar de ejemplo que trae la app">
+    <div class="cinta-pista">
+      <ul>
+        <li><b>Fondo MSCI World</b><span class="num">39.589 €</span><span class="s up">▲ 47,7 %</span></li>
+        <li><b>Acciones de Apple</b><span class="num">5.134 €</span><span class="s up">▲ 55,6 %</span></li>
+        <li><b>Oro físico</b><span class="num">9.072 €</span><span class="s up">▲ 72,8 %</span></li>
+        <li><b>Bitcoin</b><span class="num">1.286 €</span><span class="s dn">▼ 4,7 %</span></li>
+        <li><b>Piso en alquiler</b><span class="num">780 €/mes</span><span class="s up">7,4 % bruta</span></li>
+        <li><b>Plan de pensiones</b><span class="num">19.073 €</span><span class="s up">▲ 22,3 %</span></li>
+        <li><b>Crowdfunding</b><span class="num">1.950 €</span><span class="s dn">▼ 35,0 %</span></li>
+        <li><b>Fondo monetario</b><span class="num">14.783 €</span><span class="s up">▲ 7,0 %</span></li>
+        <li><b>Ahorro medio</b><span class="num">3.072 €/mes</span><span class="s up">12 meses</span></li>
+        <li><b>Libertad financiera</b><span class="num">42 %</span><span class="s up">cubierto</span></li>
+      </ul>
+      <ul aria-hidden="true">
+        <li><b>Fondo MSCI World</b><span class="num">39.589 €</span><span class="s up">▲ 47,7 %</span></li>
+        <li><b>Acciones de Apple</b><span class="num">5.134 €</span><span class="s up">▲ 55,6 %</span></li>
+        <li><b>Oro físico</b><span class="num">9.072 €</span><span class="s up">▲ 72,8 %</span></li>
+        <li><b>Bitcoin</b><span class="num">1.286 €</span><span class="s dn">▼ 4,7 %</span></li>
+        <li><b>Piso en alquiler</b><span class="num">780 €/mes</span><span class="s up">7,4 % bruta</span></li>
+        <li><b>Plan de pensiones</b><span class="num">19.073 €</span><span class="s up">▲ 22,3 %</span></li>
+        <li><b>Crowdfunding</b><span class="num">1.950 €</span><span class="s dn">▼ 35,0 %</span></li>
+        <li><b>Fondo monetario</b><span class="num">14.783 €</span><span class="s up">▲ 7,0 %</span></li>
+        <li><b>Ahorro medio</b><span class="num">3.072 €/mes</span><span class="s up">12 meses</span></li>
+        <li><b>Libertad financiera</b><span class="num">42 %</span><span class="s up">cubierto</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ======== LA ECUACIÓN ======== -->
+<section class="ecuacion" id="ecuacion" aria-labelledby="t-ecuacion">
+  <div class="wrap">
+    <p class="rotulo rv"><b>01</b>La única cuenta que importa</p>
+    <h2 id="t-ecuacion" class="rv" style="--d:1">Lo que tienes, menos lo que debes.</h2>
+    <p class="lead rv" style="--d:2">Liberty suma todo lo de tu casa, resta todas las deudas y te dice, al euro, cuánto es tuyo. Estas son las cifras del hogar de ejemplo que trae la app para que la pruebes antes de meter las tuyas.</p>
+    <div class="libro">
+      <div class="asiento rv">
+        <span class="op" aria-hidden="true"></span>
+        <div class="que"><h3>Todo lo que tienes</h3><p>Cuentas, fondos, acciones, cripto, oro, pensiones e inmuebles.</p>
+          <div class="desglose"><span>Cartera 163.581 €</span><span>Inmuebles 396.500 €</span></div></div>
+        <div class="v" data-odo="560081" data-suf=" €">560.081 €</div>
+      </div>
+      <div class="asiento debe rv">
+        <span class="op" aria-hidden="true">−</span>
+        <div class="que"><h3>Todo lo que debes</h3><p>Hipotecas, préstamo del coche y tarjeta, con su cuota y su interés.</p>
+          <div class="desglose"><span>Hipotecas 236.960 €</span><span>Otras deudas 10.165 €</span></div></div>
+        <div class="v" data-odo="247125" data-suf=" €">247.125 €</div>
+      </div>
+      <div class="asiento total rv">
+        <span class="op" aria-hidden="true">=</span>
+        <div class="que"><h3>Lo que es tuyo</h3><p>Tu patrimonio neto, actualizado cada vez que anotas o cambian los precios.</p></div>
+        <div class="v" data-odo="312956" data-suf=" €">312.956 €</div>
+      </div>
+    </div>
+    <p class="libro-nota rv">Y debajo de esa cifra, todo lo demás: rentabilidad real (TIR), dinero libre, colchón, ingresos y gastos, cuánto te falta para vivir de tus rentas y cómo ha cambiado cada mes.</p>
+  </div>
+</section>
+
+<!-- ======== QUÉ ES ======== -->
+<section id="que-es" aria-labelledby="t-quees" style="padding-top:0">
+  <div class="wrap">
+    <p class="rotulo rv"><b>02</b>Qué es y para qué sirve</p>
+    <h2 id="t-quees" class="rv" style="--d:1">El Excel que nunca terminaste, ya hecho.</h2>
+    <p class="lead rv" style="--d:2">Liberty reúne <strong>todo el patrimonio de tu hogar</strong> —cuentas, fondos, acciones, cripto, planes de pensiones, inmuebles e hipotecas— con tu <strong>rentabilidad real</strong>, tus ingresos y gastos y la evolución mes a mes. Sin fórmulas que mantener y sin que tus datos salgan de tu equipo.</p>
+  </div>
+  <div class="cards-marquee rv" style="--d:3" role="region" aria-label="Para qué sirve Liberty">
+    <div class="cards-row izq">
+      <div class="cards-track" data-cards-track>
+        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-cartera"/></svg></span><h3>Patrimonio completo</h3><p>Cuentas, inversiones, inmuebles y deudas, todo en una misma vista consolidada.</p></div>
+        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-hoja"/></svg></span><h3>Ingresos y gastos</h3><p>Categorías, tendencias, mapa de calor y presupuesto: entiende a dónde va tu dinero.</p></div>
+        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-grafica"/></svg></span><h3>Rentabilidad y evolución</h3><p>Rentabilidad real (TIR), plusvalías y cómo evoluciona tu patrimonio en el tiempo.</p></div>
+        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-carpeta"/></svg></span><h3>Multi-patrimonio</h3><p>Varios patrimonios independientes desde la misma aplicación.</p></div>
+        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-rayo"/></svg></span><h3>Precios al día</h3><p>Actualiza el valor de fondos, acciones y cripto con un solo clic.</p></div>
+        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-disco"/></svg></span><h3>Copias de seguridad</h3><p>Copias automáticas y manuales que restauras cuando quieras; todo bajo tu control.</p></div>
+        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-bandera"/></svg></span><h3>Libertad financiera</h3><p>Cuántos meses vivirías con lo que tienes y cuánto de tu gasto cubren ya tus rentas.</p></div>
+      </div>
+    </div>
+    <div class="cards-row der">
+      <div class="cards-track" data-cards-track>
+        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-casa"/></svg></span><h3>Inmuebles</h3><p>Cada piso con su ficha: valor, hipoteca, inquilinos y contratos, lo que te deja el alquiler y avisos si un cobro no llega.</p></div>
+        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-personas"/></svg></span><h3>Titulares</h3><p>Asigna cada activo o deuda a sus titulares y conoce el reparto real del patrimonio.</p></div>
+        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-documento"/></svg></span><h3>Informe fiscal</h3><p>Un resumen para la declaración: ganancias, pérdidas y rendimientos del ahorro.</p></div>
+        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-tarta"/></svg></span><h3>Distribución</h3><p>Cómo se reparte tu patrimonio por tipo de activo, titular, entidad o geografía.</p></div>
+        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-tarjeta"/></svg></span><h3>Deudas y vencimientos</h3><p>Préstamos, cuotas, intereses y las fechas que se van acercando.</p></div>
+        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-importar"/></svg></span><h3>Importa tus datos</h3><p>Trae inversiones y movimientos del banco (Excel/CSV o con ayuda de una IA) sin partir de cero.</p></div>
+        <div class="card"><span class="c-ico"><svg class="ico" aria-hidden="true"><use href="#i-candado"/></svg></span><h3>Sin cuentas ni servidores</h3><p>Sin registro ni nube: todo funciona en tu equipo, sin conexión obligatoria.</p></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ======== CÓMO FUNCIONA ======== -->
-<section class="alt" id="como-funciona">
+<!-- ======== RECORRIDO ======== -->
+<section class="recorrido" id="recorrido" aria-labelledby="t-rec">
   <div class="wrap">
-    <h2>Cómo funciona</h2>
-    <p class="lead">Nada que instalar ni configurar. Liberty es un único ejecutable que se abre en tu navegador y guarda los datos a su lado.</p>
-    <div class="steps">
-      <div class="step">
-        <h3>Abres la app</h3>
-        <p>En Windows, doble clic en <code>Liberty.exe</code>. En Mac, abre el <code>.dmg</code> y arrastra Liberty a Aplicaciones. No requiere instalación.</p>
-      </div>
-      <div class="step">
-        <h3>Se abre en tu navegador</h3>
-        <p>La app se sirve localmente y se abre en <code>127.0.0.1</code>. Todo ocurre dentro de tu ordenador.</p>
-      </div>
-      <div class="step">
-        <h3>Tus datos, a su lado</h3>
-        <p>Se guardan en una carpeta <code>mis_datos</code> junto al <code>.exe</code>. Nada se sube a ningún sitio.</p>
-      </div>
-      <div class="step">
-        <h3>Portable</h3>
-        <p>Para moverlo a otro equipo, copia solo el <code>.exe</code>: él recreará su carpeta de datos.</p>
+    <p class="rotulo rv"><b>03</b>Un recorrido por dentro</p>
+    <h2 id="t-rec" class="rv" style="--d:1">Cinco pantallas, todo tu dinero.</h2>
+    <div class="rec-grid">
+      <ol class="rec-pasos" id="rec-pasos">
+        <li class="rec-paso" data-img="0">
+          <div class="js-opaco">
+            <p class="n">i. Inicio</p>
+            <h3>Tu casa, de un vistazo</h3>
+            <p>Al abrir ves tu patrimonio total y cómo ha crecido, tu libertad financiera, los avisos que importan y el mes en curso. Ordenas las tarjetas a tu gusto.</p>
+            <ul><li><svg class="ico" aria-hidden="true"><use href="#i-ok"/></svg>Patrimonio total: cartera + inmuebles netos</li><li><svg class="ico" aria-hidden="true"><use href="#i-ok"/></svg>Avisos de vencimientos, agenda y alertas de precio</li></ul>
+          </div>
+          <div class="rec-img-movil"><img src="capturas/panel/inicio.webp" alt="Inicio de Liberty: tu patrimonio, cómo ha crecido y tu libertad financiera" loading="lazy" width="1920" height="1200"></div>
+        </li>
+        <li class="rec-paso" data-img="1">
+          <div class="js-opaco">
+            <p class="n">ii. Cartera</p>
+            <h3>Lo que rinde de verdad</h3>
+            <p>Valor, aportado, plusvalía y TIR de cada inversión, con precios que se actualizan solos y comparación con índices.</p>
+            <ul><li><svg class="ico" aria-hidden="true"><use href="#i-ok"/></svg>Fondos, ETF, acciones, cripto, oro, pensiones…</li><li><svg class="ico" aria-hidden="true"><use href="#i-ok"/></svg>Dinero libre, reservados y colchón</li></ul>
+          </div>
+          <div class="rec-img-movil"><img src="capturas/panel/cartera.webp" alt="Cartera: patrimonio neto, rentabilidad, TIR y dinero libre" loading="lazy" width="1920" height="1200"></div>
+        </li>
+        <li class="rec-paso" data-img="2">
+          <div class="js-opaco">
+            <p class="n">iii. Inmuebles</p>
+            <h3>Cada ladrillo, con su ficha</h3>
+            <p>Lo que vale cada inmueble, lo que te costó, lo que aún debes y lo que te deja el alquiler, con avisos de revisión de renta.</p>
+            <ul><li><svg class="ico" aria-hidden="true"><use href="#i-ok"/></svg>Hipotecas enlazadas a su inmueble</li><li><svg class="ico" aria-hidden="true"><use href="#i-ok"/></svg>Cash-flow y rentabilidad bruta del alquiler</li></ul>
+          </div>
+          <div class="rec-img-movil"><img src="capturas/panel/inmuebles.webp" alt="Inmuebles: valor estimado, hipotecas, alquileres y cash-flow" loading="lazy" width="1920" height="1200"></div>
+        </li>
+        <li class="rec-paso" data-img="3">
+          <div class="js-opaco">
+            <p class="n">iv. Ingresos y gastos</p>
+            <h3>A dónde va cada euro</h3>
+            <p>Anota en segundos o importa los movimientos del banco. Categorías, presupuesto, tasa de ahorro y tendencias por periodo.</p>
+            <ul><li><svg class="ico" aria-hidden="true"><use href="#i-ok"/></svg>Facturas adjuntas a cada apunte</li><li><svg class="ico" aria-hidden="true"><use href="#i-ok"/></svg>Deshacer al borrar, con Ctrl+Z</li></ul>
+          </div>
+          <div class="rec-img-movil"><img src="capturas/panel/ingresos.webp" alt="Ingresos y gastos: ingresos, gastos, ahorro y tasa de ahorro" loading="lazy" width="1920" height="1200"></div>
+        </li>
+        <li class="rec-paso" data-img="4">
+          <div class="js-opaco">
+            <p class="n">v. Documentos</p>
+            <h3>Los papeles, junto al dinero</h3>
+            <p>Notas, cuadernos, un tablero de tareas, la agenda y un explorador de archivos para escrituras, contratos y recibos.</p>
+            <ul><li><svg class="ico" aria-hidden="true"><use href="#i-ok"/></svg>Notas enlazadas a activos y documentos</li><li><svg class="ico" aria-hidden="true"><use href="#i-ok"/></svg>Recordatorios que avisan en el Panel</li></ul>
+          </div>
+          <div class="rec-img-movil"><img src="capturas/notas/tablero.webp" alt="Documentos: tablero de tareas del hogar" loading="lazy" width="1920" height="1200"></div>
+        </li>
+      </ol>
+      <div class="rec-fijo" aria-hidden="true">
+        <div class="marco">
+          <div class="marco-barra"><i></i><i></i><i></i><span>127.0.0.1 · Liberty</span></div>
+          <div class="marco-vista" id="rec-vista">
+            <img src="capturas/panel/inicio.webp" alt="" class="on" loading="lazy" width="1920" height="1200">
+            <img src="capturas/panel/cartera.webp" alt="" loading="lazy" width="1920" height="1200">
+            <img src="capturas/panel/inmuebles.webp" alt="" loading="lazy" width="1920" height="1200">
+            <img src="capturas/panel/ingresos.webp" alt="" loading="lazy" width="1920" height="1200">
+            <img src="capturas/notas/tablero.webp" alt="" loading="lazy" width="1920" height="1200">
+          </div>
+          <div class="rec-cont" id="rec-cont"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ======== CARACTERÍSTICAS ======== -->
-<section id="caracteristicas">
+<section class="cv" id="caracteristicas" aria-labelledby="t-feat">
   <div class="wrap">
-    <h2>Todo lo que puedes hacer con Liberty</h2>
-    <p class="lead">De gestor de inversión a gestor de todo el patrimonio del hogar. Esto es lo que encontrarás dentro, sin coste y sin límites.</p>
-    <div class="feat-grid">
-      <div class="feat">
-        <span class="feat-ico">🏦</span>
+    <p class="rotulo rv"><b>04</b>Todo lo que puedes hacer</p>
+    <h2 id="t-feat" class="rv" style="--d:1">Sin coste. Sin límites. Sin letra pequeña.</h2>
+    <p class="lead rv" style="--d:2">De gestor de inversiones a gestor de todo el patrimonio del hogar. Esto es lo que encontrarás dentro.</p>
+    <div class="bento">
+      <div class="feat ancha rv">
+        <span class="feat-ico"><svg class="ico" aria-hidden="true"><use href="#i-cartera"/></svg></span>
         <h3>Patrimonio completo</h3>
         <ul>
           <li>Cuentas, efectivo, inversiones e inmuebles</li>
-          <li>Inmuebles aparte: inquilinos, contratos y rentabilidad del alquiler</li>
           <li>Deudas: hipoteca, préstamos, tarjetas</li>
           <li>Reservados y colchón de liquidez</li>
           <li>Varios titulares y reparto por persona</li>
-          <li>Tu patrimonio total en Inicio: cartera + inmuebles netos</li>
+          <li>Tu patrimonio total en Inicio: cartera + inmuebles netos, y cómo ha crecido</li>
         </ul>
       </div>
-      <div class="feat">
-        <span class="feat-ico">📈</span>
-        <h3>Inversión y rentabilidad</h3>
+      <div class="feat rv" style="--d:1">
+        <span class="feat-ico"><svg class="ico" aria-hidden="true"><use href="#i-edificio"/></svg></span>
+        <h3>Inmuebles</h3>
+        <ul>
+          <li>Ficha de cada piso, casa, garaje o trastero</li>
+          <li>Inquilinos, contratos y revisiones de renta</li>
+          <li>Rentabilidad y cash-flow del alquiler</li>
+        </ul>
+      </div>
+      <div class="feat rv" style="--d:2">
+        <span class="feat-ico"><svg class="ico" aria-hidden="true"><use href="#i-grafica"/></svg></span>
+        <h3>Inversión</h3>
         <ul>
           <li>Precios automáticos: fondos, acciones, cripto…</li>
-          <li>Rentabilidad real (TIR/XIRR) y plusvalías</li>
+          <li>Rentabilidad real (TIR) y plusvalías</li>
           <li>Comparación con índices de referencia</li>
-          <li>Ayuda para rebalancear hacia tus objetivos</li>
-          <li>Multidivisa</li>
+          <li>Ayuda para rebalancear · multidivisa</li>
         </ul>
       </div>
-      <div class="feat">
-        <span class="feat-ico">💶</span>
+      <div class="feat rv">
+        <span class="feat-ico"><svg class="ico" aria-hidden="true"><use href="#i-hoja"/></svg></span>
         <h3>Ingresos y gastos</h3>
         <ul>
           <li>Categorías, presupuestos y tasa de ahorro</li>
           <li>Cascada, tendencias y mapa de calor</li>
-          <li>Filtros potentes y marcas por apunte</li>
-          <li>Importa los movimientos del banco (Excel/CSV o IA)</li>
+          <li>Facturas adjuntas y filtros potentes</li>
+          <li>Importa los movimientos del banco</li>
         </ul>
       </div>
-      <div class="feat">
-        <span class="feat-ico">🗒️</span>
-        <h3>Organización</h3>
-        <ul>
-          <li>Notas con etiquetas y listas de tareas</li>
-          <li>Tablero tipo Trello</li>
-          <li>Agenda con calendario mensual</li>
-          <li>Recordatorios y vencimientos en un sitio</li>
-        </ul>
-      </div>
-      <div class="feat">
-        <span class="feat-ico">🎯</span>
+      <div class="feat ancha rv" style="--d:1">
+        <span class="feat-ico"><svg class="ico" aria-hidden="true"><use href="#i-bandera"/></svg></span>
         <h3>Control y planificación</h3>
         <ul>
-          <li>Objetivos de asignación por tipo</li>
-          <li>Concentración y alertas configurables</li>
-          <li>Vencimientos de depósitos y deudas</li>
-          <li>Informe fiscal anual y exportar a PDF</li>
+          <li>Libertad financiera: meses de vida con lo disponible y renta pasiva que ya cubre tu gasto <span class="nuevo">1.19</span></li>
+          <li>Alertas de precio: «avísame si cae un 10 %» o «si supera…» <span class="nuevo">1.19</span></li>
+          <li>Objetivos de asignación, concentración y alertas configurables</li>
+          <li>Vencimientos de depósitos y deudas · informe fiscal anual</li>
         </ul>
       </div>
-      <div class="feat">
-        <span class="feat-ico">🔐</span>
+      <div class="feat rv" style="--d:2">
+        <span class="feat-ico"><svg class="ico" aria-hidden="true"><use href="#i-nota"/></svg></span>
+        <h3>Organización</h3>
+        <ul>
+          <li>Notas, cuadernos y etiquetas</li>
+          <li>Tablero de tareas y agenda mensual</li>
+          <li>Explorador de archivos del hogar</li>
+        </ul>
+      </div>
+      <div class="feat ancha rv">
+        <span class="feat-ico"><svg class="ico" aria-hidden="true"><use href="#i-ajustes"/></svg></span>
+        <h3>A tu manera</h3>
+        <ul>
+          <li>Inicio a tu gusto: ordena, oculta o junta tarjetas <span class="nuevo">1.19</span></li>
+          <li>Ocultar importes con un clic, para enseñar la pantalla sin enseñar cifras</li>
+          <li>Deshacer al borrar (Ctrl+Z) y búsqueda global con Ctrl+K</li>
+          <li>Tema claro y oscuro, tipografía propia y accesible con teclado <span class="nuevo">1.20</span></li>
+        </ul>
+      </div>
+      <div class="feat ancha rv" style="--d:1">
+        <span class="feat-ico"><svg class="ico" aria-hidden="true"><use href="#i-escudo"/></svg></span>
         <h3>Privacidad por diseño</h3>
         <ul>
-          <li>100% local, funciona sin conexión</li>
+          <li>100 % local, funciona sin conexión</li>
           <li>Sin cuentas, sin nube, sin telemetría</li>
           <li>Tus datos viven en una carpeta tuya</li>
-          <li>Código abierto: puedes revisarlo</li>
+          <li>Código fuente público: puedes revisarlo</li>
         </ul>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ======== PARA QUIÉN ES ======== -->
-<section class="alt" id="para-quien">
+<!-- ======== CIFRAS ======== -->
+<section class="cifras" aria-label="Liberty en cifras">
   <div class="wrap">
-    <h2>¿Para quién es?</h2>
-    <p class="lead">Si quieres entender y ordenar tu dinero sin ceder tus datos a nadie, Liberty es para ti.</p>
+    <div class="cifras-fila">
+      <div class="cifra rv"><div class="v" data-odo="0" data-suf=" €">0 €</div><p>Lo que cuesta. Hoy y siempre.</p></div>
+      <div class="cifra rv" style="--d:1"><div class="v" data-odo="0">0</div><p>Cuentas que crear o contraseñas que recordar.</p></div>
+      <div class="cifra rv" style="--d:2"><div class="v" data-odo="0">0</div><p>Datos tuyos enviados a un servidor.</p></div>
+      <div class="cifra rv" style="--d:3"><div class="v"><span data-odo="1">1</span><small>archivo</small></div><p>Un ejecutable de unos 13 MB. Sin instalar.</p></div>
+      <div class="cifra rv" style="--d:4"><div class="v" data-odo="4">4</div><p>Formas de usarlo: Windows, Mac, Linux y Docker.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== CÓMO FUNCIONA ======== -->
+<section class="cv" id="como-funciona" aria-labelledby="t-como">
+  <div class="wrap">
+    <p class="rotulo rv"><b>05</b>Cómo funciona</p>
+    <h2 id="t-como" class="rv" style="--d:1">Nada que instalar. Nada que configurar.</h2>
+    <p class="lead rv" style="--d:2">Liberty es un único programa que se abre en tu navegador y guarda los datos en tu equipo. La primera vez te recibe con un hogar de ejemplo para que lo pruebes todo.</p>
+    <ol class="steps" id="steps">
+      <li class="step rv"><span class="bola">1</span><h3>Abres la app</h3><p>En Windows, doble clic en <code>Liberty.exe</code>. En Mac, abre el <code>.dmg</code> y arrastra Liberty a Aplicaciones.</p></li>
+      <li class="step rv" style="--d:1"><span class="bola">2</span><h3>Se abre en tu navegador</h3><p>La app se sirve en tu propio equipo, en <code>127.0.0.1</code>. Todo ocurre dentro de tu ordenador.</p></li>
+      <li class="step rv" style="--d:2"><span class="bola">3</span><h3>Pruebas con el ejemplo</h3><p>Un hogar de unos 300.000 €, con fechas siempre al día. Cuando quieras, empiezas con tus datos.</p></li>
+      <li class="step rv" style="--d:3"><span class="bola">4</span><h3>Tus datos, contigo</h3><p>En Windows, en la carpeta <code>mis_datos</code> junto al <code>.exe</code>; en Mac, en tu carpeta de usuario. Para moverlo, copias la carpeta.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ======== PARA QUIÉN ES ======== -->
+<section class="cv" id="para-quien" aria-labelledby="t-pq" style="padding-top:0">
+  <div class="wrap">
+    <p class="rotulo rv"><b>06</b>¿Para quién es?</p>
+    <h2 id="t-pq" class="rv" style="--d:1">Para quien quiere entender su dinero sin ceder sus datos.</h2>
     <div class="pq-grid">
-      <div class="pq"><span class="pq-ico">🏡</span><div><h3>Hogares y familias</h3><p>Cuentas, inversiones, inmuebles y deudas de toda la casa en una sola foto.</p></div></div>
-      <div class="pq"><span class="pq-ico">💑</span><div><h3>Parejas</h3><p>Reparte cada activo o deuda por titular y ve qué le corresponde a cada uno.</p></div></div>
-      <div class="pq"><span class="pq-ico">📊</span><div><h3>Quien deja el Excel</h3><p>Todo lo de tu hoja de cálculo —y más— sin fórmulas que mantener ni archivos sueltos.</p></div></div>
-      <div class="pq"><span class="pq-ico">📈</span><div><h3>Inversores particulares</h3><p>Rentabilidad real, distribución, rebalanceo y comparación con índices.</p></div></div>
+      <div class="pq rv"><span class="pq-ico"><svg class="ico" aria-hidden="true"><use href="#i-casa"/></svg></span><h3>Hogares y familias</h3><p>Cuentas, inversiones, inmuebles y deudas de toda la casa en una sola foto.</p></div>
+      <div class="pq rv" style="--d:1"><span class="pq-ico"><svg class="ico" aria-hidden="true"><use href="#i-personas"/></svg></span><h3>Parejas</h3><p>Cada activo o deuda con su titular: «Yo», «Mi pareja» o «Común», y qué le toca a cada uno.</p></div>
+      <div class="pq rv" style="--d:2"><span class="pq-ico"><svg class="ico" aria-hidden="true"><use href="#i-hoja"/></svg></span><h3>Quien deja el Excel</h3><p>Todo lo de tu hoja de cálculo —y más— sin fórmulas que mantener ni archivos sueltos.</p></div>
+      <div class="pq rv" style="--d:3"><span class="pq-ico"><svg class="ico" aria-hidden="true"><use href="#i-grafica"/></svg></span><h3>Inversores particulares</h3><p>Rentabilidad real, distribución, rebalanceo y comparación con índices.</p></div>
     </div>
   </div>
 </section>
 
 <!-- ======== CAPTURAS ======== -->
-<section id="capturas">
+<section id="capturas" class="cv recorrido" aria-labelledby="t-cap">
   <div class="wrap">
-    <h2>Un vistazo a Liberty</h2>
-    <p class="lead">Así se ve por dentro. Los carruseles avanzan solos; pasa el ratón para pausar, o usa las flechas, los puntos o desliza en móvil.</p>
+    <p class="rotulo rv"><b>07</b>Un vistazo a Liberty</p>
+    <h2 id="t-cap" class="rv" style="--d:1">Así se ve por dentro.</h2>
+    <p class="lead rv" style="--d:2">Capturas reales de la versión actual con el hogar de ejemplo. Avanzan solas; pasa el ratón para pausar, usa las flechas, los indicadores o desliza en el móvil. Pulsa una para ampliarla.</p>
 
-    <!-- Carrusel Panel -->
-    <div class="carousel-block">
-      <h3><span class="dot"></span>Panel</h3>
-      <div class="carousel" data-carousel aria-roledescription="carrusel" aria-label="Capturas del Panel">
-        <div class="carousel-viewport" data-track>
-          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Resumen del patrimonio (1)"><img src="capturas/panel/Panel_1_patrimonio1.webp" alt="Panel — Resumen del patrimonio (1)"></div>
-          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Resumen del patrimonio (2)"><img src="capturas/panel/Panel_1_patrimonio2.webp" alt="Panel — Resumen del patrimonio (2)" loading="lazy"></div>
-          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Distribución del patrimonio"><img src="capturas/panel/Panel_2_distribucion.webp" alt="Panel — Distribución del patrimonio" loading="lazy"></div>
-          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Vista de un activo"><img src="capturas/panel/Panel_3_vistaDeActivo.webp" alt="Panel — Vista de un activo" loading="lazy"></div>
-          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Rentabilidad"><img src="capturas/panel/Panel_4_rentabilidad.webp" alt="Panel — Rentabilidad" loading="lazy"></div>
-          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Evolución del patrimonio"><img src="capturas/panel/Panel_5_Evolucion.webp" alt="Panel — Evolución del patrimonio" loading="lazy"></div>
-          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Evolución del patrimonio (2)"><img src="capturas/panel/Panel_5_Evolucion2.webp" alt="Panel — Evolución del patrimonio (2)" loading="lazy"></div>
-          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Ingresos y gastos"><img src="capturas/panel/Panel_6_IngresosYGastos.webp" alt="Panel — Ingresos y gastos" loading="lazy"></div>
-          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Deudas y vencimientos"><img src="capturas/panel/Panel_7_DeudasYVencimientos.webp" alt="Panel — Deudas y vencimientos" loading="lazy"></div>
-          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Informe fiscal"><img src="capturas/panel/Panel_8_InformeFiscal.webp" alt="Panel — Informe fiscal" loading="lazy"></div>
-          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Panel — Estructura patrimonial (treemap)"><img src="capturas/panel/Panel_9_Estructura.webp" alt="Panel — Estructura patrimonial (treemap)" loading="lazy"></div>
+    <div class="gal-tabs rv" role="tablist" aria-label="Zonas de la app">
+      <button class="gal-tab" type="button" role="tab" id="gt-panel" aria-controls="gp-panel" aria-selected="true">Panel</button>
+      <button class="gal-tab" type="button" role="tab" id="gt-datos" aria-controls="gp-datos" aria-selected="false" tabindex="-1">Mis datos</button>
+      <button class="gal-tab" type="button" role="tab" id="gt-notas" aria-controls="gp-notas" aria-selected="false" tabindex="-1">Documentos</button>
+      <button class="gal-tab" type="button" role="tab" id="gt-ajustes" aria-controls="gp-ajustes" aria-selected="false" tabindex="-1">Ajustes</button>
+    </div>
+
+    <div class="gal-panel rv" id="gp-panel" role="tabpanel" aria-labelledby="gt-panel">
+      <div class="carousel-block">
+        <h3>Panel</h3>
+        <div class="carousel" data-carousel aria-roledescription="carrusel" aria-label="Capturas del Panel">
+          <div class="carousel-viewport" data-track>
+            <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Inicio: tu patrimonio, cómo ha crecido y tu libertad financiera"><img src="capturas/panel/inicio.webp" alt="Inicio: tu patrimonio, cómo ha crecido y tu libertad financiera" loading="lazy" width="1920" height="1200"></div>
+            <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Cartera: tu mes de un vistazo y la cartera neta"><img src="capturas/panel/cartera.webp" alt="Cartera: tu mes de un vistazo y la cartera neta" loading="lazy" width="1920" height="1200"></div>
+            <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Distribución: componentes de la cartera"><img src="capturas/panel/distribucion.webp" alt="Distribución: componentes de la cartera" loading="lazy" width="1920" height="1200"></div>
+            <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Ficha de un activo: fondo indexado MSCI World"><img src="capturas/panel/ficha.webp" alt="Ficha de un activo: fondo indexado MSCI World" loading="lazy" width="1920" height="1200"></div>
+            <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Rentabilidad de la cartera por activo"><img src="capturas/panel/rentabilidad.webp" alt="Rentabilidad de la cartera por activo" loading="lazy" width="1920" height="1200"></div>
+            <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Evolución de la cartera"><img src="capturas/panel/evolucion.webp" alt="Evolución de la cartera" loading="lazy" width="1920" height="1200"></div>
+            <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Ingresos, gastos y ahorro"><img src="capturas/panel/ingresos.webp" alt="Ingresos, gastos y ahorro" loading="lazy" width="1920" height="1200"></div>
+            <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Deudas y vencimientos"><img src="capturas/panel/deudas.webp" alt="Deudas y vencimientos" loading="lazy" width="1920" height="1200"></div>
+            <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Informe fiscal"><img src="capturas/panel/fiscal.webp" alt="Informe fiscal" loading="lazy" width="1920" height="1200"></div>
+            <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Inmuebles"><img src="capturas/panel/inmuebles.webp" alt="Inmuebles" loading="lazy" width="1920" height="1200"></div>
+          </div>
+          <button class="car-btn car-prev" type="button" data-prev aria-label="Captura anterior"><svg class="ico" aria-hidden="true"><use href="#i-izq"/></svg></button>
+          <button class="car-btn car-next" type="button" data-next aria-label="Captura siguiente"><svg class="ico" aria-hidden="true"><use href="#i-der"/></svg></button>
+          <div class="car-pie"><span class="car-caption" data-caption aria-live="polite"></span><div class="car-dots" data-dots role="tablist" aria-label="Seleccionar captura del Panel"></div></div>
         </div>
-        <button class="car-btn car-prev" type="button" data-prev aria-label="Captura anterior">‹</button>
-        <button class="car-btn car-next" type="button" data-next aria-label="Captura siguiente">›</button>
-        <div class="car-dots" data-dots role="tablist" aria-label="Seleccionar captura del Panel"></div>
       </div>
     </div>
 
-    <!-- Carrusel Mis datos -->
-    <div class="carousel-block" style="margin-top:36px">
-      <h3><span class="dot"></span>Mis datos</h3>
-      <div class="carousel" data-carousel aria-roledescription="carrusel" aria-label="Capturas de Mis datos">
-        <div class="carousel-viewport" data-track>
-          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Mis datos — Activos"><img src="capturas/misdatos/MisDatos_1_Activos.webp" alt="Mis datos — Activos"></div>
-          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Mis datos — Ingresos y gastos"><img src="capturas/misdatos/MisDatos_4_IngresosYGastos.webp" alt="Mis datos — Ingresos y gastos" loading="lazy"></div>
-          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Mis datos — Saldos y movimientos"><img src="capturas/misdatos/MisDatos_5_SaldosYMovimientos.webp" alt="Mis datos — Saldos y movimientos" loading="lazy"></div>
-          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Mis datos — Configuración"><img src="capturas/misdatos/MisDatos_7_Configuracion.webp" alt="Mis datos — Configuración" loading="lazy"></div>
-          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Mis datos — Importar"><img src="capturas/misdatos/MisDatos_8_Importar.webp" alt="Mis datos — Importar" loading="lazy"></div>
-          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Mis datos — Copias y seguridad"><img src="capturas/misdatos/MisDatos_9_CopiasYSeguridad.webp" alt="Mis datos — Copias y seguridad" loading="lazy"></div>
+    <div class="gal-panel" id="gp-datos" role="tabpanel" aria-labelledby="gt-datos" hidden>
+      <div class="carousel-block">
+        <h3>Mis datos</h3>
+        <div class="carousel" data-carousel aria-roledescription="carrusel" aria-label="Capturas de Mis datos">
+          <div class="carousel-viewport" data-track>
+            <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Mis datos: activos"><img src="capturas/misdatos/activos.webp" alt="Mis datos: activos" loading="lazy" width="1920" height="1200"></div>
+            <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Mis datos: ingresos y gastos con anotación rápida"><img src="capturas/misdatos/ingresos.webp" alt="Mis datos: ingresos y gastos con anotación rápida" loading="lazy" width="1920" height="1200"></div>
+            <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Mis datos: saldos y movimientos"><img src="capturas/misdatos/saldos.webp" alt="Mis datos: saldos y movimientos" loading="lazy" width="1920" height="1200"></div>
+            <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Mis datos: inmuebles"><img src="capturas/misdatos/inmuebles.webp" alt="Mis datos: inmuebles" loading="lazy" width="1920" height="1200"></div>
+            <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Mis datos: importar"><img src="capturas/misdatos/importar.webp" alt="Mis datos: importar" loading="lazy" width="1920" height="1200"></div>
+            <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Mis datos: copias y seguridad"><img src="capturas/misdatos/copias.webp" alt="Mis datos: copias y seguridad" loading="lazy" width="1920" height="1200"></div>
+          </div>
+          <button class="car-btn car-prev" type="button" data-prev aria-label="Captura anterior"><svg class="ico" aria-hidden="true"><use href="#i-izq"/></svg></button>
+          <button class="car-btn car-next" type="button" data-next aria-label="Captura siguiente"><svg class="ico" aria-hidden="true"><use href="#i-der"/></svg></button>
+          <div class="car-pie"><span class="car-caption" data-caption aria-live="polite"></span><div class="car-dots" data-dots role="tablist" aria-label="Seleccionar captura de Mis datos"></div></div>
         </div>
-        <button class="car-btn car-prev" type="button" data-prev aria-label="Captura anterior">‹</button>
-        <button class="car-btn car-next" type="button" data-next aria-label="Captura siguiente">›</button>
-        <div class="car-dots" data-dots role="tablist" aria-label="Seleccionar captura de Mis datos"></div>
       </div>
     </div>
 
-    <!-- Carrusel Notas y agenda -->
-    <div class="carousel-block" style="margin-top:36px">
-      <h3><span class="dot"></span>Notas y agenda</h3>
-      <div class="carousel" data-carousel aria-roledescription="carrusel" aria-label="Capturas de Notas y agenda">
-        <div class="carousel-viewport" data-track>
-          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Notas — Lista de notas con etiquetas y tareas"><img src="capturas/notas/Notas_1_Lista.webp" alt="Notas — Lista de notas con etiquetas y tareas" loading="lazy"></div>
-          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Notas — Tablero tipo Trello"><img src="capturas/notas/Notas_2_Tablero.webp" alt="Notas — Tablero tipo Trello" loading="lazy"></div>
-          <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Notas — Agenda con calendario mensual"><img src="capturas/notas/Notas_3_Agenda.webp" alt="Notas — Agenda con calendario mensual" loading="lazy"></div>
+    <div class="gal-panel" id="gp-notas" role="tabpanel" aria-labelledby="gt-notas" hidden>
+      <div class="carousel-block">
+        <h3>Notas y agenda</h3>
+        <div class="carousel" data-carousel aria-roledescription="carrusel" aria-label="Capturas de Documentos">
+          <div class="carousel-viewport" data-track>
+            <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Documentos: notas con etiquetas y tareas"><img src="capturas/notas/lista.webp" alt="Documentos: notas con etiquetas y tareas" loading="lazy" width="1920" height="1200"></div>
+            <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Documentos: cuadernos"><img src="capturas/notas/cuadernos.webp" alt="Documentos: cuadernos" loading="lazy" width="1920" height="1200"></div>
+            <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Documentos: tablero de tareas"><img src="capturas/notas/tablero.webp" alt="Documentos: tablero de tareas" loading="lazy" width="1920" height="1200"></div>
+            <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Documentos: agenda con calendario mensual"><img src="capturas/notas/agenda.webp" alt="Documentos: agenda con calendario mensual" loading="lazy" width="1920" height="1200"></div>
+            <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Documentos: explorador de archivos"><img src="capturas/notas/biblioteca.webp" alt="Documentos: explorador de archivos" loading="lazy" width="1920" height="1200"></div>
+          </div>
+          <button class="car-btn car-prev" type="button" data-prev aria-label="Captura anterior"><svg class="ico" aria-hidden="true"><use href="#i-izq"/></svg></button>
+          <button class="car-btn car-next" type="button" data-next aria-label="Captura siguiente"><svg class="ico" aria-hidden="true"><use href="#i-der"/></svg></button>
+          <div class="car-pie"><span class="car-caption" data-caption aria-live="polite"></span><div class="car-dots" data-dots role="tablist" aria-label="Seleccionar captura de Documentos"></div></div>
         </div>
-        <button class="car-btn car-prev" type="button" data-prev aria-label="Captura anterior">‹</button>
-        <button class="car-btn car-next" type="button" data-next aria-label="Captura siguiente">›</button>
-        <div class="car-dots" data-dots role="tablist" aria-label="Seleccionar captura de Notas y agenda"></div>
       </div>
     </div>
 
-    <!-- Ajustes (una sola imagen) -->
-    <div class="carousel-block" style="margin-top:36px">
-      <h3><span class="dot"></span>Ajustes</h3>
-      <div class="single-shot">
-        <img src="capturas/ajustes/Ajustes.webp" alt="Ajustes de la aplicación" loading="lazy">
+    <div class="gal-panel" id="gp-ajustes" role="tabpanel" aria-labelledby="gt-ajustes" hidden>
+      <div class="carousel-block">
+        <h3>Ajustes</h3>
+        <div class="single-shot"><img src="capturas/ajustes/ajustes.webp" alt="Ajustes de la aplicación: tema, tamaño del texto, ocultar importes y carpeta de datos" loading="lazy" width="1920" height="1200"></div>
+      </div>
+    </div>
+
+    <div class="dos-col" style="margin-top:clamp(70px,9vw,120px)">
+      <div class="rv">
+        <h3 style="font-family:var(--serif);font-weight:500;font-size:clamp(1.6rem,2.6vw,2.2rem);letter-spacing:-.02em;margin-bottom:10px">Claro u oscuro, como prefieras</h3>
+        <p style="color:var(--tinta3);margin-bottom:20px">Arrastra para comparar los dos temas de la app.</p>
+        <div class="compara" id="compara">
+          <img src="capturas/panel/inicio.webp" alt="" loading="lazy" width="1920" height="1200">
+          <img class="claro" src="capturas/panel/inicio_claro.webp" alt="" loading="lazy" width="1920" height="1200">
+          <span class="et o" aria-hidden="true">Oscuro</span><span class="et c" aria-hidden="true">Claro</span>
+          <span class="asa" aria-hidden="true"></span>
+          <label class="sr" for="compara-r">Comparar el tema oscuro y el claro de Inicio</label>
+          <input type="range" id="compara-r" min="0" max="100" value="50">
+        </div>
+      </div>
+      <div class="rv" style="--d:1">
+        <h3 style="font-family:var(--serif);font-weight:500;font-size:clamp(1.6rem,2.6vw,2.2rem);letter-spacing:-.02em;margin-bottom:10px">También en el móvil</h3>
+        <p style="color:var(--tinta3);margin-bottom:24px">Con Docker en un servidor de casa y una VPN privada, la abres desde el móvil. La interfaz se adapta a pantallas pequeñas.</p>
+        <div class="movil-par">
+          <div class="telefono"><img src="capturas/movil/inicio.webp" alt="Inicio de Liberty en un móvil" loading="lazy" width="780" height="1688"></div>
+          <div class="telefono"><img src="capturas/movil/inmuebles_claro.webp" alt="Inmuebles de Liberty en un móvil, tema claro" loading="lazy" width="780" height="1688"></div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ======== DESCARGA ======== -->
-<section id="descarga">
-  <div class="wrap">
-    <h2>Descarga Liberty</h2>
-    <p class="lead">Gratis, sin registro. Elige tu sistema:</p>
+<!-- ======== PRIVACIDAD ======== -->
+<section id="privacidad" class="cv privacidad" aria-labelledby="t-priv">
+  <div class="wrap dos-col">
+    <div>
+      <p class="rotulo rv"><b>08</b>Privacidad y seguridad</p>
+      <h2 id="t-priv" class="rv" style="--d:1">Tus cuentas no salen de casa.</h2>
+      <p class="lead rv" style="--d:2">Liberty está pensado para los datos más sensibles de tu hogar, así que la privacidad no es una opción: es el diseño.</p>
+      <ul class="priv-list">
+        <li class="rv"><svg class="ico" aria-hidden="true"><use href="#i-escudo"/></svg><span><b>100 % local.</b> Todo se ejecuta y se guarda en tu propio ordenador.</span></li>
+        <li class="rv" style="--d:1"><svg class="ico" aria-hidden="true"><use href="#i-escudo"/></svg><span><b>Sin telemetría.</b> No se recopila ni se envía ningún dato de uso.</span></li>
+        <li class="rv" style="--d:2"><svg class="ico" aria-hidden="true"><use href="#i-escudo"/></svg><span><b>Sin cuentas ni nube.</b> No hay registro, inicio de sesión ni servidores.</span></li>
+        <li class="rv" style="--d:3"><svg class="ico" aria-hidden="true"><use href="#i-escudo"/></svg><span><b>Tú controlas tus datos.</b> Viven en una carpeta que puedes copiar o borrar cuando quieras. La única conexión es para traer los precios de tus inversiones.</span></li>
+      </ul>
+    </div>
+    <div class="boveda rv" style="--d:2" aria-hidden="true">
+      <div class="rayo" style="--a:-90deg;--dl:0s"><i class="paq"></i></div>
+      <div class="rayo" style="--a:0deg;--dl:.8s"><i class="paq"></i></div>
+      <div class="rayo" style="--a:90deg;--dl:1.6s"><i class="paq"></i></div>
+      <div class="rayo" style="--a:180deg;--dl:2.4s"><i class="paq"></i></div>
+      <div class="nodo" style="--a:-90deg;--r:43cqw"><span><svg class="ico"><use href="#i-nube"/></svg><i class="x"></i>Nube</span></div>
+      <div class="nodo" style="--a:0deg;--r:43cqw"><span><svg class="ico"><use href="#i-servidor"/></svg><i class="x"></i>Servidores</span></div>
+      <div class="nodo" style="--a:90deg;--r:43cqw"><span><svg class="ico"><use href="#i-antena"/></svg><i class="x"></i>Telemetría</span></div>
+      <div class="nodo" style="--a:180deg;--r:43cqw"><span><svg class="ico"><use href="#i-usuario"/></svg><i class="x"></i>Cuentas</span></div>
+      <div class="centro"><div><svg class="ico"><use href="#i-portatil"/></svg>Tu ordenador</div></div>
+    </div>
+  </div>
+</section>
 
-    <!-- Iconos reutilizables: logos de Windows, Apple, Linux (Tux) y Docker, monocromos
-         (currentColor) para que combinen con el texto y se vean en cualquier sistema. -->
-    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
-      <symbol id="ic-win" viewBox="0 0 24 24"><path fill="currentColor" d="M3 5.1 10.4 4v7.3H3V5.1zM3 18.9 10.4 20v-7.2H3v6.1zM11.6 3.84 21 2.5v8.8h-9.4V3.84zM11.6 20.16 21 21.5v-8.7h-9.4v7.36z"/></symbol>
-      <symbol id="ic-apple" viewBox="0 0 24 24"><path fill="currentColor" d="M16.36 1.43c.06 1.03-.33 2.04-.98 2.78-.68.77-1.77 1.36-2.8 1.28-.1-.99.37-2.03.99-2.7.69-.76 1.85-1.32 2.79-1.36zM19.86 17.4c-.52 1.2-.77 1.72-1.43 2.77-.93 1.47-2.23 3.28-3.84 3.29-1.44.02-1.81-.94-3.76-.93-1.95.01-2.36.95-3.8.93-1.61-.01-2.84-1.65-3.77-3.11-2.6-4.09-2.88-8.89-1.27-11.44 1.15-1.8 2.96-2.85 4.67-2.85 1.74 0 2.83.95 4.27.95 1.4 0 2.25-.96 4.26-.96 1.52 0 3.13.83 4.28 2.26-3.76 2.06-3.14 7.42-.28 9.72z"/></symbol>
-      <symbol id="ic-linux" viewBox="0 0 24 24"><path fill="currentColor" d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.106 1.484.174.334.535.47.94.601.81.2 1.91.135 2.774.6.926.466 1.866.67 2.616.47.526-.116.97-.464 1.208-.946.587-.003 1.23-.269 2.26-.334.699-.058 1.574.267 2.577.2.025.134.063.198.114.333l.003.003c.391.778 1.113 1.132 1.884 1.071.771-.06 1.592-.536 2.257-1.306.631-.765 1.683-1.084 2.378-1.503.348-.199.629-.469.649-.853.023-.4-.2-.811-.714-1.376v-.097l-.003-.003c-.17-.2-.25-.535-.338-.926-.085-.401-.182-.786-.492-1.046h-.003c-.059-.054-.123-.067-.188-.135a.357.357 0 00-.19-.064c.431-1.278.264-2.55-.173-3.694-.533-1.41-1.465-2.638-2.175-3.483-.796-1.005-1.576-1.957-1.56-3.368.026-2.152.236-6.133-3.544-6.139zm.529 3.405h.013c.213 0 .396.062.584.198.19.135.33.332.438.533.105.259.158.459.166.724 0-.02.006-.04.006-.06v.105a.086.086 0 01-.004-.021l-.004-.024a1.807 1.807 0 01-.15.706.953.953 0 01-.213.335.71.71 0 00-.088-.042c-.104-.045-.198-.064-.284-.133a1.312 1.312 0 00-.22-.066c.05-.06.146-.133.183-.198.053-.128.082-.264.088-.402v-.02a1.21 1.21 0 00-.061-.4c-.045-.134-.101-.2-.183-.333-.084-.066-.167-.132-.267-.132h-.016c-.093 0-.176.03-.262.132a.8.8 0 00-.205.334 1.18 1.18 0 00-.09.4v.019c.002.089.008.179.02.267-.193-.067-.438-.135-.607-.202a1.635 1.635 0 01-.018-.2v-.02a1.772 1.772 0 01.15-.768c.082-.22.232-.406.43-.533a.985.985 0 01.594-.2zm-2.962.059h.036c.142 0 .27.048.399.135.146.129.264.288.344.465.09.199.14.4.153.667v.004c.007.134.006.2-.002.266v.08c-.03.007-.056.018-.083.024-.152.055-.274.135-.393.2.012-.09.013-.18.003-.267v-.015c-.012-.133-.04-.2-.081-.333a.613.613 0 00-.166-.267.248.248 0 00-.183-.064h-.021c-.071.006-.13.04-.186.132a.552.552 0 00-.12.27.944.944 0 00-.023.33v.015c.012.135.037.2.08.334.046.134.098.2.166.268.01.009.02.018.034.024-.07.057-.117.07-.176.136a.304.304 0 01-.131.068 2.62 2.62 0 01-.275-.402 1.772 1.772 0 01-.155-.667 1.759 1.759 0 01.08-.668 1.43 1.43 0 01.283-.535c.128-.133.26-.2.418-.2zm1.37 1.706c.332 0 .733.065 1.216.399.293.199.523.269 1.052.468h.003c.255.136.405.266.478.399a.571.571 0 01.016.47c-.123.31-.516.643-1.063.842v.002c-.268.135-.501.333-.775.465-.276.135-.588.292-1.012.267a1.139 1.139 0 01-.448-.067 3.566 3.566 0 01-.322-.198c-.195-.135-.363-.332-.612-.465v-.005h-.005c-.4-.246-.616-.512-.686-.71-.07-.268-.005-.47.193-.6.224-.135.38-.271.483-.336.104-.074.143-.102.176-.131h.002v-.003c.169-.202.436-.47.839-.601.139-.036.294-.065.466-.065zm2.8 2.142c.358 1.417 1.196 3.475 1.735 4.473.286.534.855 1.659 1.102 3.024.156-.005.33.018.513.064.646-1.671-.546-3.467-.81-3.874-.802-1.235-.564-1.558-1.65-1.46-2.95.085-.401.182-.786.492-1.046z"/></symbol>
-      <symbol id="ic-docker" viewBox="0 0 24 24"><path fill="currentColor" d="M13.983 11.078h2.119a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.119a.185.185 0 00-.185.185v1.888c0 .102.083.185.185.185m-2.954-5.43h2.118a.186.186 0 00.186-.186V3.574a.186.186 0 00-.186-.185h-2.118a.185.185 0 00-.185.185v1.888c0 .102.082.185.185.185m0 2.716h2.118a.187.187 0 00.186-.186V6.29a.186.186 0 00-.186-.185h-2.118a.185.185 0 00-.185.185v1.887c0 .102.082.186.185.186m-2.93 0h2.12a.186.186 0 00.184-.186V6.29a.185.185 0 00-.185-.185H8.1a.185.185 0 00-.185.185v1.887c0 .102.083.186.185.186m-2.964 0h2.119a.186.186 0 00.185-.186V6.29a.185.185 0 00-.185-.185H5.136a.186.186 0 00-.186.185v1.887c0 .102.084.186.186.186m5.893 2.715h2.118a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.118a.185.185 0 00-.185.185v1.888c0 .102.082.185.185.185m-2.93 0h2.12a.185.185 0 00.184-.185V9.006a.185.185 0 00-.184-.186h-2.12a.185.185 0 00-.184.185v1.888c0 .102.083.185.185.185m-2.964 0h2.119a.185.185 0 00.185-.185V9.006a.185.185 0 00-.185-.186h-2.119a.186.186 0 00-.186.185v1.888c0 .102.084.185.186.185m-2.92 0h2.12a.185.185 0 00.184-.185V9.006a.185.185 0 00-.184-.186h-2.12a.185.185 0 00-.185.185v1.888c0 .103.083.185.185.185M23.763 9.89c-.065-.051-.672-.51-1.954-.51-.338.001-.676.03-1.01.087-.248-1.7-1.653-2.53-1.716-2.566l-.344-.199-.226.327c-.284.438-.49.922-.612 1.43-.23.97-.09 1.882.403 2.661-.595.332-1.55.413-1.744.42H.751a.751.751 0 00-.75.748 11.376 11.376 0 00.692 4.062c.545 1.428 1.355 2.48 2.41 3.124 1.18.723 3.1 1.137 5.275 1.137.983.003 1.963-.086 2.93-.266a12.248 12.248 0 003.823-1.389c.98-.567 1.86-1.288 2.61-2.136 1.252-1.418 1.998-2.997 2.553-4.4h.221c1.372 0 2.215-.549 2.68-1.009.309-.293.55-.65.707-1.046l.098-.288z"/></symbol>
-    </defs></svg>
+<!-- ======== DESCARGA ======== -->
+<section id="descarga" class="noche con-foco" aria-labelledby="t-desc">
+  <div class="rejilla" aria-hidden="true"></div>
+  <div class="foco" aria-hidden="true"></div>
+  <div class="wrap">
+    <p class="rotulo rv"><b>09</b>Descarga</p>
+    <h2 id="t-desc" class="rv" style="--d:1">Empieza hoy. <em style="font-style:italic;color:var(--oro-v)">Gratis.</em></h2>
+    <p class="lead rv" style="--d:2">Sin registro ni tarjeta. Elige tu sistema:</p>
 
     <div class="os-selector" role="tablist" aria-label="Elige tu sistema operativo">
-      <button class="os-tab" type="button" data-os="win" role="tab" aria-selected="true"><svg class="os-ico"><use href="#ic-win"/></svg> Windows</button>
-      <button class="os-tab" type="button" data-os="mac" role="tab" aria-selected="false"><svg class="os-ico"><use href="#ic-apple"/></svg> Mac</button>
-      <button class="os-tab" type="button" data-os="lin" role="tab" aria-selected="false"><svg class="os-ico"><use href="#ic-linux"/></svg> Linux</button>
-      <button class="os-tab" type="button" data-os="docker" role="tab" aria-selected="false"><svg class="os-ico"><use href="#ic-docker"/></svg> Docker</button>
+      <button class="os-tab" type="button" data-os="win" role="tab" aria-selected="true"><svg class="os-ico" aria-hidden="true"><use href="#ic-win"/></svg> Windows</button>
+      <button class="os-tab" type="button" data-os="mac" role="tab" aria-selected="false"><svg class="os-ico" aria-hidden="true"><use href="#ic-apple"/></svg> Mac</button>
+      <button class="os-tab" type="button" data-os="lin" role="tab" aria-selected="false"><svg class="os-ico" aria-hidden="true"><use href="#ic-linux"/></svg> Linux</button>
+      <button class="os-tab" type="button" data-os="docker" role="tab" aria-selected="false"><svg class="os-ico" aria-hidden="true"><use href="#ic-docker"/></svg> Docker</button>
     </div>
 
     <!-- Windows -->
-    <div class="os-panel" data-os="win">
+    <div class="os-panel" data-os="win" role="tabpanel">
       <a class="btn-descarga" href="https://github.com/AlonsoVine/liberty/releases/latest/download/Liberty.exe">
         <span class="big" aria-hidden="true"><svg class="os-ico"><use href="#ic-win"/></svg></span>
         <span class="dl-txt">Descargar para Windows<small>Liberty.exe · ~13 MB</small></span>
@@ -717,7 +1200,7 @@
     </div>
 
     <!-- Mac -->
-    <div class="os-panel" data-os="mac" hidden>
+    <div class="os-panel" data-os="mac" role="tabpanel" hidden>
       <a class="btn-descarga btn-mac" href="https://github.com/AlonsoVine/liberty/releases/latest/download/Liberty-macOS.dmg">
         <span class="big" aria-hidden="true"><svg class="os-ico"><use href="#ic-apple"/></svg></span>
         <span class="dl-txt">Descargar para Mac<small>Apple Silicon e Intel · Liberty-macOS.dmg</small></span>
@@ -730,7 +1213,7 @@
     </div>
 
     <!-- Linux -->
-    <div class="os-panel" data-os="lin" hidden>
+    <div class="os-panel" data-os="lin" role="tabpanel" hidden>
       <a class="btn-descarga btn-lin" href="https://github.com/AlonsoVine/liberty-app" target="_blank" rel="noopener">
         <span class="big" aria-hidden="true"><svg class="os-ico"><use href="#ic-linux"/></svg></span>
         <span class="dl-txt">Ver el código fuente<small>Se ejecuta con Python</small></span>
@@ -738,12 +1221,12 @@
       <p class="plataforma">Cualquier Linux con Python 3.10 o superior</p>
       <div class="aviso-azul">
         <span class="ico" aria-hidden="true"><svg class="os-ico"><use href="#ic-linux"/></svg></span>
-        <p><strong>En Linux se ejecuta desde el código.</strong> No hay un binario para Linux, pero el proyecto es de <strong>código abierto</strong>. Descarga o clona <a href="https://github.com/AlonsoVine/liberty-app" target="_blank" rel="noopener">el repositorio</a> y arráncalo con <code>python -m app</code> (o con el script incluido <code>Iniciar.command</code>). Necesitas Python 3.10 o superior. También puedes usar <strong>Docker</strong> (pestaña de al lado). Sigue siendo 100 % local.</p>
+        <p><strong>En Linux se ejecuta desde el código.</strong> No hay un binario para Linux, pero el código fuente es público. Descarga o clona <a href="https://github.com/AlonsoVine/liberty-app" target="_blank" rel="noopener">el repositorio</a> y arráncalo con <code>python -m app</code> (o con el script incluido <code>Iniciar.command</code>). Necesitas Python 3.10 o superior. También puedes usar <strong>Docker</strong> (pestaña de al lado). Sigue siendo 100 % local.</p>
       </div>
     </div>
 
     <!-- Docker -->
-    <div class="os-panel" data-os="docker" hidden>
+    <div class="os-panel" data-os="docker" role="tabpanel" hidden>
       <a class="btn-descarga btn-lin" href="https://github.com/AlonsoVine/liberty-app#ejecutar-en-docker-raspberry-pi-nas" target="_blank" rel="noopener">
         <span class="big" aria-hidden="true"><svg class="os-ico"><use href="#ic-docker"/></svg></span>
         <span class="dl-txt">Ver la guía de Docker<small>Imagen multiarch · Raspberry Pi, NAS…</small></span>
@@ -755,7 +1238,7 @@
       </div>
       <details class="verificar">
         <summary><code>docker-compose.yml</code> de ejemplo</summary>
-        <pre><code>services:
+        <pre tabindex="0"><code>services:
   liberty:
     image: ghcr.io/alonsovine/liberty:1.20.0     # la última versión publicada
     restart: unless-stopped
@@ -775,39 +1258,28 @@
 
     <p class="ver-actual-linea">Última versión: <strong id="ver-actual">v1.20.0</strong><span class="ver-fecha" id="ver-fecha"></span></p>
     <div class="descargas-count" id="descargas-count" aria-live="polite"></div>
-    <div class="sellos" aria-label="Garantías">
-      <span class="sello"><span class="ck">✓</span> Gratis</span>
-      <span class="sello"><span class="ck">✓</span> Sin registro</span>
-      <span class="sello"><span class="ck">✓</span> 100% local</span>
-      <span class="sello"><span class="ck">✓</span> Código abierto</span>
-    </div>
+    <ul class="sellos" aria-label="Garantías">
+      <li class="sello"><span class="ck"><svg class="ico" aria-hidden="true"><use href="#i-ok"/></svg></span> Gratis</li>
+      <li class="sello"><span class="ck"><svg class="ico" aria-hidden="true"><use href="#i-ok"/></svg></span> Sin registro</li>
+      <li class="sello"><span class="ck"><svg class="ico" aria-hidden="true"><use href="#i-ok"/></svg></span> 100% local</li>
+      <li class="sello"><span class="ck"><svg class="ico" aria-hidden="true"><use href="#i-ok"/></svg></span> Código fuente público</li>
+    </ul>
     <details class="novedades" id="novedades" hidden>
-      <summary>✨ Novedades de esta versión</summary>
+      <summary>Novedades de esta versión</summary>
       <div class="novedades-cuerpo" id="novedades-cuerpo"></div>
     </details>
     <p class="ver-versiones"><a href="https://github.com/AlonsoVine/liberty/releases" target="_blank" rel="noopener">Ver todas las versiones y novedades →</a></p>
   </div>
 </section>
 
-<!-- ======== PRIVACIDAD ======== -->
-<section id="privacidad">
-  <div class="wrap">
-    <h2>Privacidad y seguridad</h2>
-    <p class="lead">Liberty está pensado para datos sensibles de tu hogar, así que la privacidad no es una opción: es el diseño.</p>
-    <ul class="priv-list">
-      <li><span class="ico">✓</span><span><b>100% local.</b> Todo se ejecuta y se guarda en tu propio ordenador.</span></li>
-      <li><span class="ico">✓</span><span><b>Sin telemetría.</b> No se recopila ni se envía ningún dato de uso.</span></li>
-      <li><span class="ico">✓</span><span><b>Sin cuentas ni nube.</b> No hay registro, inicio de sesión ni servidores.</span></li>
-      <li><span class="ico">✓</span><span><b>Tú controlas tus datos.</b> Viven en una carpeta que puedes copiar o borrar cuando quieras.</span></li>
-    </ul>
-  </div>
-</section>
-
 <!-- ======== PREGUNTAS FRECUENTES ======== -->
-<section class="alt" id="faq">
-  <div class="wrap">
-    <h2>Preguntas frecuentes</h2>
-    <p class="lead">Lo que la gente suele preguntar antes de empezar.</p>
+<section class="cv" id="faq" aria-labelledby="t-faq">
+  <div class="wrap faq-grid">
+    <div>
+      <p class="rotulo rv"><b>10</b>Preguntas frecuentes</p>
+      <h2 id="t-faq" class="rv" style="--d:1">Lo que la gente pregunta antes de empezar.</h2>
+      <p class="rv" style="--d:2;color:var(--tinta3)">¿Falta algo? Escribe en <a href="https://github.com/AlonsoVine/liberty/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+    </div>
     <div class="faq">
       <details class="faq-item">
         <summary>¿Es gratis?</summary>
@@ -815,11 +1287,15 @@
       </details>
       <details class="faq-item">
         <summary>¿Mis datos se suben a algún sitio?</summary>
-        <div class="faq-body"><p>No. Todo se queda en tu ordenador, en una carpeta <code>mis_datos</code> junto al programa. No hay nube, ni servidores, ni telemetría. La única conexión que usa es para descargar los precios de tus inversiones.</p></div>
+        <div class="faq-body"><p>No. Todo se queda en tu ordenador: en Windows, en una carpeta <code>mis_datos</code> junto al programa; en Mac, en tu carpeta de usuario. No hay nube, ni servidores, ni telemetría. La única conexión que usa es para descargar los precios de tus inversiones.</p></div>
       </details>
       <details class="faq-item">
         <summary>¿Hay que instalarlo?</summary>
-        <div class="faq-body"><p>No. Es un único archivo <code>.exe</code> portable: lo descargas y haces doble clic. Para moverlo a otro equipo, copia el <code>.exe</code> (y tu carpeta <code>mis_datos</code> si quieres llevarte los datos).</p></div>
+        <div class="faq-body"><p>En Windows, no: es un único archivo <code>.exe</code> portable; lo descargas y haces doble clic. Para moverlo a otro equipo, copia el <code>.exe</code> (y tu carpeta <code>mis_datos</code> si quieres llevarte los datos). En Mac, arrastras Liberty a Aplicaciones desde el <code>.dmg</code>.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary>¿Puedo probarlo sin meter mis datos?</summary>
+        <div class="faq-body"><p>Sí. La primera vez se abre con un patrimonio de ejemplo completo: un hogar de unos 300.000 € con cartera, casa, piso alquilado, garaje, trastero, tres años de ingresos y gastos, notas, agenda y documentos, con fechas siempre al día. Cuando quieras, empiezas con tus datos desde cero o con una copia del ejemplo para practicar.</p></div>
       </details>
       <details class="faq-item">
         <summary>¿Funciona sin internet?</summary>
@@ -831,7 +1307,7 @@
       </details>
       <details class="faq-item">
         <summary>¿Cómo hago copias de seguridad?</summary>
-        <div class="faq-body"><p>La propia app hace copias automáticas, y desde <strong>Mis datos → Copias y seguridad</strong> puedes crear y restaurar copias cuando quieras. También puedes copiar manualmente la carpeta <code>mis_datos</code>.</p></div>
+        <div class="faq-body"><p>La propia app hace copias automáticas, y desde <strong>Mis datos → Copias y seguridad</strong> puedes crear y restaurar copias cuando quieras, también con las facturas y documentos. Además puedes copiar a mano la carpeta de datos.</p></div>
       </details>
       <details class="faq-item">
         <summary>¿Puedo gestionar más de un patrimonio?</summary>
@@ -839,11 +1315,15 @@
       </details>
       <details class="faq-item">
         <summary>¿Qué puedo registrar?</summary>
-        <div class="faq-body"><p>Cuentas y efectivo, fondos, ETF, acciones, criptomonedas, planes de pensiones, inmuebles y deudas, con sus titulares; además de ingresos y gastos. Liberty calcula tu patrimonio neto, rentabilidad, distribución e informe fiscal.</p></div>
+        <div class="faq-body"><p>Cuentas y efectivo, fondos, ETF, acciones, criptomonedas, oro, planes de pensiones, seguros de ahorro, inmuebles y deudas, con sus titulares; además de ingresos y gastos con sus facturas. Liberty calcula tu patrimonio neto, rentabilidad, distribución, libertad financiera e informe fiscal.</p></div>
       </details>
       <details class="faq-item">
         <summary>¿Hay versión para Mac?</summary>
         <div class="faq-body"><p>Sí. Hay una descarga <strong>universal para Mac</strong> en la <a href="#descarga">zona de descarga</a>: un único <code>.dmg</code> que funciona nativo tanto en <strong>Apple Silicon (M1 o posterior)</strong> como en <strong>Mac con Intel</strong>. Como no está firmada con un certificado de pago de Apple, la primera vez se abre con <strong>clic derecho → «Abrir»</strong> (o desde Ajustes del Sistema → Privacidad y seguridad).</p></div>
+      </details>
+      <details class="faq-item">
+        <summary>¿Puedo usarlo desde el móvil o desde varios equipos?</summary>
+        <div class="faq-body"><p>Sí, con la imagen de <strong>Docker</strong> en un servidor de casa (una Raspberry Pi o un NAS): la abres desde cualquier dispositivo y la interfaz se adapta al móvil. Como Liberty no tiene usuarios ni contraseña, ponla siempre detrás de una VPN privada como Tailscale y nunca la expongas a internet.</p></div>
       </details>
       <details class="faq-item">
         <summary>¿Es asesoramiento financiero?</summary>
@@ -852,72 +1332,253 @@
     </div>
   </div>
 </section>
+</main>
 
-<!-- ======== CRÉDITOS / FOOTER ======== -->
-<footer id="creditos">
-  <div class="wrap">
-    <h2>Créditos</h2>
-    <p>Hecho por <strong>Alonso Viñé</strong> a partir de un fork de <a href="https://github.com/danidm98/rumbo" target="_blank" rel="noopener">Rumbo</a>, el proyecto original de <strong>Dani Domínguez Quant</strong>. Gracias por sentar las bases que han hecho posible Liberty.</p>
-    <div class="social">
-      <a href="https://alonsovine.github.io/portfolioR/" target="_blank" rel="noopener">🌐 Portfolio</a>
-      <a href="https://www.linkedin.com/in/alonso-vi%C3%B1%C3%A9-barrancos/" target="_blank" rel="noopener">💼 LinkedIn</a>
-      <a href="https://github.com/AlonsoVine" target="_blank" rel="noopener">🐙 GitHub</a>
+<!-- ======== CRÉDITOS / PIE ======== -->
+<footer id="creditos" class="cv">
+  <div class="rejilla" aria-hidden="true"></div>
+  <div class="wrap" style="position:relative">
+    <div class="pie-grid">
+      <div>
+        <h2>Créditos</h2>
+        <p>Hecho por <strong style="color:var(--n-tinta)">Alonso Viñé</strong> a partir de un fork de <a href="https://github.com/danidm98/rumbo" target="_blank" rel="noopener">Rumbo</a>, el proyecto original de <strong style="color:var(--n-tinta)">Dani Domínguez Quant</strong>. Gracias por sentar las bases que han hecho posible Liberty.</p>
+        <div class="social">
+          <a href="https://alonsovine.github.io/portfolioR/" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-web"/></svg>Portfolio</a>
+          <a href="https://www.linkedin.com/in/alonso-vi%C3%B1%C3%A9-barrancos/" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-linkedin"/></svg>LinkedIn</a>
+          <a href="https://github.com/AlonsoVine" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-github"/></svg>GitHub</a>
+        </div>
+      </div>
+      <nav aria-label="Pie de página">
+        <ul class="pie-nav">
+          <li><a href="#que-es">Qué es</a></li>
+          <li><a href="#recorrido">Recorrido</a></li>
+          <li><a href="#caracteristicas">Funciones</a></li>
+          <li><a href="#capturas">Capturas</a></li>
+          <li><a href="#privacidad">Privacidad</a></li>
+          <li><a href="#descarga">Descarga</a></li>
+          <li><a href="#faq">Preguntas</a></li>
+          <li><a href="https://github.com/AlonsoVine/liberty/releases" target="_blank" rel="noopener">Versiones</a></li>
+        </ul>
+      </nav>
     </div>
-    <p class="foot-fine">Liberty · Gestor del patrimonio del hogar · 100% local y privado</p>
+    <p class="pie-marca" aria-hidden="true">Liberty</p>
+    <div class="foot-fine"><span>Liberty · Gestor del patrimonio del hogar · 100% local y privado</span><span>Herramienta informativa: no es asesoramiento financiero.</span></div>
   </div>
 </footer>
 
 <!-- Botón de descarga flotante -->
-<a class="fab-descarga" id="fab-descarga" href="#descarga" aria-label="Ir a la descarga de Liberty">
-  <span aria-hidden="true">⬇</span> Descargar
+<a class="fab-descarga" id="fab-descarga" href="#descarga" aria-label="Ir a la descarga de Liberty" tabindex="-1" aria-hidden="true">
+  <svg class="ico" aria-hidden="true"><use href="#i-bajada"/></svg> Descargar
 </a>
 
 <!-- Lightbox de capturas -->
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Captura ampliada" hidden>
-  <button class="lightbox-close" type="button" id="lightbox-close" aria-label="Cerrar">×</button>
-  <img id="lightbox-img" src="" alt="">
+  <button class="lightbox-close" type="button" id="lightbox-close" aria-label="Cerrar"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg></button>
+  <img id="lightbox-img" src="data:," alt="">
 </div>
 
 <script>
 (function(){
   "use strict";
+  var root = document.documentElement;
+  var QUIETO = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var FINO = window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
-  /* ---------- Cambio de tema (claro por defecto) ---------- */
+  /* ---------- Cambio de tema (claro por defecto, guardado) ---------- */
   (function(){
     var btn = document.getElementById("theme-toggle");
     if(!btn) return;
-    var root = document.documentElement;
     function pinta(){
       var oscuro = root.getAttribute("data-theme") === "dark";
-      btn.textContent = oscuro ? "☀️" : "🌙";
       btn.setAttribute("aria-label", oscuro ? "Cambiar a modo claro" : "Cambiar a modo oscuro");
     }
     pinta();
     btn.addEventListener("click", function(){
-      var oscuro = root.getAttribute("data-theme") === "dark";
-      if(oscuro){ root.removeAttribute("data-theme"); } else { root.setAttribute("data-theme", "dark"); }
-      try { localStorage.setItem("liberty-tema", oscuro ? "light" : "dark"); } catch(e){}
-      pinta();
+      var aplica = function(){
+        var oscuro = root.getAttribute("data-theme") === "dark";
+        if(oscuro){ root.removeAttribute("data-theme"); } else { root.setAttribute("data-theme", "dark"); }
+        try { localStorage.setItem("liberty-tema", oscuro ? "light" : "dark"); } catch(e){}
+        pinta();
+      };
+      if(document.startViewTransition && !QUIETO){ document.startViewTransition(aplica); } else { aplica(); }
     });
   })();
 
+  /* ---------- Con movimiento reducido, cinta y tarjetas se desplazan a mano: que sean enfocables ---------- */
+  if(QUIETO){ document.querySelectorAll(".cinta, .cards-row").forEach(function(z){ z.tabIndex = 0; }); }
+
+  /* ---------- Entrada del hero ---------- */
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){ document.body.classList.add("listo"); }); });
+
+  /* ---------- Odómetro: cifras que giran como un contador ---------- */
+  var FMT = new Intl.NumberFormat("es-ES");
+  function montaOdo(el){
+    var n = parseInt(el.getAttribute("data-odo"), 10);
+    var texto = FMT.format(n) + (el.getAttribute("data-suf") || "");
+    var sr = document.createElement("span"); sr.className = "sr"; sr.textContent = texto;
+    var caja = document.createElement("span");
+    caja.className = "odo"; caja.setAttribute("aria-hidden", "true");
+    var k = 0, digitos = [];
+    texto.split("").forEach(function(ch){
+      if(/\d/.test(ch)){
+        var d = document.createElement("span"); d.className = "d";
+        var col = document.createElement("span"); col.style.setProperty("--k", k++);
+        for(var i=0;i<10;i++){ var c = document.createElement("i"); c.textContent = i; col.appendChild(c); }
+        d.appendChild(col); caja.appendChild(d); digitos.push([col, +ch]);
+      } else {
+        var s = document.createElement("span"); s.className = "s"; s.textContent = ch === " " ? " " : ch; caja.appendChild(s);
+      }
+    });
+    el.textContent = ""; el.appendChild(sr); el.appendChild(caja);
+    return function(){ digitos.forEach(function(x){ x[0].style.transform = "translateY(" + (-x[1] * 10) + "%)"; }); };
+  }
+  var odos = Array.prototype.slice.call(document.querySelectorAll("[data-odo]"));
+  if(QUIETO){
+    odos.forEach(function(el){ var g = montaOdo(el); g(); });
+  } else {
+    // Se monta al acercarse (sin coste en la carga) y gira al entrar en pantalla.
+    var ioOdo = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(!e.isIntersecting) return;
+        var el = e.target; ioOdo.unobserve(el);
+        var g = montaOdo(el);
+        requestAnimationFrame(function(){ requestAnimationFrame(function(){ setTimeout(g, el.closest(".hero") ? 550 : 60); }); });
+      });
+    }, {rootMargin:"0px 0px -15% 0px"});
+    odos.forEach(function(el){ ioOdo.observe(el); });
+  }
+
+  /* ---------- Aparición al hacer scroll ---------- */
+  (function(){
+    var els = Array.prototype.slice.call(document.querySelectorAll(".rv"));
+    if(QUIETO || !("IntersectionObserver" in window)){ els.forEach(function(e){ e.classList.add("dentro"); }); return; }
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("dentro"); io.unobserve(e.target); } });
+    }, {rootMargin:"0px 0px -8% 0px", threshold:.08});
+    els.forEach(function(e){ io.observe(e); });
+  })();
+
+  var LIBRE = window.requestIdleCallback || function(f){ return setTimeout(f, 200); };
   /* ---------- Cards en bucle: duplicar para scroll sin costuras ---------- */
-  document.querySelectorAll("[data-cards-track]").forEach(function(track){
+  LIBRE(function(){ document.querySelectorAll("[data-cards-track]").forEach(function(track){
     Array.prototype.slice.call(track.children).forEach(function(card){
       var clon = card.cloneNode(true);
       clon.setAttribute("aria-hidden", "true");
       track.appendChild(clon);
     });
-  });
+  }); });
 
   /* ---------- Foco de luz siguiendo al ratón (hero y descarga) ---------- */
-  document.querySelectorAll("header.hero, #descarga").forEach(function(zona){
-    zona.addEventListener("mousemove", function(e){
-      var r = zona.getBoundingClientRect();
-      zona.style.setProperty("--mx", ((e.clientX - r.left) / r.width  * 100) + "%");
-      zona.style.setProperty("--my", ((e.clientY - r.top)  / r.height * 100) + "%");
+  if(FINO){
+    document.querySelectorAll(".con-foco").forEach(function(zona){
+      var foco = zona.querySelector(".foco"), pend = false, x = 0, y = 0;
+      zona.addEventListener("mousemove", function(e){
+        var r = zona.getBoundingClientRect(); x = e.clientX - r.left; y = e.clientY - r.top;
+        if(!pend){ pend = true; requestAnimationFrame(function(){ pend = false; foco.style.setProperty("--fx", x + "px"); foco.style.setProperty("--fy", y + "px"); }); }
+      });
     });
-  });
+  }
+
+  /* ---------- Inclinación 3D de la tarjeta del hero ---------- */
+  (function(){
+    var esc = document.getElementById("escena"), cuadro = document.getElementById("cuadro");
+    if(!esc || !cuadro || QUIETO || !FINO) return;
+    var hero = esc.closest(".hero"), pend = false, rx = 6, ry = -10;
+    hero.addEventListener("mousemove", function(e){
+      var r = esc.getBoundingClientRect();
+      var px = (e.clientX - (r.left + r.width/2)) / window.innerWidth, py = (e.clientY - (r.top + r.height/2)) / window.innerHeight;
+      ry = -10 + px * 16; rx = 6 - py * 10;
+      if(!pend){ pend = true; requestAnimationFrame(function(){ pend = false; cuadro.style.setProperty("--rx", rx.toFixed(2) + "deg"); cuadro.style.setProperty("--ry", ry.toFixed(2) + "deg"); }); }
+    });
+    hero.addEventListener("mouseleave", function(){ cuadro.style.setProperty("--rx", "6deg"); cuadro.style.setProperty("--ry", "-10deg"); });
+  })();
+
+  /* ---------- Brillo que sigue al ratón dentro de cada función ---------- */
+  if(FINO){
+    document.querySelectorAll(".feat").forEach(function(f){
+      f.addEventListener("mousemove", function(e){ var r = f.getBoundingClientRect(); f.style.setProperty("--gx", (e.clientX - r.left) + "px"); f.style.setProperty("--gy", (e.clientY - r.top) + "px"); });
+    });
+  }
+
+  /* ---------- Navegación: fondo, barra de progreso y sección activa ---------- */
+  (function(){
+    var nav = document.getElementById("nav"), barra = document.getElementById("progreso");
+    var steps = document.getElementById("steps");
+    var pend = false;
+    function pinta(){
+      pend = false;
+      var y = window.scrollY, h = document.documentElement.scrollHeight - window.innerHeight;
+      nav.classList.toggle("solida", y > 40);
+      barra.style.transform = "scaleX(" + (h > 0 ? Math.min(1, y / h) : 0).toFixed(4) + ")";
+      if(steps){
+        var r = steps.getBoundingClientRect(), vh = window.innerHeight;
+        var av = Math.max(0, Math.min(1, (vh * .8 - r.top) / (r.height + vh * .3)));
+        if(QUIETO) av = 1;
+        steps.style.setProperty("--av", av.toFixed(3));
+        var hijos = steps.children;
+        for(var i=0;i<hijos.length;i++){ hijos[i].classList.toggle("hecho", av >= (i + .4) / hijos.length); }
+      }
+    }
+    window.addEventListener("scroll", function(){ if(!pend){ pend = true; requestAnimationFrame(pinta); } }, {passive:true});
+    window.addEventListener("resize", pinta);
+    pinta();
+    var enlaces = Array.prototype.slice.call(document.querySelectorAll(".nav-links a"));
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ enlaces.forEach(function(a){ a.setAttribute("aria-current", String(a.getAttribute("href") === "#" + e.target.id)); }); } });
+    }, {rootMargin:"-45% 0px -50% 0px"});
+    enlaces.forEach(function(a){ var s = document.querySelector(a.getAttribute("href")); if(s) io.observe(s); });
+  })();
+
+  /* ---------- Recorrido: la pantalla fija cambia con cada paso ---------- */
+  (function(){
+    var pasos = Array.prototype.slice.call(document.querySelectorAll(".rec-paso"));
+    var imgs = Array.prototype.slice.call(document.querySelectorAll("#rec-vista img"));
+    var marcas = Array.prototype.slice.call(document.querySelectorAll("#rec-cont i"));
+    if(!pasos.length) return;
+    function activa(i){
+      pasos.forEach(function(p, j){ p.classList.toggle("activo", j === i); });
+      imgs.forEach(function(im, j){ im.classList.toggle("on", j === i); });
+      marcas.forEach(function(m, j){ m.classList.toggle("on", j <= i); });
+    }
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ activa(+e.target.getAttribute("data-img")); } });
+    }, {rootMargin:"-45% 0px -45% 0px"});
+    pasos.forEach(function(p){ io.observe(p); });
+    activa(0);
+  })();
+
+  /* ---------- Comparador claro / oscuro ---------- */
+  (function(){
+    var c = document.getElementById("compara"), r = document.getElementById("compara-r");
+    if(!c || !r) return;
+    function pinta(){ var v = +r.value; c.style.setProperty("--corte", v + "%"); c.style.setProperty("--corte-px", (c.clientWidth * v / 100) + "px"); }
+    r.addEventListener("input", pinta);
+    window.addEventListener("resize", pinta);
+    pinta();
+  })();
+
+  /* ---------- Pestañas de la galería ---------- */
+  (function(){
+    var tabs = Array.prototype.slice.call(document.querySelectorAll(".gal-tab"));
+    function activa(t, foco){
+      tabs.forEach(function(x){
+        var on = x === t; x.setAttribute("aria-selected", String(on)); x.tabIndex = on ? 0 : -1;
+        var p = document.getElementById(x.getAttribute("aria-controls")); if(p){ p.hidden = !on; if(on) p.classList.add("dentro"); }
+      });
+      if(foco) t.focus();
+      document.dispatchEvent(new Event("galeria"));
+    }
+    tabs.forEach(function(t, i){
+      t.addEventListener("click", function(){ activa(t); });
+      t.addEventListener("keydown", function(e){
+        var n = null;
+        if(e.key === "ArrowRight") n = tabs[(i + 1) % tabs.length];
+        else if(e.key === "ArrowLeft") n = tabs[(i - 1 + tabs.length) % tabs.length];
+        else if(e.key === "Home") n = tabs[0]; else if(e.key === "End") n = tabs[tabs.length - 1];
+        if(n){ e.preventDefault(); activa(n, true); }
+      });
+    });
+  })();
 
   /* ---------- Selector de sistema operativo (auto-detecta; se puede alternar) ---------- */
   (function(){
@@ -933,10 +1594,17 @@
       return "win"; // por defecto, Windows
     }
     function activa(os){
-      tabs.forEach(function(t){ t.setAttribute("aria-selected", String(t.dataset.os===os)); });
+      tabs.forEach(function(t){ var on = t.dataset.os===os; t.setAttribute("aria-selected", String(on)); t.tabIndex = on ? 0 : -1; });
       panels.forEach(function(pn){ pn.hidden = (pn.dataset.os!==os); });
     }
-    tabs.forEach(function(t){ t.addEventListener("click", function(){ activa(t.dataset.os); }); });
+    tabs.forEach(function(t, i){
+      t.addEventListener("click", function(){ activa(t.dataset.os); });
+      t.addEventListener("keydown", function(e){
+        var n = null;
+        if(e.key === "ArrowRight") n = tabs[(i + 1) % tabs.length]; else if(e.key === "ArrowLeft") n = tabs[(i - 1 + tabs.length) % tabs.length];
+        if(n){ e.preventDefault(); activa(n.dataset.os); n.focus(); }
+      });
+    });
     activa(detecta());
   })();
 
@@ -950,7 +1618,10 @@
       // se oculta cuando ya estás sobre la propia sección de descarga
       var enDescarga = false;
       if(dl){ var r = dl.getBoundingClientRect(); enDescarga = r.top < window.innerHeight && r.bottom > 0; }
-      fab.classList.toggle("visible", pasadoHero && !enDescarga);
+      var ver = pasadoHero && !enDescarga;
+      fab.classList.toggle("visible", ver);
+      fab.tabIndex = ver ? 0 : -1;
+      fab.setAttribute("aria-hidden", String(!ver));
     }
     window.addEventListener("scroll", toggle, {passive:true});
     window.addEventListener("resize", toggle);
@@ -963,21 +1634,29 @@
     var img = document.getElementById("lightbox-img");
     var cerrar = document.getElementById("lightbox-close");
     if(!box || !img) return;
+    var antes = null;
     function abrir(src, alt){
+      antes = document.activeElement;
       img.src = src; img.alt = alt || "";
       box.hidden = false; box.classList.add("open");
       document.body.style.overflow = "hidden";
+      cerrar.focus();
     }
     function cierra(){
       box.classList.remove("open"); box.hidden = true;
-      img.src = ""; document.body.style.overflow = "";
+      img.src = "data:,"; document.body.style.overflow = "";
+      if(antes && antes.focus) antes.focus();
     }
-    document.querySelectorAll(".slide img, .single-shot img").forEach(function(el){
+    document.querySelectorAll(".slide img, .single-shot img, .rec-img-movil img, .telefono img").forEach(function(el){
       el.addEventListener("click", function(){ abrir(el.currentSrc || el.src, el.alt); });
     });
     box.addEventListener("click", function(e){ if(e.target !== cerrar) cierra(); });
     cerrar.addEventListener("click", cierra);
-    document.addEventListener("keydown", function(e){ if(e.key === "Escape" && box.classList.contains("open")) cierra(); });
+    document.addEventListener("keydown", function(e){
+      if(!box.classList.contains("open")) return;
+      if(e.key === "Escape") cierra();
+      else if(e.key === "Tab"){ e.preventDefault(); cerrar.focus(); }
+    });
   })();
 
   /* ---------- Carruseles ---------- */
@@ -989,17 +1668,19 @@
     var dotsBox= car.querySelector("[data-dots]");
     var prev   = car.querySelector("[data-prev]");
     var next   = car.querySelector("[data-next]");
+    var cap    = car.querySelector("[data-caption]");
     if(!slides.length) return;
+    car.style.setProperty("--int", INTERVALO + "ms");
 
     var idx = 0, timer = null, dots = [];
 
-    // Crear puntitos
+    // Crear indicadores
     slides.forEach(function(s, i){
       var d = document.createElement("button");
       d.type = "button";
       d.className = "car-dot";
       d.setAttribute("role","tab");
-      d.setAttribute("aria-label","Ir a la captura " + (i+1));
+      d.setAttribute("aria-label","Ir a la captura " + (i+1) + ": " + s.getAttribute("aria-label"));
       d.addEventListener("click", function(){ goto(i); reset(); });
       dotsBox.appendChild(d);
       dots.push(d);
@@ -1013,16 +1694,19 @@
       });
       dots.forEach(function(d, i){
         var on = (i === idx);
-        d.classList.toggle("active", on);
+        d.classList.remove("active");
         d.setAttribute("aria-selected", on ? "true" : "false");
       });
+      if(dots[idx]) requestAnimationFrame(function(){ dots[idx].classList.add("active"); });
+      if(cap) cap.textContent = (idx + 1) + " / " + slides.length + " · " + slides[idx].getAttribute("aria-label");
     }
+    function visible(){ return car.offsetParent !== null; }
     function goto(i){ idx = (i + slides.length) % slides.length; render(); }
     function avanza(){ goto(idx + 1); }
     function retrocede(){ goto(idx - 1); }
 
-    function start(){ if(!timer && slides.length > 1) timer = setInterval(avanza, INTERVALO); }
-    function stop(){ if(timer){ clearInterval(timer); timer = null; } }
+    function start(){ if(!timer && slides.length > 1 && visible() && !QUIETO){ car.classList.remove("parado"); timer = setInterval(function(){ if(visible()) avanza(); }, INTERVALO); } }
+    function stop(){ car.classList.add("parado"); if(timer){ clearInterval(timer); timer = null; } }
     function reset(){ stop(); start(); }
 
     prev.addEventListener("click", function(){ retrocede(); reset(); });
@@ -1050,12 +1734,14 @@
       else if(e.key === "ArrowRight"){ avanza(); reset(); }
     });
 
-    // Pausar si la pestaña no está visible
+    // Pausar si la pestaña no está visible; arrancar al cambiar de pestaña de la galería
     document.addEventListener("visibilitychange", function(){
       document.hidden ? stop() : start();
     });
+    document.addEventListener("galeria", function(){ stop(); if(visible()){ render(); start(); } });
 
     render();
+    if(QUIETO) car.classList.add("parado");
     start();
   });
 
@@ -1091,8 +1777,20 @@
     try{
       // Suma el download_count de TODOS los assets Liberty.exe de TODAS las releases:
       // el total es acumulativo e histórico, independiente de la versión y no se reinicia.
-      fetch("https://api.github.com/repos/AlonsoVine/liberty/releases?per_page=100")
-        .then(function(r){ if(!r.ok) throw new Error("http " + r.status); return r.json(); })
+      // Se guarda 15 min en el navegador: recargar la página no gasta el cupo de la API de GitHub.
+      var CLAVE = "liberty-releases", cache = null;
+      try { cache = JSON.parse(localStorage.getItem(CLAVE) || "null"); } catch(e){}
+      var pide = (cache && Date.now() - cache.t < 15 * 60 * 1000 && Array.isArray(cache.d))
+        ? Promise.resolve(cache.d)
+        : fetch("https://api.github.com/repos/AlonsoVine/liberty/releases?per_page=100")
+            .then(function(r){ if(!r.ok) throw new Error("http " + r.status); return r.json(); })
+            .then(function(d){
+              try { localStorage.setItem(CLAVE, JSON.stringify({t: Date.now(), d: d.map(function(x){
+                return {tag_name:x.tag_name, draft:x.draft, prerelease:x.prerelease, published_at:x.published_at, body:x.body,
+                  assets:(x.assets||[]).map(function(a){ return {name:a.name, download_count:a.download_count}; })}; })})); } catch(e){}
+              return d;
+            });
+      pide
         .then(function(releases){
           if(!Array.isArray(releases)) throw new Error("formato");
           var total = 0;
@@ -1105,7 +1803,7 @@
             });
           });
           if(elCount){
-            elCount.innerHTML = "⬇ <strong>" + new Intl.NumberFormat("es-ES").format(total) + "</strong> descargas";
+            elCount.innerHTML = "<strong>" + new Intl.NumberFormat("es-ES").format(total) + "</strong> descargas";
             elCount.style.display = "";
           }
           // Última versión publicada (la primera que no sea borrador ni prelanzamiento).
