@@ -114,3 +114,71 @@ Listón: ponderada ≥ 8,8, Creatividad ≥ 8,5 y ningún criterio por debajo de
 - solo transform y opacity;
 - Lighthouse escritorio: Perf 98 · A11y 100 · BP 96;
 - Lighthouse móvil: Perf 94–98 · A11y 100 · BP 96.
+
+**Veredicto del árbitro, vuelta 2:** D 7,5 · U 7,5 · C 7,5 · Co 8,0 → **ponderada 7,6** (antes 6,3).
+- **Correcciones de la vuelta 1:** B1, M1, M2, M3, M4, m1, m2 y m4 resueltas. M5 y m3, a medias.
+- **Inventario:** 23 se conservan, 8 mejoran, 1 degradación leve (E2, el icono es más pequeño), 0 perdidos.
+- **Defectos mayores:**
+  - M1: el carrusel avanza con el ratón o el foco dentro;
+  - M2: el flotante tapa texto en móvil;
+  - M3: no hay menú por debajo de 980 px;
+  - M4: movimiento infinito sin pausa (WCAG 2.2.2);
+  - M5: el nodo «Nube» sale deformado.
+- **Defectos menores:**
+  - m1: al cargar con #ancla queda descolocado;
+  - m2: la pastilla se estira en tableta;
+  - m3: la palabra del pie pisa el aviso legal;
+  - m4: la pista de la ecuación va detrás;
+  - m5: los indicadores del recorrido tapan la captura;
+  - m6: la captura de Cartera choca con el hero;
+  - m7: detalles de texto;
+  - m8: en oscuro se pierden las bandas.
+- **Gratuito:**
+  - la galería repite el recorrido;
+  - la bóveda contradice el texto;
+  - las tarjetas flotantes no se pueden pausar.
+- **Camino a 9:** «el libro se cuadra» con un sello, el hero con el tiempo dentro, una bóveda veraz, el pie a todo el ancho y el recorrido horizontal en móvil.
+
+El usuario decide cerrar en 3 vueltas: la vuelta 3 aplica todo lo anterior, se arbitra y se despliega.
+
+## Vuelta 3
+
+**Correcciones:**
+- **M1.** El carrusel no arranca si el ratón está encima, si el foco está dentro o si está la pausa global. Al navegar con el teclado, el foco sigue a la imagen activa.
+- **M2.** En móvil manda el «Descargar» del menú, que es fijo y siempre visible, y el flotante no se muestra; el flotante se queda solo en escritorio. Se oculta también sobre el pie, y el botón del menú solo se retira en escritorio.
+- **M3.** Menú de secciones en móvil y tableta: un `<details>` con 7 enlaces. Se cierra al elegir, con Esc o al tocar fuera, y marca la sección activa.
+- **M4.** Botón global «Pausar el movimiento» en el menú, con `aria-pressed`, recordado entre visitas. Para la cinta, la marquesina, las tarjetas flotantes, los paquetes de la bóveda y el autoavance de los carruseles.
+- **M5.** Los iconos de los nodos ya no se deforman (`max-width:none`).
+- **m1.** Si se llega con #ancla, la página se recoloca cuando aparecen el contador y las novedades, salvo que el usuario ya se haya movido. Medido: `#faq` a 84 px a 1440 y a 81 px a 390.
+- **m2.** La pastilla usa `justify-self:start`.
+- **m3.** La palabra «Liberty» del pie se ajusta al ancho y no toca la línea legal. Limpieza: 6 símbolos sin uso, h3 ocultos, una transición muerta, un `top` duplicado y un comentario desfasado.
+- **m4.** La pista va antes del libro, y las partidas llevan ✓ o ✕ según estén sumadas o no.
+- **m5.** Los indicadores del recorrido pasan a la barra del marco.
+- **m6.** El paso «Cartera» del recorrido usa la captura de Rentabilidad. La galería deja de repetir Inicio y suma «Inmuebles en tema claro»; siguen siendo 11 capturas en el Panel.
+- **m7.** Anuncio con «menos», `user-select:none` en los odómetros, «Sin coste. Sin cuentas. Sin letra pequeña.» y «La app estrena diseño…».
+- **m8.** En oscuro el papel pasa a `#161a21`, separado de la noche `#0b0d11`.
+
+**Novedades (camino a 9):**
+- **El hero lleva el tiempo dentro.** La gráfica de la tarjeta se recorre mes a mes con la serie REAL del hogar de ejemplo: 91 meses, de mayo de 2019 a noviembre de 2026.
+  - Se mueve con el ratón, arrastrando en táctil o con las flechas, gracias a un `input range` accesible con `aria-valuetext`.
+  - Cambian el odómetro, la barra y la leyenda cartera/inmuebles, la variación a 12 meses y las dos filas con céntimos.
+  - Un cursor vertical con su punto se desplaza con `transform`.
+- **El libro se cuadra.** Los apuntes entran escalonados, el filete doble se dibuja con `scaleX` y se estampa un sello «Cuadrado».
+  - Al quitar partidas, el sello se vuelve a estampar como «Simulación».
+  - Si el total queda negativo, dice «En rojo» y se pinta en rojo.
+- **Bóveda veraz.** Cuatro conexiones tachadas y una permitida, «Precios · solo cotizaciones». Por esa conexión va la petición (oro) y vuelve la cotización (verde). Ahora tiene `role="img"` con una descripción.
+- **Recorrido horizontal en móvil y tableta.** Tarjetas con `scroll-snap` y la indicación «Desliza para ver las cinco».
+- **Releases bajo demanda.** El contador, la versión y las novedades se piden al acercarse a la descarga, o al instante si la URL trae #. Gasta menos cupo de la API y saca ese trabajo de la carga.
+
+**Checks:**
+- consola limpia;
+- sin scroll horizontal de 360 a 1920 px;
+- axe 0/0 en claro y en oscuro;
+- 45 paradas de foco, todas visibles;
+- solo transform y opacity.
+
+**Lighthouse:**
+- escritorio: 98/100/100 en las tres pasadas, con el equipo tranquilo; con carga hubo pasadas de 72–75, también en la v2 y en la base;
+- móvil: 89–97/100/100.
+
+El trabajo del hilo principal es igual o menor que en la v2 (estilo y layout 1018 ms frente a 1111). La diferencia es ruido de cuándo cae la tarea larga. BP sube a 100 porque esta vez la API respondió.

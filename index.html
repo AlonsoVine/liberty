@@ -66,7 +66,7 @@
 }
 :root[data-theme="dark"]{
   color-scheme:dark;
-  --papel:#0e1014; --papel2:#151820; --hoja:#12151a;
+  --papel:#161a21; --papel2:#1c212a; --hoja:#1a1f27;
   --tinta:#f1eee7; --tinta2:#c2c7cf; --tinta3:#959ca7;
   --linea:rgba(241,238,231,.1); --linea2:rgba(241,238,231,.18);
   --azul:#86b2ff; --azul-v:#2a68cf; --oro:#e2ae4c; --oro-v:#e2ae4c;
@@ -149,8 +149,24 @@ section{padding:clamp(72px,8.5vw,124px) 0;position:relative}
 .btn-sm{padding:9px 16px;font-size:.92rem}
 .progreso{position:absolute;left:0;right:0;bottom:-1px;height:2px;background:linear-gradient(90deg,var(--oro-v),#f5d48f);transform-origin:left;transform:scaleX(0)}
 @media (max-width:980px){.nav-links{display:none}.nav-acc{margin-left:auto}}
+.theme-toggle .i-play{display:none}
+.pausado .theme-toggle .i-play{display:block}
+.pausado .theme-toggle .i-pausa{display:none}
+#pausa[aria-pressed="true"]{background:rgba(226,174,76,.18);border-color:rgba(226,174,76,.5)}
+.nav-menu{position:relative;display:none}
+.nav-menu > summary{list-style:none}
+.nav-menu > summary::-webkit-details-marker{display:none}
+.nav-menu[open] > summary{background:rgba(243,239,230,.16)}
+.nav-menu-panel{position:absolute;right:0;top:calc(100% + 12px);min-width:220px;background:#12151b;border:1px solid rgba(243,239,230,.14);border-radius:16px;padding:8px;box-shadow:0 30px 60px -20px rgba(0,0,0,.7);animation:aparece .35s var(--ease-o)}
+.nav-menu-panel ul{list-style:none;margin:0;padding:0;display:grid}
+.nav-menu-panel a{display:block;padding:11px 14px;border-radius:10px;color:var(--n-tinta2);text-decoration:none;font-size:.98rem}
+.nav-menu-panel a:hover,.nav-menu-panel a[aria-current="true"]{color:var(--n-tinta);background:rgba(243,239,230,.07)}
+@media (max-width:980px){.nav-menu{display:block}}
+@media (max-width:400px){.nav-acc{gap:6px}.nav-acc .theme-toggle{width:36px;height:36px}}
+/* Pausa global (WCAG 2.2.2): para cinta, marquesina, tarjetas flotantes y paquetes de la bóveda */
+.pausado .cinta-pista,.pausado .cards-track,.pausado .flotante > *,.pausado .rayo .paq{animation-play-state:paused !important}
 
-/* ================= banda nocturna (hero, ecuación, descarga) ================= */
+/* ================= banda nocturna (hero, descarga y pie) ================= */
 .noche{background:var(--noche);color:var(--n-tinta2)}
 .noche h1,.noche h2,.noche h3{color:var(--n-tinta)}
 .noche .rotulo{color:var(--n-tinta3)}
@@ -179,6 +195,7 @@ section{padding:clamp(72px,8.5vw,124px) 0;position:relative}
 .hero-eyebrow .pill{background:var(--oro-v);color:#1b1306;font-weight:700;font-size:.74rem;padding:3px 9px;border-radius:999px;letter-spacing:.02em}
 .hero-icon{width:34px;height:34px;border-radius:10px;box-shadow:0 10px 24px -8px rgba(0,0,0,.7);transition:transform .6s var(--ease-o)}
 .hero:hover .hero-icon{transform:translateY(-3px) rotate(-6deg) scale(1.08)}
+.hero-eyebrow{justify-self:start;max-width:100%}
 .hero-eyebrow .flecha{width:15px;height:15px;transition:transform .4s var(--ease-o)}
 .hero-eyebrow:hover .flecha{transform:translateX(4px)}
 .hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(2.9rem,6.6vw,6rem);letter-spacing:-.035em;line-height:.98;margin-bottom:28px;font-variation-settings:"opsz" 144}
@@ -230,6 +247,15 @@ section{padding:clamp(72px,8.5vw,124px) 0;position:relative}
 .limpia > div > div{transform:translateX(100%);transition:transform 2s var(--ease-o) .7s}
 .listo .limpia > div,.listo .limpia > div > div{transform:none}
 .tp-graf svg{width:100%;height:auto;overflow:visible}
+.tp-lienzo{position:relative;border-radius:6px}
+.tp-lienzo.foco{outline:2px solid var(--oro-v);outline-offset:6px}
+.tp-lienzo input{position:absolute;inset:-8px 0;width:100%;height:calc(100% + 16px);margin:0;opacity:0;cursor:ew-resize;touch-action:pan-y}
+.tp-cur{position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(rgba(255,255,255,.55),rgba(255,255,255,.08));opacity:0;transition:opacity .3s var(--ease);pointer-events:none}
+.tp-cur i{position:absolute;left:-5px;top:-5px;width:11px;height:11px;border-radius:50%;background:#fff;box-shadow:0 0 0 4px rgba(255,255,255,.18)}
+.tp-lienzo.activo .tp-cur{opacity:1}
+.tp-pista{margin:8px 0 0;font-size:.74rem;color:var(--n-tinta3);display:flex;align-items:center;gap:6px}
+.tp-pista::before{content:"\2194";color:var(--oro-v);font-size:.95rem}
+.tp-cifra.rapido .odo .d > span{transition-duration:.45s;transition-delay:0s}
 .tp-filas{display:grid;gap:0;margin-top:14px;border-top:1px solid var(--n-linea)}
 .tp-fila{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:10px 0;border-bottom:1px solid var(--n-linea);font-size:.92rem}
 .tp-fila b{color:var(--n-tinta);font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
@@ -239,7 +265,7 @@ section{padding:clamp(72px,8.5vw,124px) 0;position:relative}
   box-shadow:0 24px 50px -20px rgba(0,0,0,.9);white-space:nowrap}
 .flotante b{display:block;color:var(--n-tinta);font-size:1rem;font-variant-numeric:tabular-nums}
 .flotante .ico{width:30px;height:30px;padding:6px;border-radius:9px;background:rgba(79,207,142,.14);color:var(--n-verde)}
-.flot-1{left:-38px;bottom:22%;transform:translateZ(110px)}
+.flot-1{left:-44px;bottom:-30px;transform:translateZ(110px)}
 .flot-2{right:-26px;top:-26px;transform:translateZ(90px)}
 .flot-2 .ico{background:rgba(226,174,76,.16);color:var(--oro-v)}
 .js .flotante{opacity:0;transition:opacity .9s var(--ease) 1.6s}
@@ -272,23 +298,33 @@ section{padding:clamp(72px,8.5vw,124px) 0;position:relative}
 .asiento.total{border-bottom:0;border-top:2px solid var(--tinta);margin-top:-1px}
 .asiento.total::after{content:"";grid-column:1/-1;height:6px;border-top:1px solid var(--tinta);border-bottom:1px solid var(--tinta);margin-top:18px}
 .asiento.total .v{color:var(--oro)}
+.asiento.total{position:relative}
+.js .asiento.total::after{transform:scaleX(0);transform-origin:left;transition:transform 1.4s var(--ease-o) 1s}
+.js .asiento.total.dentro::after{transform:none}
+.sello-libro{position:absolute;right:0;top:-22px;z-index:2;font-family:var(--sans);font-size:.74rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--verde);
+  border:2px solid currentColor;outline:1px solid currentColor;outline-offset:2px;border-radius:6px;padding:5px 10px 4px;background:var(--papel);opacity:0;transform:rotate(-8deg) scale(1.8);transform-origin:100% 50%;pointer-events:none}
+.asiento.total.dentro .sello-libro{animation:estampa .5s cubic-bezier(.3,1.5,.5,1) 2.3s both}
+.sello-libro.otra{animation:estampa .5s cubic-bezier(.3,1.5,.5,1) .9s both !important}
+.sello-libro.simulado{color:var(--tinta3)}
+.sello-libro.rojo{color:var(--rojo)}
+@keyframes estampa{0%{opacity:0;transform:rotate(-8deg) scale(1.8)}60%{opacity:1}100%{opacity:1;transform:rotate(-8deg) scale(1)}}
 .asiento.total.negativo .v{color:var(--rojo)}
 .asiento.debe .v{color:var(--rojo)}
 .libro-nota{margin-top:26px;font-size:.92rem;color:var(--tinta3);max-width:720px}
 .desglose{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
 .partida{display:inline-flex;align-items:center;gap:8px;font:inherit;font-size:.86rem;font-weight:500;color:var(--tinta);background:var(--hoja);border:1px solid var(--linea2);border-radius:999px;padding:5px 6px 5px 12px;cursor:pointer;transition:transform .3s var(--ease-o)}
 .partida span{font-variant-numeric:tabular-nums;color:var(--tinta2);background:var(--papel2);border-radius:999px;padding:2px 9px}
-.partida::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--oro-v);transition:transform .3s var(--ease-o)}
-.debe .partida::before{background:var(--rojo)}
+.partida::before{content:"\2713";display:grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--oro-v);color:#1b1306;font-size:.7rem;font-weight:700;transition:transform .3s var(--ease-o)}
+.debe .partida::before{background:var(--rojo);color:#fff}
 .partida:hover{transform:translateY(-2px)}
 .partida[aria-pressed="false"]{color:var(--tinta3);text-decoration:line-through;background:transparent;border-style:dashed}
 .partida[aria-pressed="false"] span{background:transparent}
-.partida[aria-pressed="false"]::before{transform:scale(.4)}
-.ec-pista{display:flex;align-items:center;gap:10px;margin:22px 0 0;font-size:.92rem;color:var(--tinta3)}
+.partida[aria-pressed="false"]::before{content:"\2715";background:transparent;color:var(--tinta3);border:1px solid var(--tinta3)}
+.ec-pista{display:flex;align-items:center;gap:10px;margin:0 0 18px;font-size:.92rem;color:var(--tinta3)}
 .ec-pista .ico{width:18px;height:18px;color:var(--oro);flex:none}
 
 /* Odómetro: cada dígito es una columna 0-9 que se desplaza con transform */
-.odo{display:inline-flex;white-space:nowrap;font-variant-numeric:tabular-nums lining-nums}
+.odo{user-select:none;display:inline-flex;white-space:nowrap;font-variant-numeric:tabular-nums lining-nums}
 .odo .d{display:inline-block;height:1em;line-height:1;overflow:hidden;position:relative}
 .odo .d > span{display:flex;flex-direction:column;transform:translateY(0);transition:transform 1.8s var(--ease-o);transition-delay:calc(var(--k) * 60ms)}
 .odo .d > span > i{font-style:normal;height:1em;line-height:1;display:block;text-align:center}
@@ -328,8 +364,9 @@ section{padding:clamp(72px,8.5vw,124px) 0;position:relative}
 .rec-paso li .ico{width:18px;height:18px;color:var(--verde);margin-top:4px}
 .rec-paso .js-opaco{transform:translateX(0);transition:transform .8s var(--ease-o)}
 .rec-paso.activo .js-opaco{transform:translateX(10px)}
-.rec-paso .n,.rec-paso h3{transition:opacity .6s var(--ease)}
 .rec-img-movil{display:none}
+.rec-desliza{display:none;align-items:center;gap:8px;font-size:.86rem;color:var(--tinta3);margin:-8px 0 14px}
+.rec-desliza::after{content:"";flex:0 0 36px;height:1px;background:currentColor}
 .rec-fijo{position:sticky;top:calc(50vh - 260px);height:520px;align-self:start}
 .marco{position:relative;height:100%;border-radius:16px;background:#0c0e12;border:1px solid var(--linea2);box-shadow:0 60px 120px -50px rgba(17,19,23,.55);overflow:hidden}
 .marco-barra{display:flex;align-items:center;gap:7px;height:36px;padding:0 14px;background:#15181e;border-bottom:1px solid rgba(255,255,255,.06)}
@@ -338,10 +375,10 @@ section{padding:clamp(72px,8.5vw,124px) 0;position:relative}
 .marco-vista{position:absolute;inset:36px 0 0 0}
 .marco-vista img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top left;opacity:0;transform:scale(1.04);transition:opacity .7s var(--ease),transform 1.2s var(--ease-o)}
 .marco-vista img.on{opacity:1;transform:none}
-.rec-cont{position:absolute;right:18px;bottom:16px;display:flex;gap:6px;z-index:2}
-.rec-cont i{width:22px;height:3px;border-radius:2px;background:rgba(255,255,255,.25);overflow:hidden;position:relative}
-.rec-cont i::after{content:"";position:absolute;inset:0;background:var(--oro-v);transform:scaleX(0);transform-origin:left;transition:transform .6s var(--ease-o)}
-.rec-cont i.on::after{transform:none}
+.rec-cont{margin-left:auto;display:flex;gap:6px}
+.rec-cont b{width:22px;height:3px;border-radius:2px;background:rgba(255,255,255,.25);overflow:hidden;position:relative}
+.rec-cont b::after{content:"";position:absolute;inset:0;background:var(--oro-v);transform:scaleX(0);transform-origin:left;transition:transform .6s var(--ease-o)}
+.rec-cont b.on::after{transform:none}
 
 /* ================= CARACTERÍSTICAS (bento) ================= */
 .bento{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
@@ -395,7 +432,7 @@ section{padding:clamp(72px,8.5vw,124px) 0;position:relative}
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231b1306' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 6l-6 6 6 6M15 6l6 6-6 6'/%3E%3C/svg%3E");background-size:22px;background-repeat:no-repeat;background-position:center}
 .compara input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
 .compara:focus-within{outline:2px solid var(--azul-v);outline-offset:4px}
-.compara .et{position:absolute;top:14px;font-size:.74rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:5px 10px;border-radius:999px;pointer-events:none}
+.compara .et{position:absolute;font-size:.74rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:5px 10px;border-radius:999px;pointer-events:none}
 .compara .et.o{left:14px;top:auto;bottom:14px;background:rgba(0,0,0,.6);color:#fff}
 .compara .et.c{right:14px;top:auto;bottom:14px;background:rgba(255,255,255,.85);color:#111}
 .dos-col{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:48px;align-items:center}
@@ -417,7 +454,6 @@ section{padding:clamp(72px,8.5vw,124px) 0;position:relative}
 @media (max-width:370px){.gal-tab{padding:9px 7px;font-size:.8rem}}
 .gal-tab[aria-selected="true"]{background:var(--tinta);color:var(--papel)}
 .gal-panel[hidden]{display:none}
-.carousel-block h3{display:none}
 .carousel{position:relative;border-radius:16px;overflow:hidden;background:#0c0e12;border:1px solid var(--linea2);box-shadow:0 50px 100px -50px rgba(17,19,23,.5)}
 .carousel-viewport{position:relative;width:100%;aspect-ratio:16/10;overflow:hidden}
 .slide{position:absolute;inset:0;opacity:0;transition:opacity .7s var(--ease);pointer-events:none}
@@ -449,12 +485,23 @@ img[role="button"]:focus-visible{outline:3px solid var(--oro-v);outline-offset:-
 .boveda .centro .ico{width:34px;height:34px;margin:0 auto 6px}
 .rayo{position:absolute;left:50%;top:50%;width:46%;height:2px;transform-origin:0 50%;transform:rotate(var(--a))}
 .rayo::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:repeating-linear-gradient(90deg,var(--linea2) 0 5px,transparent 5px 10px)}
-.rayo .paq{position:absolute;left:30%;top:-3px;width:7px;height:7px;border-radius:50%;background:var(--oro);opacity:0}
-.boveda.dentro .rayo .paq{animation:rebota 3.2s var(--ease) 3;animation-delay:calc(var(--dl) + .6s)}
-@keyframes rebota{0%{transform:translateX(0);opacity:0}15%{opacity:1}55%{transform:translateX(160%);opacity:1}62%{transform:translateX(150%);opacity:0}100%{opacity:0}}
+.rayo.ok::before{background:linear-gradient(90deg,var(--oro),rgba(122,82,10,.25));height:2px;top:-.5px}
+.rayo .paq{position:absolute;left:0;top:-3px;width:100%;height:7px;opacity:0}
+.rayo .paq::before{content:"";position:absolute;left:22%;top:0;width:7px;height:7px;border-radius:50%;background:var(--oro)}
+.rayo .paq.vuelta::before{background:var(--verde);width:16px;border-radius:4px}
+.boveda.dentro .rayo .paq{animation:viaje 2.8s var(--ease) 6 .8s}
+.boveda.dentro .rayo .paq.vuelta{animation-name:viajeVuelta;animation-delay:2.2s}
+@keyframes viaje{0%{transform:translateX(0);opacity:0}12%{opacity:1}48%{transform:translateX(62%);opacity:1}55%,100%{transform:translateX(62%);opacity:0}}
+@keyframes viajeVuelta{0%{transform:translateX(62%);opacity:0}12%{opacity:1}48%{transform:translateX(0);opacity:1}55%,100%{transform:translateX(0);opacity:0}}
 .nodo{position:absolute;left:50%;top:50%;transform:rotate(var(--a)) translateX(var(--r)) rotate(calc(var(--a) * -1));width:0;height:0}
 .nodo > span{position:absolute;transform:translate(-50%,-50%);display:grid;place-items:center;gap:4px;font-size:.78rem;color:var(--tinta3);white-space:nowrap;text-align:center}
-.nodo .ico{width:42px;height:42px;padding:10px;border-radius:50%;border:1px solid var(--linea2);background:var(--papel);color:var(--tinta3)}
+.nodo .ico{width:42px;height:42px;max-width:none;flex:none;padding:10px;border-radius:50%;border:1px solid var(--linea2);background:var(--papel);color:var(--tinta3)}
+.nodo > span{min-width:72px}
+.nodo small{display:block;font-size:.68rem;color:var(--tinta3);margin-top:-2px}
+.nodo.ok .ico{border-color:var(--oro);color:var(--oro);background:var(--hoja)}
+.nodo.ok > span{color:var(--tinta);font-weight:600}
+.nodo .v{position:absolute;left:50%;top:-6px;margin-left:10px;width:18px;height:18px;border-radius:50%;background:var(--verde)}
+.nodo .v::after{content:"";position:absolute;left:6px;top:3px;width:5px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
 .nodo .ico.tachado{position:relative}
 .nodo .x{position:absolute;left:50%;top:21px;width:48px;height:2px;margin-left:-24px;background:var(--rojo);transform:rotate(-45deg)}
 .priv-list{list-style:none;padding:0;margin:0;display:grid;gap:0;border-top:1px solid var(--linea2)}
@@ -550,7 +597,7 @@ footer a{color:var(--oro-v)}
 .pie-nav{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 24px}
 .pie-nav a{color:var(--n-tinta2);text-decoration:none;font-size:.95rem}
 .pie-nav a:hover{color:var(--n-tinta);text-decoration:underline}
-.pie-marca{font-family:var(--serif);font-size:clamp(5rem,19vw,17rem);line-height:.8;letter-spacing:-.05em;color:transparent;-webkit-text-stroke:1px rgba(243,239,230,.16);margin:70px 0 0;white-space:nowrap;user-select:none;font-variation-settings:"opsz" 144}
+.pie-marca{font-family:var(--serif);font-size:min(calc((100vw - 40px) / 3.55),20rem);line-height:.82;letter-spacing:-.055em;color:transparent;-webkit-text-stroke:1px rgba(243,239,230,.18);margin:60px 0 0;padding-bottom:.2em;white-space:nowrap;user-select:none;font-variation-settings:"opsz" 144;text-align:center}
 .foot-fine{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.84rem;color:var(--n-tinta3);border-top:1px solid var(--n-linea);padding-top:22px;margin-top:10px}
 @media (max-width:820px){.pie-grid{grid-template-columns:minmax(0,1fr)}}
 
@@ -560,7 +607,8 @@ footer a{color:var(--oro-v)}
 .fab-descarga .ico{width:18px;height:18px}
 @media (min-width:981px){.fab-descarga{width:58px;height:58px;padding:0;justify-content:center;border-radius:50%}.fab-descarga .fab-txt{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}.fab-descarga .ico{width:22px;height:22px}}
 .nav .btn-oro{transition:transform .35s var(--ease-o),opacity .35s var(--ease)}
-.fab-on .nav .btn-oro{opacity:0;pointer-events:none;transform:translateY(-6px)}
+@media (min-width:981px){.fab-on .nav .btn-oro{opacity:0;pointer-events:none;transform:translateY(-6px)}}
+@media (max-width:980px){.fab-descarga{display:none}}
 .fab-descarga.visible{opacity:1;transform:none;pointer-events:auto}
 .fab-descarga.visible:hover{transform:translateY(-3px);text-decoration:none}
 .lightbox{position:fixed;inset:0;z-index:120;display:none;background:rgba(8,9,12,.94);align-items:center;justify-content:center;padding:28px;cursor:zoom-out}
@@ -585,9 +633,14 @@ footer a{color:var(--oro-v)}
   .rec-paso .js-opaco,.rec-paso.activo .js-opaco{transform:none}
   .rec-img-movil{display:block;margin-top:22px;border-radius:12px;overflow:hidden;border:1px solid var(--linea2);box-shadow:var(--sombra)}
   .rec-img-movil img{width:100%;height:auto}
+  .rec-pasos{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 calc(var(--pad,20px) * -1);padding:4px var(--pad,20px) 16px;scrollbar-width:thin;overscroll-behavior-x:contain}
+  .rec-paso{flex:0 0 min(78%,520px);scroll-snap-align:center;border:1px solid var(--linea2);border-radius:18px;background:var(--hoja);padding:24px 20px;justify-content:flex-start}
+  .rec-paso::before{display:none}
+  .rec-desliza{display:flex}
 }
 @media (max-width:640px){
   body{font-size:16px}
+  .rec-paso{flex-basis:86%}
   .wrap{padding:0 20px}
   .hero{padding-top:96px}
   .hero-eyebrow{margin-bottom:22px;font-size:.8rem;gap:9px}
@@ -613,7 +666,9 @@ footer a{color:var(--oro-v)}
   .cards-row,.cinta{overflow-x:auto;-webkit-mask-image:none;mask-image:none}
   .cards-track,.cinta-pista{animation:none !important}
   .rayo .paq,.flotante > *{animation:none !important}
-  .rayo .paq{opacity:1;transform:translateX(120%)}
+  .rayo .paq.vuelta{opacity:0 !important}
+  .rayo .paq{opacity:1;transform:translateX(30%)}
+  .sello-libro{opacity:1 !important;transform:rotate(-8deg) !important}
 }
 
 /* ================= impresión ================= */
@@ -654,7 +709,6 @@ footer a{color:var(--oro-v)}
   <symbol id="i-documento" viewBox="0 0 24 24"><path d="M6 3.5h8l4.5 4.5v12.5H6z"/><path d="M14 3.5V8h4.5M9 12.5h6M9 16h6"/></symbol>
   <symbol id="i-nota" viewBox="0 0 24 24"><path d="M5 4.5h14v15H5z"/><path d="M8.5 9h7M8.5 12.5h7M8.5 16h4"/></symbol>
   <symbol id="i-calendario" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 17h.01M12 17h.01"/></symbol>
-  <symbol id="i-objetivo" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r=".8"/></symbol>
   <symbol id="i-escudo" viewBox="0 0 24 24"><path d="M12 3.2 19.5 6v5.7c0 4.6-3.2 8.2-7.5 9.3-4.3-1.1-7.5-4.7-7.5-9.3V6z"/><path d="m8.8 12 2.2 2.2 4.2-4.4"/></symbol>
   <symbol id="i-candado" viewBox="0 0 24 24"><rect x="4.5" y="10.5" width="15" height="10" rx="2"/><path d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7"/><path d="M12 14.5v2.5"/></symbol>
   <symbol id="i-nube" viewBox="0 0 24 24"><path d="M7 18.5h10.5a4 4 0 0 0 .6-7.95A6 6 0 0 0 6.4 11 3.8 3.8 0 0 0 7 18.5z"/></symbol>
@@ -662,15 +716,11 @@ footer a{color:var(--oro-v)}
   <symbol id="i-antena" viewBox="0 0 24 24"><path d="M12 13v8"/><circle cx="12" cy="11" r="2"/><path d="M8.2 7.2a5.4 5.4 0 0 0 0 7.6M15.8 7.2a5.4 5.4 0 0 1 0 7.6M5.4 4.4a9.4 9.4 0 0 0 0 13.2M18.6 4.4a9.4 9.4 0 0 1 0 13.2"/></symbol>
   <symbol id="i-usuario" viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20.5c.8-4 3.8-6.2 7.5-6.2s6.7 2.2 7.5 6.2"/></symbol>
   <symbol id="i-portatil" viewBox="0 0 24 24"><rect x="4.5" y="5" width="15" height="10.5" rx="1.5"/><path d="M2.5 19h19"/></symbol>
-  <symbol id="i-carpeta" viewBox="0 0 24 24"><path d="M3.5 6.5a1.5 1.5 0 0 1 1.5-1.5h4.5l2 2.5H19a1.5 1.5 0 0 1 1.5 1.5v9a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 18z"/></symbol>
   <symbol id="i-bajada" viewBox="0 0 24 24"><path d="M12 4v11.5M7 11l5 5 5-5"/><path d="M4.5 20h15"/></symbol>
   <symbol id="i-ok" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
   <symbol id="i-ajustes" viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></symbol>
-  <symbol id="i-ojo" viewBox="0 0 24 24"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></symbol>
-  <symbol id="i-campana" viewBox="0 0 24 24"><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 1.5h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></symbol>
   <symbol id="i-bandera" viewBox="0 0 24 24"><path d="M5.5 21V4"/><path d="M5.5 4.5h11l-2 3.5 2 3.5h-11"/></symbol>
   <symbol id="i-hoja" viewBox="0 0 24 24"><rect x="3.5" y="4" width="17" height="16" rx="1.5"/><path d="M3.5 9h17M3.5 14h17M9.5 4v16M15 4v16"/></symbol>
-  <symbol id="i-importar" viewBox="0 0 24 24"><path d="M12 15V3.5M7.5 8 12 3.5 16.5 8"/><path d="M4.5 13v6.5h15V13"/></symbol>
   <symbol id="i-disco" viewBox="0 0 24 24"><path d="M5 4h11.5L20 7.5V20H5z"/><path d="M8 4v5h7V4M8 20v-6h8v6"/></symbol>
   <symbol id="i-flecha" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
   <symbol id="i-izq" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
@@ -681,7 +731,9 @@ footer a{color:var(--oro-v)}
   <symbol id="i-web" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.4 2.4 3.5 5.2 3.5 8.5s-1.1 6.1-3.5 8.5c-2.4-2.4-3.5-5.2-3.5-8.5s1.1-6.1 3.5-8.5z"/></symbol>
   <symbol id="i-linkedin" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="2.5"/><path d="M8 10.5v6M8 7.5h.01M12 16.5v-6M12 13c0-1.6 1-2.6 2.3-2.6s2 .9 2 2.6v3.5"/></symbol>
   <symbol id="i-github" viewBox="0 0 24 24"><path d="M9 19.5c-4 1.2-4-2-5.5-2.5M14.5 21.5v-3.4a3 3 0 0 0-.8-2.3c2.7-.3 5.6-1.3 5.6-6a4.6 4.6 0 0 0-1.3-3.2 4.3 4.3 0 0 0-.1-3.2s-1-.3-3.4 1.3a11.7 11.7 0 0 0-6 0C6.1 1.1 5 1.4 5 1.4a4.3 4.3 0 0 0-.1 3.2 4.6 4.6 0 0 0-1.3 3.2c0 4.6 2.9 5.6 5.6 6a3 3 0 0 0-.8 2.2v3.5"/></symbol>
-  <symbol id="i-deshacer" viewBox="0 0 24 24"><path d="M9 14 4.5 9.5 9 5"/><path d="M4.5 9.5H14a5.5 5.5 0 0 1 0 11h-3"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></symbol>
+  <symbol id="i-pausa" viewBox="0 0 24 24"><path d="M9 5.5v13M15 5.5v13"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5 18.5 12 8 18.5z"/></symbol>
   <symbol id="i-rayo" viewBox="0 0 24 24"><path d="M13 3 5 13.5h6L10 21l8-10.5h-6z"/></symbol>
 </defs></svg>
 
@@ -699,8 +751,23 @@ footer a{color:var(--oro-v)}
       </ul>
     </nav>
     <div class="nav-acc">
+      <button class="theme-toggle" id="pausa" type="button" aria-pressed="false" aria-label="Pausar el movimiento de la página"><svg class="ico i-pausa" aria-hidden="true"><use href="#i-pausa"/></svg><svg class="ico i-play" aria-hidden="true"><use href="#i-play"/></svg></button>
       <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Cambiar a modo oscuro"><svg class="ico i-luna" aria-hidden="true"><use href="#i-luna"/></svg><svg class="ico i-sol" aria-hidden="true"><use href="#i-sol"/></svg></button>
       <a class="btn btn-oro btn-sm" id="nav-descarga" href="#descarga"><svg class="ico" aria-hidden="true"><use href="#i-bajada"/></svg>Descargar</a>
+      <details class="nav-menu" id="nav-menu">
+        <summary class="theme-toggle" aria-label="Secciones de la página"><svg class="ico" aria-hidden="true"><use href="#i-menu"/></svg></summary>
+        <nav class="nav-menu-panel" aria-label="Secciones (menú)">
+          <ul>
+            <li><a href="#que-es">Qué es</a></li>
+            <li><a href="#recorrido">Recorrido</a></li>
+            <li><a href="#caracteristicas">Funciones</a></li>
+            <li><a href="#capturas">Capturas</a></li>
+            <li><a href="#privacidad">Privacidad</a></li>
+            <li><a href="#descarga">Descarga</a></li>
+            <li><a href="#faq">Preguntas</a></li>
+          </ul>
+        </nav>
+      </details>
     </div>
   </div>
   <div class="progreso" id="progreso" aria-hidden="true"></div>
@@ -713,7 +780,7 @@ footer a{color:var(--oro-v)}
   <div class="foco" aria-hidden="true"></div>
   <div class="wrap">
     <div class="hero-txt">
-      <a class="hero-eyebrow ent" style="--d:0" href="#descarga"><img class="hero-icon" src="icono-512.png" alt="" width="34" height="34"><span class="pill">1.20</span><span>Nuevo diseño y un hogar de ejemplo completo</span><svg class="ico flecha" aria-hidden="true"><use href="#i-flecha"/></svg></a>
+      <a class="hero-eyebrow ent" style="--d:0" href="#descarga"><img class="hero-icon" src="icono-512.png" alt="" width="34" height="34"><span class="pill">1.20</span><span>La app estrena diseño y un hogar de ejemplo completo</span><svg class="ico flecha" aria-hidden="true"><use href="#i-flecha"/></svg></a>
       <h1 id="titulo"><span class="l"><span style="--i:0">Todo lo que</span></span><span class="l"><span style="--i:1">tienes, en un</span></span><span class="l"><span style="--i:2"><em>solo número.</em></span></span></h1>
       <p class="hero-sub ent" style="--d:1">Liberty reúne las cuentas, inversiones, inmuebles y deudas de tu hogar en una app de escritorio y te dice <strong>cuánto tienes, cuánto ganas y cómo evoluciona</strong>. Gratis y 100 % local: tus datos nunca salen de tu ordenador.</p>
       <div class="hero-ctas ent" style="--d:2">
@@ -727,17 +794,17 @@ footer a{color:var(--oro-v)}
       </ul>
     </div>
 
-    <div class="escena" id="escena" aria-label="Ejemplo: la tarjeta «Tu patrimonio» de Liberty" role="img">
+    <div class="escena" id="escena">
       <div class="cuadro" id="cuadro">
         <div class="pantalla" aria-hidden="true"><img src="capturas/panel/inicio.webp" alt="" width="1920" height="1200" fetchpriority="low"></div>
-        <div class="tarjeta-pat" aria-hidden="true">
-          <div class="tp-cab"><h2>Tu patrimonio</h2><span>todo lo del hogar: tu cartera y tus inmuebles</span></div>
-          <div class="tp-cifra" data-odo="312956" data-suf=" €">312.956 €</div>
-          <div class="tp-barra"><i></i><i></i></div>
-          <div class="tp-ley"><span style="--c:#5a9cf0">Cartera 49 %</span><span style="--c:#24b37d">Inmuebles 51 %</span></div>
+        <div class="tarjeta-pat">
+          <div class="tp-cab" aria-hidden="true"><h2>Tu patrimonio</h2><span>todo lo del hogar: tu cartera y tus inmuebles</span></div>
+          <div class="tp-cifra" aria-hidden="true" id="tp-cifra" data-odo="312956" data-suf=" €">312.956 €</div>
+          <div class="tp-barra" aria-hidden="true" id="tp-barra"><i></i><i></i></div>
+          <div class="tp-ley" aria-hidden="true"><span style="--c:#5a9cf0" id="tp-ley-c">Cartera 49 %</span><span style="--c:#24b37d" id="tp-ley-i">Inmuebles 51 %</span></div>
           <div class="tp-graf">
-            <div class="tp-graf-cab"><b>Cómo ha crecido</b><span class="sube">+59.875 € en 12 meses</span></div>
-            <div class="limpia"><div><div>
+            <div class="tp-graf-cab" aria-hidden="true"><b id="tp-cuando">Cómo ha crecido</b><span class="sube" id="tp-sube">+59.875 € en 12 meses</span></div>
+            <div class="tp-lienzo" id="tp-lienzo"><div class="limpia" aria-hidden="true"><div><div>
               <svg viewBox="62 40 616 146" preserveAspectRatio="none" style="aspect-ratio:616/146" aria-hidden="true">
                 <defs><linearGradient id="gArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".16"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>
                 <path d="M62.0 164.8 L68.8 164.8 L75.7 164.8 L82.5 164.8 L89.4 164.8 L96.2 164.8 L103.1 164.8 L109.9 164.8 L116.8 164.8 L123.6 164.8 L130.4 164.8 L137.3 164.8 L144.1 164.8 L151.0 164.8 L157.8 164.8 L164.7 164.8 L171.5 164.8 L178.4 164.8 L185.2 164.8 L192.0 164.8 L198.9 164.8 L205.7 164.8 L212.6 164.8 L219.4 164.8 L226.3 152.1 L233.1 151.9 L240.0 151.8 L246.8 151.6 L253.6 151.4 L260.5 151.2 L267.3 148.3 L274.2 148.1 L281.0 148.0 L287.9 147.8 L294.7 147.6 L301.6 147.4 L308.4 147.3 L315.2 147.1 L322.1 146.9 L328.9 146.7 L335.8 146.6 L342.6 146.4 L349.5 146.2 L356.3 146.0 L363.2 145.9 L370.0 145.7 L376.8 145.5 L383.7 145.3 L390.5 145.2 L397.4 145.0 L404.2 138.8 L411.1 138.7 L417.9 138.5 L424.8 138.3 L431.6 105.6 L438.4 103.9 L445.3 102.4 L452.1 95.9 L459.0 94.7 L465.8 94.6 L472.7 100.7 L479.5 99.6 L486.4 98.1 L493.2 97.2 L500.0 96.4 L506.9 95.0 L513.7 91.5 L520.6 90.7 L527.4 86.9 L534.3 84.1 L541.1 84.9 L548.0 84.9 L554.8 85.5 L561.6 84.7 L568.5 83.3 L575.3 82.1 L582.2 78.9 L589.0 77.2 L595.9 76.4 L602.7 72.7 L609.6 71.2 L616.4 68.4 L623.2 67.6 L630.1 65.2 L636.9 62.8 L643.8 62.2 L650.6 59.8 L657.5 57.0 L664.3 52.9 L671.2 51.6 L678.0 51.0  L678 186 L62 186 Z" fill="url(#gArea)" stroke="none"/>
@@ -746,16 +813,21 @@ footer a{color:var(--oro-v)}
                 <path d="M62.0 164.8 L68.8 164.8 L75.7 164.8 L82.5 164.8 L89.4 164.8 L96.2 164.8 L103.1 164.8 L109.9 164.8 L116.8 164.8 L123.6 164.8 L130.4 164.8 L137.3 164.8 L144.1 164.8 L151.0 164.8 L157.8 164.8 L164.7 164.8 L171.5 164.8 L178.4 164.8 L185.2 164.8 L192.0 164.8 L198.9 164.8 L205.7 164.8 L212.6 164.8 L219.4 164.8 L226.3 152.1 L233.1 151.9 L240.0 151.8 L246.8 151.6 L253.6 151.4 L260.5 151.2 L267.3 148.3 L274.2 148.1 L281.0 148.0 L287.9 147.8 L294.7 147.6 L301.6 147.4 L308.4 147.3 L315.2 147.1 L322.1 146.9 L328.9 146.7 L335.8 146.6 L342.6 146.4 L349.5 146.2 L356.3 146.0 L363.2 145.9 L370.0 145.7 L376.8 145.5 L383.7 145.3 L390.5 145.2 L397.4 145.0 L404.2 138.8 L411.1 138.7 L417.9 138.5 L424.8 138.3 L431.6 105.6 L438.4 103.9 L445.3 102.4 L452.1 95.9 L459.0 94.7 L465.8 94.6 L472.7 100.7 L479.5 99.6 L486.4 98.1 L493.2 97.2 L500.0 96.4 L506.9 95.0 L513.7 91.5 L520.6 90.7 L527.4 86.9 L534.3 84.1 L541.1 84.9 L548.0 84.9 L554.8 85.5 L561.6 84.7 L568.5 83.3 L575.3 82.1 L582.2 78.9 L589.0 77.2 L595.9 76.4 L602.7 72.7 L609.6 71.2 L616.4 68.4 L623.2 67.6 L630.1 65.2 L636.9 62.8 L643.8 62.2 L650.6 59.8 L657.5 57.0 L664.3 52.9 L671.2 51.6 L678.0 51.0 " fill="none" stroke="#fff" stroke-width="2.2" vector-effect="non-scaling-stroke"/>
               </svg>
             </div></div></div>
+              <span class="tp-cur" id="tp-cur" aria-hidden="true"><i></i></span>
+              <label class="sr" for="tp-rango">Recorre mes a mes la evolución del patrimonio del hogar de ejemplo</label>
+              <input type="range" id="tp-rango" min="0" max="90" step="1" value="90" aria-valuetext="noviembre de 2026: 312.956 euros">
+            </div>
+            <p class="tp-pista" aria-hidden="true">Desliza sobre la gráfica para viajar en el tiempo</p>
           </div>
-          <div class="tp-filas">
-            <div class="tp-fila"><span>Cartera neta <small>· inversiones, cuentas y deudas</small></span><b>153.415<small>,40</small> €</b></div>
-            <div class="tp-fila"><span>Inmuebles netos <small>· 396.500 € − hipotecas</small></span><b>159.540<small>,17</small> €</b></div>
+          <div class="tp-filas" aria-hidden="true">
+            <div class="tp-fila"><span>Cartera neta <small>· inversiones, cuentas y deudas</small></span><b id="tp-f-c">153.415<small>,40</small> €</b></div>
+            <div class="tp-fila"><span>Inmuebles netos <small>· valor − hipotecas</small></span><b id="tp-f-i">159.540<small>,17</small> €</b></div>
           </div>
         </div>
         <div class="flotante flot-1" aria-hidden="true"><div><svg class="ico"><use href="#i-grafica"/></svg></div><div><span>TIR de la cartera</span><b>+11,17 %</b></div></div>
         <div class="flotante flot-2" aria-hidden="true"><div><svg class="ico"><use href="#i-bandera"/></svg></div><div><span>Libertad financiera</span><b>42 % cubierto</b></div></div>
       </div>
-      <span class="sr">Ejemplo de la tarjeta «Tu patrimonio»: 312.956 euros, 49 % en cartera y 51 % en inmuebles, con una subida de 59.875 euros en 12 meses.</span>
+      <p class="sr">Ejemplo de la tarjeta «Tu patrimonio» de Liberty: 312.956 euros, 49 % en cartera y 51 % en inmuebles, con una subida de 59.875 euros en 12 meses. El control deslizante de la gráfica recorre la evolución desde mayo de 2019.</p>
     </div>
   </div>
 
@@ -795,26 +867,27 @@ footer a{color:var(--oro-v)}
     <p class="rotulo rv"><b>01</b>La única cuenta que importa</p>
     <h2 id="t-ecuacion" class="rv" style="--d:1">Lo que tienes, menos lo que debes.</h2>
     <p class="lead rv" style="--d:2">Liberty suma todo lo de tu casa, resta todas las deudas y te dice, al euro, cuánto es tuyo. Estas son las cifras del hogar de ejemplo que trae la app para que la pruebes antes de meter las tuyas.</p>
+    <p class="ec-pista rv" style="--d:3"><svg class="ico" aria-hidden="true"><use href="#i-ajustes"/></svg>Pulsa una partida para quitarla o volver a sumarla y mira cómo cambia la cuenta.</p>
     <div class="libro">
-      <div class="asiento rv">
+      <div class="asiento rv" style="--d:1">
         <span class="op" aria-hidden="true"></span>
         <div class="que"><h3>Todo lo que tienes</h3><p>Cuentas, fondos, acciones, cripto, oro, pensiones e inmuebles.</p>
           <div class="desglose" role="group" aria-label="Partidas de lo que tienes"><button type="button" class="partida" data-lado="t" data-v="163581.55" aria-pressed="true">Cartera <span>163.582 €</span></button><button type="button" class="partida" data-lado="t" data-v="396500" aria-pressed="true">Inmuebles <span>396.500 €</span></button></div></div>
         <div class="v" id="ec-t" data-odo="560082" data-suf=" €">560.082 €</div>
       </div>
-      <div class="asiento debe rv">
+      <div class="asiento debe rv" style="--d:3">
         <span class="op" aria-hidden="true">−</span>
         <div class="que"><h3>Todo lo que debes</h3><p>Hipotecas, préstamo del coche y tarjeta, con su cuota y su interés.</p>
           <div class="desglose" role="group" aria-label="Partidas de lo que debes"><button type="button" class="partida" data-lado="d" data-v="236959.83" aria-pressed="true">Hipotecas <span>236.960 €</span></button><button type="button" class="partida" data-lado="d" data-v="10166.15" aria-pressed="true">Coche y tarjeta <span>10.166 €</span></button></div></div>
         <div class="v" id="ec-d" data-odo="247126" data-suf=" €">247.126 €</div>
       </div>
-      <div class="asiento total rv">
+      <div class="asiento total rv" style="--d:5">
+        <span class="sello-libro" id="ec-sello" aria-hidden="true">Cuadrado</span>
         <span class="op" aria-hidden="true">=</span>
         <div class="que"><h3>Lo que es tuyo</h3><p>Tu patrimonio neto, actualizado cada vez que anotas o cambian los precios.</p></div>
         <div class="v" id="ec-p" data-odo="312956" data-suf=" €">312.956 €</div>
       </div>
     </div>
-    <p class="ec-pista rv"><svg class="ico" aria-hidden="true"><use href="#i-ajustes"/></svg>Pulsa una partida para quitarla o volver a sumarla y mira cómo cambia la cuenta.</p>
     <p class="sr" id="ec-anuncio" aria-live="polite"></p>
     <p class="libro-nota rv">Y debajo de esa cifra, todo lo demás: rentabilidad real (TIR), dinero libre, colchón, ingresos y gastos, cuánto te falta para vivir de tus rentas y cómo ha cambiado cada mes.</p>
   </div>
@@ -859,8 +932,9 @@ footer a{color:var(--oro-v)}
   <div class="wrap">
     <p class="rotulo rv"><b>03</b>Un recorrido por dentro</p>
     <h2 id="t-rec" class="rv" style="--d:1">Cinco pantallas, todo tu dinero.</h2>
+    <p class="rec-desliza" aria-hidden="true">Desliza para ver las cinco</p>
     <div class="rec-grid">
-      <ol class="rec-pasos" id="rec-pasos">
+      <ol class="rec-pasos" id="rec-pasos" aria-label="Pasos del recorrido">
         <li class="rec-paso" data-img="0">
           <div class="js-opaco">
             <p class="n">i. Inicio</p>
@@ -877,7 +951,7 @@ footer a{color:var(--oro-v)}
             <p>Valor, aportado, plusvalía y TIR de cada inversión, con precios que se actualizan solos y comparación con índices.</p>
             <ul><li><svg class="ico" aria-hidden="true"><use href="#i-ok"/></svg>Fondos, ETF, acciones, cripto, oro, pensiones…</li><li><svg class="ico" aria-hidden="true"><use href="#i-ok"/></svg>Dinero libre, reservados y colchón</li></ul>
           </div>
-          <div class="rec-img-movil"><img src="capturas/panel/cartera.webp" alt="Cartera: patrimonio neto, rentabilidad, TIR y dinero libre" loading="lazy" width="1920" height="1200"></div>
+          <div class="rec-img-movil"><img src="capturas/panel/rentabilidad.webp" alt="Cartera: rentabilidad, plusvalía y TIR de cada inversión" loading="lazy" width="1920" height="1200"></div>
         </li>
         <li class="rec-paso" data-img="2">
           <div class="js-opaco">
@@ -909,15 +983,14 @@ footer a{color:var(--oro-v)}
       </ol>
       <div class="rec-fijo" aria-hidden="true">
         <div class="marco">
-          <div class="marco-barra"><i></i><i></i><i></i><span>127.0.0.1 · Liberty</span></div>
+          <div class="marco-barra"><i></i><i></i><i></i><span>127.0.0.1 · Liberty</span><div class="rec-cont" id="rec-cont"><b></b><b></b><b></b><b></b><b></b></div></div>
           <div class="marco-vista" id="rec-vista">
             <img src="capturas/panel/inicio.webp" alt="" class="on" loading="lazy" width="1920" height="1200">
-            <img src="capturas/panel/cartera.webp" alt="" loading="lazy" width="1920" height="1200">
+            <img src="capturas/panel/rentabilidad.webp" alt="" loading="lazy" width="1920" height="1200">
             <img src="capturas/panel/inmuebles.webp" alt="" loading="lazy" width="1920" height="1200">
             <img src="capturas/panel/ingresos.webp" alt="" loading="lazy" width="1920" height="1200">
             <img src="capturas/notas/tablero.webp" alt="" loading="lazy" width="1920" height="1200">
           </div>
-          <div class="rec-cont" id="rec-cont"><i class="on"></i><i></i><i></i><i></i><i></i></div>
         </div>
       </div>
     </div>
@@ -928,7 +1001,7 @@ footer a{color:var(--oro-v)}
 <section class="cv" id="caracteristicas" aria-labelledby="t-feat">
   <div class="wrap">
     <p class="rotulo rv"><b>04</b>Todo lo que puedes hacer</p>
-    <h2 id="t-feat" class="rv" style="--d:1">Sin coste. Sin límites. Sin letra pequeña.</h2>
+    <h2 id="t-feat" class="rv" style="--d:1">Sin coste. Sin cuentas. Sin letra pequeña.</h2>
     <p class="lead rv" style="--d:2">De gestor de inversiones a gestor de todo el patrimonio del hogar. Esto es lo que encontrarás dentro.</p>
     <div class="bento">
       <div class="feat ancha rv">
@@ -1059,11 +1132,9 @@ footer a{color:var(--oro-v)}
 
     <div class="gal-panel rv" id="gp-panel" role="tabpanel" aria-labelledby="gt-panel">
       <div class="carousel-block">
-        <h3>Panel</h3>
         <div class="carousel" data-carousel aria-roledescription="carrusel" aria-label="Capturas del Panel">
           <div class="carousel-viewport" data-track>
-            <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Inicio: tu patrimonio, cómo ha crecido y tu libertad financiera"><img src="capturas/panel/inicio.webp" alt="Inicio: tu patrimonio, cómo ha crecido y tu libertad financiera" loading="lazy" width="1920" height="1200"></div>
-            <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Cartera: tu mes de un vistazo y la cartera neta"><img src="capturas/panel/cartera.webp" alt="Cartera: tu mes de un vistazo y la cartera neta" loading="lazy" width="1920" height="1200"></div>
+            <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Cartera: tu mes de un vistazo y el detalle de inversiones"><img src="capturas/panel/cartera.webp" alt="Cartera: tu mes de un vistazo y el detalle de inversiones" loading="lazy" width="1920" height="1200"></div>
             <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Cartera en tema claro"><img src="capturas/panel/cartera_claro.webp" alt="Cartera en tema claro" loading="lazy" width="1920" height="1200"></div>
             <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Distribución: componentes de la cartera"><img src="capturas/panel/distribucion.webp" alt="Distribución: componentes de la cartera" loading="lazy" width="1920" height="1200"></div>
             <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Ficha de un activo: fondo indexado MSCI World"><img src="capturas/panel/ficha.webp" alt="Ficha de un activo: fondo indexado MSCI World" loading="lazy" width="1920" height="1200"></div>
@@ -1073,6 +1144,7 @@ footer a{color:var(--oro-v)}
             <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Deudas y vencimientos"><img src="capturas/panel/deudas.webp" alt="Deudas y vencimientos" loading="lazy" width="1920" height="1200"></div>
             <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Informe fiscal"><img src="capturas/panel/fiscal.webp" alt="Informe fiscal" loading="lazy" width="1920" height="1200"></div>
             <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Inmuebles"><img src="capturas/panel/inmuebles.webp" alt="Inmuebles" loading="lazy" width="1920" height="1200"></div>
+            <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Inmuebles en tema claro"><img src="capturas/panel/inmuebles_claro.webp" alt="Inmuebles en tema claro" loading="lazy" width="1920" height="1200"></div>
           </div>
           <button class="car-btn car-prev" type="button" data-prev aria-label="Captura anterior"><svg class="ico" aria-hidden="true"><use href="#i-izq"/></svg></button>
           <button class="car-btn car-next" type="button" data-next aria-label="Captura siguiente"><svg class="ico" aria-hidden="true"><use href="#i-der"/></svg></button>
@@ -1083,7 +1155,6 @@ footer a{color:var(--oro-v)}
 
     <div class="gal-panel" id="gp-datos" role="tabpanel" aria-labelledby="gt-datos" hidden>
       <div class="carousel-block">
-        <h3>Mis datos</h3>
         <div class="carousel" data-carousel aria-roledescription="carrusel" aria-label="Capturas de Mis datos">
           <div class="carousel-viewport" data-track>
             <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Mis datos: activos"><img src="capturas/misdatos/activos.webp" alt="Mis datos: activos" loading="lazy" width="1920" height="1200"></div>
@@ -1102,7 +1173,6 @@ footer a{color:var(--oro-v)}
 
     <div class="gal-panel" id="gp-notas" role="tabpanel" aria-labelledby="gt-notas" hidden>
       <div class="carousel-block">
-        <h3>Notas y agenda</h3>
         <div class="carousel" data-carousel aria-roledescription="carrusel" aria-label="Capturas de Documentos">
           <div class="carousel-viewport" data-track>
             <div class="slide" role="group" aria-roledescription="diapositiva" aria-label="Documentos: notas con etiquetas y tareas"><img src="capturas/notas/lista.webp" alt="Documentos: notas con etiquetas y tareas" loading="lazy" width="1920" height="1200"></div>
@@ -1120,7 +1190,6 @@ footer a{color:var(--oro-v)}
 
     <div class="gal-panel" id="gp-ajustes" role="tabpanel" aria-labelledby="gt-ajustes" hidden>
       <div class="carousel-block">
-        <h3>Ajustes</h3>
         <div class="single-shot"><img src="capturas/ajustes/ajustes.webp" alt="Ajustes de la aplicación: tema, tamaño del texto, ocultar importes y carpeta de datos" loading="lazy" width="1920" height="1200"></div>
       </div>
     </div>
@@ -1164,15 +1233,17 @@ footer a{color:var(--oro-v)}
         <li class="rv" style="--d:3"><svg class="ico" aria-hidden="true"><use href="#i-escudo"/></svg><span><b>Tú controlas tus datos.</b> Viven en una carpeta que puedes copiar o borrar cuando quieras. La única conexión es para traer los precios de tus inversiones.</span></li>
       </ul>
     </div>
-    <div class="boveda rv" style="--d:2" aria-hidden="true">
-      <div class="rayo" style="--a:-90deg;--dl:0s"><i class="paq"></i></div>
-      <div class="rayo" style="--a:0deg;--dl:.8s"><i class="paq"></i></div>
-      <div class="rayo" style="--a:90deg;--dl:1.6s"><i class="paq"></i></div>
-      <div class="rayo" style="--a:180deg;--dl:2.4s"><i class="paq"></i></div>
+    <div class="boveda rv" style="--d:2" role="img" aria-label="Diagrama: tu ordenador no se conecta a nube, servidores, telemetría ni cuentas; la única conexión es para traer las cotizaciones de tus inversiones.">
+      <div class="rayo" style="--a:-90deg"></div>
+      <div class="rayo" style="--a:54deg"></div>
+      <div class="rayo" style="--a:126deg"></div>
+      <div class="rayo" style="--a:198deg"></div>
+      <div class="rayo ok" style="--a:-18deg"><i class="paq"></i><i class="paq vuelta"></i></div>
       <div class="nodo" style="--a:-90deg;--r:43cqw"><span><svg class="ico"><use href="#i-nube"/></svg><i class="x"></i>Nube</span></div>
-      <div class="nodo" style="--a:0deg;--r:43cqw"><span><svg class="ico"><use href="#i-servidor"/></svg><i class="x"></i>Servidores</span></div>
-      <div class="nodo" style="--a:90deg;--r:43cqw"><span><svg class="ico"><use href="#i-antena"/></svg><i class="x"></i>Telemetría</span></div>
-      <div class="nodo" style="--a:180deg;--r:43cqw"><span><svg class="ico"><use href="#i-usuario"/></svg><i class="x"></i>Cuentas</span></div>
+      <div class="nodo ok" style="--a:-18deg;--r:43cqw"><span><svg class="ico"><use href="#i-grafica"/></svg><i class="v"></i>Precios<small>solo cotizaciones</small></span></div>
+      <div class="nodo" style="--a:54deg;--r:43cqw"><span><svg class="ico"><use href="#i-servidor"/></svg><i class="x"></i>Servidores</span></div>
+      <div class="nodo" style="--a:126deg;--r:43cqw"><span><svg class="ico"><use href="#i-antena"/></svg><i class="x"></i>Telemetría</span></div>
+      <div class="nodo" style="--a:198deg;--r:43cqw"><span><svg class="ico"><use href="#i-usuario"/></svg><i class="x"></i>Cuentas</span></div>
       <div class="centro"><div><svg class="ico"><use href="#i-portatil"/></svg>Tu ordenador</div></div>
     </div>
   </div>
@@ -1417,6 +1488,24 @@ footer a{color:var(--oro-v)}
     });
   })();
 
+  /* ---------- Pausar todo el movimiento (WCAG 2.2.2), recordado entre visitas ---------- */
+  (function(){
+    var b = document.getElementById("pausa"); if(!b) return;
+    function aplica(on){ root.classList.toggle("pausado", on); b.setAttribute("aria-pressed", String(on)); b.setAttribute("aria-label", on ? "Reanudar el movimiento de la página" : "Pausar el movimiento de la página"); document.dispatchEvent(new Event("pausa")); }
+    var guardado = false; try { guardado = localStorage.getItem("liberty-pausa") === "1"; } catch(e){}
+    if(guardado) aplica(true);
+    b.addEventListener("click", function(){ var on = !root.classList.contains("pausado"); aplica(on); try { localStorage.setItem("liberty-pausa", on ? "1" : "0"); } catch(e){} });
+    if(QUIETO) b.hidden = true; // con movimiento reducido ya no hay nada en marcha
+  })();
+
+  /* ---------- Menú de secciones en móvil: se cierra al elegir, con Esc o al tocar fuera ---------- */
+  (function(){
+    var m = document.getElementById("nav-menu"); if(!m) return;
+    m.addEventListener("click", function(e){ if(e.target.closest("a")) m.open = false; });
+    document.addEventListener("keydown", function(e){ if(e.key === "Escape" && m.open){ m.open = false; m.querySelector("summary").focus(); } });
+    document.addEventListener("click", function(e){ if(m.open && !m.contains(e.target)) m.open = false; });
+  })();
+
   /* ---------- Con movimiento reducido, cinta y tarjetas se desplazan a mano: que sean enfocables ---------- */
   if(QUIETO){ document.querySelectorAll(".cinta, .cards-row").forEach(function(z){ z.tabIndex = 0; }); }
 
@@ -1499,9 +1588,70 @@ footer a{color:var(--oro-v)}
         var t = suma("t"), d = suma("d"), p = Math.round(t - d);
         pon(eT, Math.round(t)); pon(eD, Math.round(d)); pon(eP, p);
         eP.closest(".asiento").classList.toggle("negativo", p < 0);
-        if(anuncio) anuncio.textContent = "Tienes " + FMT.format(Math.round(t)) + " €, debes " + FMT.format(Math.round(d)) + " €. Es tuyo: " + FMT.format(p) + " €.";
+        var sello = document.getElementById("ec-sello");
+        if(sello){
+          var todas = bs.every(function(x){ return x.getAttribute("aria-pressed") === "true"; });
+          sello.textContent = p < 0 ? "En rojo" : (todas ? "Cuadrado" : "Simulación");
+          sello.classList.toggle("rojo", p < 0); sello.classList.toggle("simulado", !todas && p >= 0);
+          sello.classList.remove("otra"); void sello.offsetWidth; sello.classList.add("otra");
+        }
+        if(anuncio) anuncio.textContent = "Tienes " + FMT.format(Math.round(t)) + " €, debes " + FMT.format(Math.round(d)) + " €. Es tuyo: " + FMT.format(p).replace("-", "menos ") + " €.";
       });
     });
+  })();
+
+  /* ---------- Hero: la gráfica se recorre mes a mes con la serie real del ejemplo ---------- */
+  (function(){
+    var S = {"f":["2019-05","2019-06","2019-07","2019-08","2019-09","2019-10","2019-11","2019-12","2020-01","2020-02","2020-03","2020-04","2020-05","2020-06","2020-07","2020-08","2020-09","2020-10","2020-11","2020-12","2021-01","2021-02","2021-03","2021-04","2021-05","2021-06","2021-07","2021-08","2021-09","2021-10","2021-11","2021-12","2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09","2022-10","2022-11","2022-12","2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09","2023-10","2023-11","2023-12","2024-01","2024-02","2024-03","2024-04","2024-05","2024-06","2024-07","2024-08","2024-09","2024-10","2024-11","2024-12","2025-01","2025-02","2025-03","2025-04","2025-05","2025-06","2025-07","2025-08","2025-09","2025-10","2025-11","2025-12","2026-01","2026-02","2026-03","2026-04","2026-05","2026-06","2026-07","2026-08","2026-09","2026-10","2026-11"],"t":[45075.03,45075.03,45075.03,45075.03,45075.03,45075.03,45075.03,45075.03,45075.03,45075.03,45075.03,45075.03,45075.03,45075.03,45075.03,45075.03,45075.03,45075.03,45075.03,45075.03,45075.03,45075.03,45075.03,45075.03,75074.76,75477.06,75880.0,76283.57,76687.79,77092.64,83998.14,84404.27,84811.05,85218.48,85626.54,86035.26,86444.62,86854.63,87265.29,87676.6,88088.56,88501.17,88914.44,89328.36,89742.94,90158.17,90574.06,90990.61,91407.82,91825.68,106244.22,106663.41,107083.26,107503.79,184517.63,188488.41,192053.54,207298.08,210076.05,210394.74,196093.42,198564.34,202156.16,204221.98,206021.36,209435.2,217675.35,219631.75,228500.49,235090.54,233214.34,233227.43,231669.02,233758.04,236865.6,239718.15,247317.96,251291.37,253080.88,261964.22,265323.27,271916.78,273900.4,279535.6,285086.31,286473.2,292245.67,298768.35,308453.12,311589.9,312955.57],"c":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,85901.56,89200.84,95093.31,97664.02,99766.99,99409.5,84430.82,86223.21,89135.32,90520.26,91637.56,94368.14,101923.84,103194.6,107376.51,109278.54,106713.11,106035.79,103785.75,105181.95,107595.48,109752.8,112656.16,115931.92,117022.56,125205.81,127863.56,129754.55,129534.42,134464.66,139309.17,139988.64,143552.46,146365.25,150338.91,152763.33,153415.4],"i":[45075.03,45075.03,45075.03,45075.03,45075.03,45075.03,45075.03,45075.03,45075.03,45075.03,45075.03,45075.03,45075.03,45075.03,45075.03,45075.03,45075.03,45075.03,45075.03,45075.03,45075.03,45075.03,45075.03,45075.03,75074.76,75477.06,75880.0,76283.57,76687.79,77092.64,83998.14,84404.27,84811.05,85218.48,85626.54,86035.26,86444.62,86854.63,87265.29,87676.6,88088.56,88501.17,88914.44,89328.36,89742.94,90158.17,90574.06,90990.61,91407.82,91825.68,106244.22,106663.41,107083.26,107503.79,98616.07,99287.57,96960.23,109634.06,110309.06,110985.24,111662.6,112341.13,113020.84,113701.72,114383.8,115067.06,115751.51,116437.15,121123.98,125812.0,126501.23,127191.64,127883.27,128576.09,129270.12,129965.35,134661.8,135359.45,136058.32,136758.41,137459.71,142162.23,144365.98,145070.94,145777.14,146484.56,148693.21,152403.1,158114.21,158826.57,159540.17]};
+    var lienzo = document.getElementById("tp-lienzo"), rango = document.getElementById("tp-rango");
+    var cur = document.getElementById("tp-cur"), cifra = document.getElementById("tp-cifra");
+    if(!lienzo || !rango || !cur || !cifra) return;
+    var barra = document.querySelectorAll("#tp-barra i"), leyC = document.getElementById("tp-ley-c"), leyI = document.getElementById("tp-ley-i");
+    var cuando = document.getElementById("tp-cuando"), sube = document.getElementById("tp-sube");
+    var fC = document.getElementById("tp-f-c"), fI = document.getElementById("tp-f-i");
+    var N = S.t.length - 1, MAXV = S.t[N], MESES = ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
+    var MESES_L = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+    var F2 = new Intl.NumberFormat("es-ES", {minimumFractionDigits:2, maximumFractionDigits:2});
+    function mes(i, largo){ var p = S.f[i].split("-"); return (largo ? MESES_L : MESES)[+p[1] - 1] + (largo ? " de " : " ") + p[0]; }
+    function euros(el, v){ var t = F2.format(v).split(","); el.innerHTML = t[0] + "<small>," + t[1] + "</small> €"; }
+    // y del SVG (viewBox 62 40 616 146; 0 € en y=184 y el último total en y=51)
+    function yDe(v){ return 184 - v * (133 / MAXV); }
+    var actual = N, pend = false, objetivo = N;
+    function pinta(){
+      pend = false;
+      var i = objetivo; if(i === actual && cifra._n !== undefined) return;
+      var previo = cifra._n === undefined ? MAXV : cifra._n;
+      var v = Math.round(S.t[i]);
+      cifra.setAttribute("data-odo", v);
+      cifra.classList.add("rapido");
+      var g = montaOdo(cifra, v, Math.round(previo)); requestAnimationFrame(g);
+      var c = S.c[i], m = S.i[i], tot = Math.max(1, c + m);
+      var pc = Math.round(c / tot * 100);
+      if(barra.length === 2){ barra[0].style.flexGrow = Math.max(0, c); barra[1].style.flexGrow = Math.max(0, m); }
+      if(leyC) leyC.textContent = "Cartera " + pc + " %"; if(leyI) leyI.textContent = "Inmuebles " + (100 - pc) + " %";
+      if(fC) euros(fC, c); if(fI) euros(fI, m);
+      if(cuando) cuando.textContent = i === N ? "Cómo ha crecido" : "Así estaba en " + mes(i);
+      if(sube){ var dlt = i >= 12 ? S.t[i] - S.t[i - 12] : S.t[i] - S.t[0]; sube.textContent = (dlt >= 0 ? "+" : "\u2212") + FMT.format(Math.abs(Math.round(dlt))) + " € en " + (i >= 12 ? "12 meses" : i + (i === 1 ? " mes" : " meses")); }
+      var w = lienzo.clientWidth, h = lienzo.clientHeight;
+      var x = i / N * w, y = (yDe(S.t[i]) - 40) / 146 * h;
+      cur.style.transform = "translateX(" + x.toFixed(1) + "px)";
+      cur.firstChild.style.transform = "translateY(" + y.toFixed(1) + "px)";
+      rango.setAttribute("aria-valuetext", mes(i, true) + ": " + FMT.format(v) + " euros");
+      actual = i;
+    }
+    function ve(i){ objetivo = Math.max(0, Math.min(N, i)); if(!pend){ pend = true; requestAnimationFrame(pinta); } }
+    rango.addEventListener("input", function(){ lienzo.classList.add("activo"); ve(+rango.value); });
+    rango.addEventListener("focus", function(){ lienzo.classList.add("activo", "foco"); ve(+rango.value); });
+    rango.addEventListener("blur", function(){ lienzo.classList.remove("activo", "foco"); rango.value = N; ve(N); });
+    if(FINO){
+      lienzo.addEventListener("pointermove", function(e){
+        var r = lienzo.getBoundingClientRect(); var i = Math.round((e.clientX - r.left) / r.width * N);
+        lienzo.classList.add("activo"); rango.value = Math.max(0, Math.min(N, i)); ve(+rango.value);
+      });
+      lienzo.addEventListener("pointerleave", function(){ if(document.activeElement === rango) return; lienzo.classList.remove("activo"); rango.value = N; ve(N); });
+    } else {
+      rango.addEventListener("change", function(){ setTimeout(function(){ if(document.activeElement !== rango){ lienzo.classList.remove("activo"); } }, 1600); });
+    }
   })();
 
   /* ---------- Aparición al hacer scroll ---------- */
@@ -1579,8 +1729,8 @@ footer a{color:var(--oro-v)}
     window.addEventListener("resize", pinta);
     pinta();
     // Sección activa: la que cruza la mitad de la pantalla; cada sección cuenta para su enlace del menú.
-    var enlaces = Array.prototype.slice.call(document.querySelectorAll(".nav-links a"));
-    var GRUPO = {"ecuacion":"#que-es","que-es":"#que-es","recorrido":"#recorrido","caracteristicas":"#caracteristicas","como-funciona":"#caracteristicas","para-quien":"#caracteristicas","capturas":"#caracteristicas","privacidad":"#privacidad","faq":"#faq"};
+    var enlaces = Array.prototype.slice.call(document.querySelectorAll(".nav-links a, .nav-menu-panel a"));
+    var GRUPO = {"ecuacion":"#que-es","que-es":"#que-es","recorrido":"#recorrido","caracteristicas":"#caracteristicas","como-funciona":"#caracteristicas","para-quien":"#caracteristicas","capturas":"#caracteristicas","privacidad":"#privacidad","faq":"#faq","capturas-menu":"#capturas"};
     var secciones = Array.prototype.slice.call(document.querySelectorAll("main > section[id]"));
     var actual;
     function marca(){
@@ -1598,7 +1748,7 @@ footer a{color:var(--oro-v)}
   (function(){
     var pasos = Array.prototype.slice.call(document.querySelectorAll(".rec-paso"));
     var imgs = Array.prototype.slice.call(document.querySelectorAll("#rec-vista img"));
-    var marcas = Array.prototype.slice.call(document.querySelectorAll("#rec-cont i"));
+    var marcas = Array.prototype.slice.call(document.querySelectorAll("#rec-cont b"));
     if(!pasos.length) return;
     function activa(i){
       pasos.forEach(function(p, j){ p.classList.toggle("activo", j === i); });
@@ -1610,6 +1760,7 @@ footer a{color:var(--oro-v)}
     }, {rootMargin:"-45% 0px -45% 0px"});
     pasos.forEach(function(p){ io.observe(p); });
     activa(0);
+    if(marcas[0]) marcas[0].classList.add("on");
   })();
 
   /* ---------- Comparador claro / oscuro ---------- */
@@ -1678,12 +1829,16 @@ footer a{color:var(--oro-v)}
     var fab = document.getElementById("fab-descarga");
     var dl  = document.getElementById("descarga");
     var navDl = document.getElementById("nav-descarga");
+    var pie = document.getElementById("creditos");
+    var ancho = window.matchMedia("(min-width:981px)");
     if(!fab) return;
     function toggle(){
       var pasadoHero = window.scrollY > 600;
       // se oculta cuando ya estás sobre la propia sección de descarga
       var enDescarga = false;
       if(dl){ var r = dl.getBoundingClientRect(); enDescarga = r.top < window.innerHeight && r.bottom > 0; }
+      if(pie && pie.getBoundingClientRect().top < window.innerHeight) enDescarga = true; // ni sobre el pie
+      if(!ancho.matches) { fab.classList.remove("visible"); fab.tabIndex = -1; fab.setAttribute("aria-hidden", "true"); document.body.classList.remove("fab-on"); if(navDl){ navDl.tabIndex = 0; navDl.removeAttribute("aria-hidden"); } return; }
       var ver = pasadoHero && !enDescarga;
       fab.classList.toggle("visible", ver);
       fab.tabIndex = ver ? 0 : -1;
@@ -1774,11 +1929,17 @@ footer a{color:var(--oro-v)}
       if(cap) cap.textContent = (idx + 1) + " / " + slides.length + " · " + slides[idx].getAttribute("aria-label");
     }
     function visible(){ return car.offsetParent !== null; }
-    function goto(i, mano){ idx = (i + slides.length) % slides.length; if(cap) cap.setAttribute("aria-live", mano ? "polite" : "off"); render(); }
+    function goto(i, mano){
+      var conFoco = document.activeElement && document.activeElement.tagName === "IMG" && car.contains(document.activeElement);
+      idx = (i + slides.length) % slides.length; if(cap) cap.setAttribute("aria-live", mano ? "polite" : "off"); render();
+      if(conFoco){ var im = slides[idx].querySelector("img"); if(im) im.focus(); }
+    }
     function avanza(mano){ goto(idx + 1, mano === true); }
     function retrocede(mano){ goto(idx - 1, mano === true); }
 
-    function start(){ if(!timer && slides.length > 1 && visible() && !QUIETO){ car.classList.remove("parado"); timer = setInterval(function(){ if(visible()) avanza(); }, INTERVALO); } }
+    var sobre = false;
+    function retenido(){ return sobre || car.contains(document.activeElement) || root.classList.contains("pausado"); }
+    function start(){ if(!timer && slides.length > 1 && visible() && !QUIETO && !retenido()){ car.classList.remove("parado"); timer = setInterval(function(){ if(visible()) avanza(); }, INTERVALO); } }
     function stop(){ car.classList.add("parado"); if(timer){ clearInterval(timer); timer = null; } }
     function reset(){ stop(); start(); }
 
@@ -1786,10 +1947,11 @@ footer a{color:var(--oro-v)}
     next.addEventListener("click", function(){ avanza(true); reset(); });
 
     // Pausa al pasar el ratón / foco
-    car.addEventListener("mouseenter", stop);
-    car.addEventListener("mouseleave", start);
+    car.addEventListener("mouseenter", function(){ sobre = true; stop(); });
+    car.addEventListener("mouseleave", function(){ sobre = false; start(); });
     car.addEventListener("focusin",  stop);
-    car.addEventListener("focusout", start);
+    car.addEventListener("focusout", function(){ setTimeout(start, 0); });
+    document.addEventListener("pausa", function(){ if(root.classList.contains("pausado")) stop(); else start(); });
 
     // Swipe en móvil
     var x0 = null;
@@ -1839,8 +2001,17 @@ footer a{color:var(--oro-v)}
     return html;
   }
 
-  /* ---------- Descargas, versión y novedades (una sola petición) ---------- */
-  (function(){
+  /* El contador y las novedades aparecen después de cargar: si se llegó con #ancla y nadie ha movido la página, se recoloca */
+  var movido = false;
+  ["wheel", "touchstart", "keydown", "mousedown"].forEach(function(ev){ window.addEventListener(ev, function(){ movido = true; }, {passive:true, once:true}); });
+  function recolocaAncla(){
+    if(movido || location.hash.length < 2) return;
+    var dest = null; try { dest = document.querySelector(location.hash); } catch(e){}
+    if(dest) dest.scrollIntoView({behavior:"instant", block:"start"});
+  }
+
+  /* ---------- Descargas, versión y novedades (una sola petición, al acercarse a la descarga) ---------- */
+  function cargaReleases(){
     var elCount = document.getElementById("descargas-count");
     var elVer   = document.getElementById("ver-actual");
     var elFecha = document.getElementById("ver-fecha");
@@ -1875,6 +2046,7 @@ footer a{color:var(--oro-v)}
               }
             });
           });
+          setTimeout(recolocaAncla, 0);
           if(elCount){
             elCount.innerHTML = "<strong>" + new Intl.NumberFormat("es-ES").format(total) + "</strong> descargas";
             elCount.style.display = "";
@@ -1899,6 +2071,14 @@ footer a{color:var(--oro-v)}
     }catch(e){
       if(elCount) elCount.style.display = "none";
     }
+  }
+  (function(){
+    var zona = document.getElementById("descarga");
+    if(location.hash.length > 1 || !zona || !("IntersectionObserver" in window)){ cargaReleases(); return; }
+    var io = new IntersectionObserver(function(es){
+      if(es.some(function(e){ return e.isIntersecting; })){ io.disconnect(); cargaReleases(); }
+    }, {rootMargin:"1500px 0px"});
+    io.observe(zona);
   })();
 
 })();
